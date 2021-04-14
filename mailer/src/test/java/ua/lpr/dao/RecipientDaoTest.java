@@ -57,5 +57,4 @@ public class RecipientDaoTest {
     public static void destroy() {
         System.out.println("After class");
     }
-
 }
