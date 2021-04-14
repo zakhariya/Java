@@ -1,6 +1,7 @@
 package ua.lpr.view;
 
 import ua.lpr.controller.Controller;
+import ua.lpr.entity.Recipient;
 import ua.lpr.util.Constants;
 import ua.lpr.view.components.*;
 import ua.lpr.view.components.MenuBar;
@@ -9,8 +10,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class View extends JFrame implements ActionListener {
 
@@ -21,6 +25,7 @@ public class View extends JFrame implements ActionListener {
     private final ProgressPanel progressPanel;
     private final TextPanel textPanel;
     private final ToolBar toolBar;
+    private final AddDialog addDialog;
 
     public View(Controller controller) throws HeadlessException {
         setLAF();
@@ -33,6 +38,7 @@ public class View extends JFrame implements ActionListener {
         textPanel = new TextPanel();
         toolBar = new ToolBar();
         menuBar = new MenuBar();
+        addDialog = new AddDialog();
 
         initView();
     }
@@ -48,8 +54,10 @@ public class View extends JFrame implements ActionListener {
         panelFullContent.add(toolBar);
 
         menuBar.addActionListener(this);
+        emailListPanel.addActionListener(this);
         progressPanel.addActionListener(this);
         toolBar.addActionListener(this);
+        addDialog.addActionListener(this);
 
         setResizable(true);
         setIconImage(Constants.LOGO);
@@ -133,22 +141,31 @@ public class View extends JFrame implements ActionListener {
             controller.hideView();
         } else if(e.getActionCommand().equals("развернуть")) {
             controller.showView();
-        } else if (e.getActionCommand().equals("рассылка")) {
-            Component c = (Component) e.getSource();
-
-            if (c instanceof JButton) {
-                JButton startButton = (JButton) c;
-
-                if (startButton.getIcon().equals(Constants.ICON_START)) {
-                    controller.startSending();
-                    startButton.setIcon(Constants.ICON_PAUSE);
-                } else {
-                    controller.stopSending();
-                    startButton.setIcon(Constants.ICON_START);
-                }
-            }
         } else if (e.getActionCommand().equals("детали")) {
             controller.showDetails();
+        } else if (e.getActionCommand().equals("md5")) {
+            //TODO: md5 or clear
+        } else {
+            Component c = (Component) e.getSource();
+
+            if (!(c instanceof JButton)) {
+                return;
+            }
+
+            JButton button = (JButton) c;
+            Icon icon = button.getIcon();
+
+            if (icon.equals(Constants.ICON_START)) {
+                controller.startSending();
+                button.setIcon(Constants.ICON_PAUSE);
+            } else if (icon.equals(Constants.ICON_PAUSE)){
+                controller.stopSending();
+                button.setIcon(Constants.ICON_START);
+            } else if (icon.equals(Constants.ICON_ADD)) {
+                controller.addRecipient();
+            } else if (icon.equals(Constants.ICON_REMOVE)) {
+                controller.removeRecipients();
+            }
         }
 
 //        if(e.getSource().equals(buttAddEmail)){
@@ -182,14 +199,27 @@ public class View extends JFrame implements ActionListener {
         Map<String, String> smtpData = smtpPanel.getSmtpData();
         Map<String, String> messageData = textPanel.getMessageData();
 
-        Map<String, String> allData = new HashMap<>();
+        Map<String, String> allData = new HashMap<>(smtpData);
+        allData.put("unsubscribe", toolBar.getUnsubscribeUrl());
+        allData.put("from", emailListPanel.getFrom());
+        allData.put("subject", emailListPanel.getSubject());
 
-        allData.put("host", smtpData.get("host"));
+       return Stream.concat(messageData.entrySet().stream(), allData.entrySet().stream())
+               .collect(Collectors.toMap(
+                       Map.Entry::getKey,
+                       Map.Entry::getValue,
+                       (key, val) -> allData.put(key, val)));
+    }
 
+    public Recipient showAddDialog() {
+        addDialog.setVisible(true);
 
-        allData.put("text", messageData.get("text"));
-        allData.put("html", messageData.get("html"));
+        while (addDialog.isVisible()) {
 
-       return allData;
+        }
+
+        Map<String, String> data = addDialog.getRecipientData();
+
+        return new Recipient(data.get("name"), data.get("company"), data.get("city"), data.get("email"));
     }
 }

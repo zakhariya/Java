@@ -3,28 +3,25 @@ package ua.lpr.view.components;
 import ua.lpr.util.Constants;
 
 import javax.swing.*;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EmailListPanel extends JPanel {
     private final JTextField textFrom;
     private final JTextField textSubject;
-    private final JButton buttAddEmail;
-    private final JButton buttRemoveSelectedEmails;
-    private final JButton buttClearList;
-    private final JButton buttFillList;
+    private final JButton buttAdd;
+    private final JButton buttRemove;
+    private final JButton buttClear;
+    private final JButton buttLoad;
     private final JList<String> listRecipients;
 
 
     public EmailListPanel() {
         textFrom = new JTextField();
         textSubject = new JTextField();
-        buttAddEmail = new JButton();
-        buttRemoveSelectedEmails = new JButton();
-        buttClearList = new JButton();
-        buttFillList = new JButton();
+        buttAdd = new JButton();
+        buttRemove = new JButton();
+        buttClear = new JButton();
+        buttLoad = new JButton();
         listRecipients = new JList<>();
 
         setLayout(null);
@@ -45,33 +42,29 @@ public class EmailListPanel extends JPanel {
         JLabel labRecipients = new JLabel("Получатели:");
         add(labRecipients);
         labRecipients.setBounds(15, 75, 100, 20);
-        add(buttAddEmail);
-        buttAddEmail.setFocusPainted(false);
-        buttAddEmail.setIcon(Constants.ICON_ADD);
-        buttAddEmail.setToolTipText("Добавить адрес");
-        buttAddEmail.setBounds(229, 75, 20, 20);
-//        buttAddEmail.addActionListener(this);
+        add(buttAdd);
+        buttAdd.setFocusPainted(false);
+        buttAdd.setIcon(Constants.ICON_ADD);
+        buttAdd.setToolTipText("Добавить адрес");
+        buttAdd.setBounds(229, 75, 20, 20);
 
-        add(buttRemoveSelectedEmails);
-        buttRemoveSelectedEmails.setFocusPainted(false);
-        buttRemoveSelectedEmails.setIcon(Constants.ICON_REMOVE);
-        buttRemoveSelectedEmails.setToolTipText("Удалить выбранные адреса");
-//        buttRemoveSelectedEmails.addActionListener(this);
-        buttRemoveSelectedEmails.setBounds(251, 75, 20, 20);
+        add(buttRemove);
+        buttRemove.setFocusPainted(false);
+        buttRemove.setIcon(Constants.ICON_REMOVE);
+        buttRemove.setToolTipText("Удалить выбранные адреса");
+        buttRemove.setBounds(251, 75, 20, 20);
 
-        add(buttClearList);
-        buttClearList.setFocusPainted(false);
-        buttClearList.setIcon(Constants.ICON_CLEAR);
-        buttClearList.setToolTipText("Очистить список");
-//        buttClearList.addActionListener(this);
-        buttClearList.setBounds(273, 75, 20, 20);
+        add(buttClear);
+        buttClear.setFocusPainted(false);
+        buttClear.setIcon(Constants.ICON_CLEAR);
+        buttClear.setToolTipText("Очистить список");
+        buttClear.setBounds(273, 75, 20, 20);
 
-        add(buttFillList);
-        buttFillList.setIcon(Constants.ICON_DOWNLOAD);
-        buttFillList.setToolTipText("Загрузить список");
-        buttFillList.setFocusPainted(false);
-        buttFillList.setBounds(295, 75, 20, 20);
-//        buttFillList.addActionListener(this);
+        add(buttLoad);
+        buttLoad.setIcon(Constants.ICON_DOWNLOAD);
+        buttLoad.setToolTipText("Загрузить список");
+        buttLoad.setFocusPainted(false);
+        buttLoad.setBounds(295, 75, 20, 20);
 
         listRecipients.setModel(new DefaultListModel<String>());
         JScrollPane scrollRecipients = new JScrollPane();
@@ -99,17 +92,20 @@ public class EmailListPanel extends JPanel {
 
 //        listRecipients.addListSelectionListener(lsl);
 
+    }
 
+    public String getFrom() {
+        return textFrom.getText();
+    }
 
-//        textArea.setColumns(20);
-//        textArea.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
-//        textArea.setRows(5);
-//        textArea.setLineWrap(true);
-//        textArea.setToolTipText("<html>Текст письма<br>(можно с тегами HTML)");
-//        textArea.setCaretColor(new java.awt.Color(50, 150, 0));
-//
-//        scrollTextArea.setViewportView(textArea);
-//        panelFullContent.add(scrollTextArea);
-//        scrollTextArea.setBounds(10, y1+260, 570, 150);
+    public String getSubject() {
+        return textSubject.getText();
+    }
+
+    public void addActionListener(ActionListener listener) {
+        buttAdd.addActionListener(listener);
+        buttRemove.addActionListener(listener);
+        buttClear.addActionListener(listener);
+        buttLoad.addActionListener(listener);
     }
 }

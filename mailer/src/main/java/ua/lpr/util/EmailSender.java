@@ -23,6 +23,7 @@ public class EmailSender {
 
     private Session createSession(final Map<String, String> params) {
         Properties properties = System.getProperties();
+
         properties.setProperty("mail.smtp.auth", "true");
         properties.setProperty("mail.smtp.host", params.get("smtp"));
         properties.setProperty("mail.smtp.port", params.get("port"));

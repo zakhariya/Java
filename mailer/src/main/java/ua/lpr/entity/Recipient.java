@@ -1,5 +1,7 @@
 package ua.lpr.entity;
 
+import java.util.Objects;
+
 public class Recipient {
     private int id;
     private String name;
@@ -9,6 +11,14 @@ public class Recipient {
     private boolean sent;
     private boolean subscribed;
     private String md5;
+
+    public Recipient(String name, String company, String city, String email) {
+        this.name = name;
+        this.company = company;
+        this.city = city;
+        this.email = email;
+        this.md5 = generateMD5(this.email);
+    }
 
     public Recipient(int id, String name, String company, String city, String email, boolean sent, boolean subscribed) {
         this.id = id;
@@ -78,5 +88,26 @@ public class Recipient {
                 ", subscribed=" + subscribed +
                 ", md5='" + md5 + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipient recipient = (Recipient) o;
+        return id == recipient.id &&
+                sent == recipient.sent &&
+                subscribed == recipient.subscribed &&
+                Objects.equals(name, recipient.name) &&
+                Objects.equals(company, recipient.company) &&
+                Objects.equals(city, recipient.city) &&
+                Objects.equals(email, recipient.email) &&
+                Objects.equals(md5, recipient.md5);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, company, city, email, sent, subscribed, md5);
     }
 }

@@ -30,6 +30,7 @@ public class ToolBar extends JToolBar {
         setRollover(true);
 
         toolC1.setFocusable(false);
+        toolC1.setText("ссылка отписки");
         toolC1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         toolC1.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
         add(toolC1);
@@ -80,5 +81,9 @@ public class ToolBar extends JToolBar {
 
     public void addItemListener(ItemListener listener) {
         toolC1.addItemListener(listener);
+    }
+
+    public String getUnsubscribeUrl() {
+        return textURL.getText();
     }
 }

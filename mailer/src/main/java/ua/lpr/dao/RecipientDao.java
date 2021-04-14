@@ -10,5 +10,7 @@ public interface RecipientDao {
 
     Recipient findById(int id);
 
-    Recipient save(Recipient recipient);
+    Recipient save(Recipient recipient) throws SQLException;
+
+    void executeSql(String sql) throws SQLException;
 }
