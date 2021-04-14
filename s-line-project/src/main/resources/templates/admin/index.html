@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <object th:include="fragments :: head" th:remove="tag" />
+
+    <script th:src="@{/js/admin/admin.js}"></script>
+</head>
+<body>
+
+<header th:replace="fragments :: header" />
+
+<main>
+    <aside>
+        <section th:replace="fragments :: admin-nav" />
+    </aside>
+    <article sec:authorize="hasRole('ADMIN')" class="container">
+        <div >
+            I`m a admin!
+        </div>
+    </article>
+</main>
+
+<footer th:replace="fragments :: footer" />
+
+</body>
+</html>

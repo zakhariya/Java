@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <object th:include="fragments :: head" th:remove="tag" />
+
+    <script th:src="@{/js/admin/employees.js}"></script>
+</head>
+<body>
+
+<header th:replace="fragments :: header" />
+
+<main>
+    <aside>
+        <section th:replace="fragments :: admin-nav" />
+    </aside>
+    <article sec:authorize="hasRole('ADMIN')">
+        <div id="employees-container" class="container">
+            <div class="panel panel-default users-panel" th:each="employee : ${employees}">
+                <div class="panel panel-default">
+                    <h4>Сотрудник:</h4>
+                    <form class="employee-form">
+                        <label>ID:<input class="id" th:value="${employee.id}" disabled="disabled" />
+                        </label>
+                        <label>Имя:<input th:value="${employee.firstName}" />
+                        </label>
+                        <label>Отчество:<input th:value="${employee.secondName}" />
+                        </label>
+                        <label>Фамилия:<input th:value="${employee.lastName}" />
+                        </label>
+                        <label>Passport:<input th:value="${employee.passportCode}" />
+                        </label>
+                        <label>Выдан:<input th:value="${employee.passportIssuedBy}" />
+                        </label>
+                        <label>Телефон:<input th:value="${employee.phone}" />
+                        </label>
+                        <label>Location:<input th:value="${employee.location}" />
+                        </label>
+                        <label>Должность:<input th:value="${employee.position.name}" />
+                        </label>
+                        <button class="save-employee" th:data-employee-id="${employee.id}">Сохранить</button>
+                        <button class="delete-employee" th:data-employee-id="${employee.id}">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+
+<footer th:replace="fragments :: footer" />
+
+</body>
+</html>

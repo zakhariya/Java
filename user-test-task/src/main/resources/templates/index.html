@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.min.js"></script>
+
+    <title>Users page</title>
+
+    <script>
+        var entriesCount = 0;
+        var currPage = 1;
+
+        function countEntries() {
+            entriesCount = 0;
+            $.get('/users/count').done(function (data, status) {
+                if (status == 'success') {
+                    console.log('count: success - ' + data);
+                    entriesCount = data;
+                } else {
+                }
+            });
+        }
+
+        function countPages() {
+            var limit = $('#list-limit').val();
+            var count = parseInt((entriesCount/limit), 10);
+            if((entriesCount/limit - parseInt(entriesCount/limit)) > 0)
+                count++;
+
+            return count;
+        }
+
+        function fillTable(limit, offset){
+            $.get('/users/', {limit: limit, offset: offset}).done(function (data, status) {
+                var table = "<table>";
+                var thead = "<thead><tr><td>№</td><td>Имя</td><td>Фамилия</td><td>Дата рождения</td><td>Пол</td></tr></thead>"
+
+                console.log('load: users - ' + entriesCount + ' limit - ' + limit + ' offset - ' + offset + ' currPage ' + currPage);
+
+                if (status == 'success') {
+                    table += thead + "<tbody>"
+                    $.each(data, function (key, user) {
+
+                        table += "<tr>" +
+                            "<td>" + (key + 1 + (currPage - 1) * limit) + "</td><td>" + user['firstName'] +"</td><td>" + user['lastName'] + "</td>" +
+                            "<td>" + user['birthDay'] + "</td><td>" + user['gender'] + "</td>" +
+                            "<td><div class='btn_cont'><input type='button' class='button edit' name='" + user['userId'] + "' value='Редактировать'/><br>" +
+                            "<input type='button' class='button remove' name='" + user['userId'] + "' value='Удалить'/></div></td>" +
+                            "</tr>";
+                    });
+
+                    table += '</tbody></table>';
+
+                    var container = $('#table-container');
+                    container.removeClass('loading');
+                    container.append(table);
+
+                    $('input.button.edit').on('click', function () {
+                        var form = $('form#user-form');
+                        if(form.hasClass('add'))
+                            form.removeClass('add');
+                        form.addClass('edit');
+                        fillForm($(this).attr('name'));
+                    });
+
+                    $('input.button.remove').on('click', function () {
+                        deleteEntry($(this).attr('name'));
+                    });
+                } else {
+                }
+            });
+        }
+
+        function refreshPagesList() {
+            var pages = countPages();
+
+            var container = $('#pagination-pages');
+            container.empty();
+
+            if(pages > 5 && currPage > 1){
+                var lastPage = currPage - 1;
+                container.append('<a href="' + lastPage + '" class="button page_link previous"></a>');
+            }
+
+            var i = 0;
+            while(++i <= pages){
+                if(i == 1 | i == (currPage - 1) | i == currPage | i == (currPage + 1) | i == pages ){
+                    container.append('<a href="' + i + '" class="button page_link page_number">' + i + '</a>');
+                }else if((i < pages && i == currPage - 2)
+                    | (i > 1 && i == currPage + 2)){
+                        container.append('<a class="">...</a>');
+                }
+            }
+
+            if(pages > 5 && currPage < pages){
+                var nextPage = 0;
+                nextPage = (currPage + 1);
+                container.append('<a href="' + nextPage + '" class="button page_link next"></a>');
+            }
+
+            $('a[href="' + currPage + '"]').addClass('current');
+
+            $('a.button.page_link').on('click', function (e) {
+                e.preventDefault();
+                load(currPage = parseInt($(this).attr('href')));
+            })
+        }
+
+        function load(page) {
+            var container = $('#table-container');
+            container.empty();
+            container.addClass('loading');
+
+            countEntries();
+
+            var i = 0;
+            var timeout = 10; // seconds
+            var loop = setInterval(function () {
+                if((typeof value === "undefined" | entriesCount < 1) && ++i >= (timeout * 4)){
+                    container.removeClass('loading');
+                    container.html('<p>Время ожидания ответа от сервера истекло, или таблица пуста</p>');
+                    container.append('<p><input id="reload-btn" type="button" class="button reload" value="Попробовать снова" /></p>');
+                    $('#reload-btn').on('click', function () {
+                        load(page);
+                    });
+
+                    clearInterval(loop);
+                }else if(typeof entriesCount != "undefined" && entriesCount > 0){
+                    var limit = $('#list-limit').val();
+
+                    while(page > countPages())
+                        currPage = --page;
+
+                    var offset = limit * (page - 1);
+
+                    fillTable(limit, offset);
+
+                    refreshPagesList();
+
+                    clearInterval(loop);
+                }
+            }, 250);
+
+        }
+
+        function fillForm(userId) {
+            showForm();
+
+            $.get('/users/' + userId, {}).done(function (user, status) {
+                if (status == 'success') {
+                    $('input#userId').val(user['userId'])
+                    $('input#firstName').val(user['firstName']);
+                    $('input#lastName').val(user['lastName']);
+                    $('input#birthDay').val(user['birthDay']);
+                    $('select#gender').val(user['gender']);
+                } else {
+                }
+            });
+        }
+
+        function addEntry() {
+            hideForm();
+
+            var user = {
+                firstName: $('#user-form #firstName').val(),
+                lastName: $('#user-form #lastName').val(),
+                birthDay: $('#user-form #birthDay').val(),
+                gender: $('#user-form #gender').val()
+            }
+
+            $.ajax({
+                url: '/users/',
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                //dataType: 'json', // always "error"
+                success: function(data) {
+                    console.log('add: success');
+                    currPage = countPages();
+                    load(++currPage);
+                },
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    //console.log('error: ' + error.Message);
+                    alert('Не удалось ((');
+                    currPage = countPages();
+                    load(++currPage);
+                }
+            });
+        }
+
+        function editEntry(){
+            hideForm();
+
+            var user = {
+                userId: $('#user-form #userId').val(),
+                firstName: $('#user-form #firstName').val(),
+                lastName: $('#user-form #lastName').val(),
+                birthDay: $('#user-form #birthDay').val(),
+                gender: $('#user-form #gender').val()
+            }
+
+            $.ajax({
+                url: '/users/',
+                type: 'PUT',
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                dataType: 'json',
+                success: function(data) {
+                    console.log('edit: success');
+                    load(currPage);
+                },
+                error: function (error) {
+                    console.log('error: ' + error);
+                    load(currPage);
+                }
+            });
+        }
+
+        function deleteEntry(id){
+            $.ajax({
+                url: '/users/' + id,
+                type: 'DELETE',
+                success: function(data) {
+                    console.log('remove: success');
+                    load(currPage);
+                },
+                error: function (error) {
+                    console.log('error: ' + error);
+                    load(currPage);
+                }
+            });
+        }
+
+        function showForm(){
+            $('#user-form-container').css('display', 'unset');
+            $('#table-container').css('display', 'none');
+            $('#pagination-panel').css('display', 'none');
+            $('input#add-user').css('display', 'none');
+        }
+
+        function hideForm() {
+            $('#user-form-container').css('display', 'none');
+            $('#table-container').css('display', 'block');
+            $('#pagination-panel').css('display', 'unset');
+            $('input#add-user').css('display', 'unset');
+        }
+
+        $(document).ready(function () {
+            load(currPage);
+
+            $('#list-limit').on('change', function () {
+                load(currPage);
+            });
+            $('input#add-user').on('click', function () {
+                var form = $('form#user-form');
+                if(form.hasClass('edit'))
+                    form.removeClass('edit');
+                form.addClass('add');
+                showForm();
+            });
+            $('form#user-form').on('submit', function (e) {
+                e.preventDefault();
+                if($(this).attr('class') == 'add')
+                    addEntry();
+                else
+                    editEntry();
+            });
+            $('form#user-form input.back').on('click', function () {
+                hideForm();
+                load(currPage);
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+<header>
+    <h1 th:text="${message}"></h1>
+    <div class="btn_cont"><input type="button" id="add-user" name="add-user" class="button add" value="Добавить" /></div>
+</header>
+
+<div id="content">
+    <div id="table-title">Список людей</div>
+    <div id="table-container"></div>
+    <div id="user-form-container">
+        <form id="user-form">
+            <input type="text" id="firstName" name="firstName" autocomplete="name" placeholder="Имя" required="" />
+            <br>
+            <input type="text" id="lastName" name="lastName" autocomplete="family-name" placeholder="Фамилия" required="" />
+            <br>
+            <input type="date" id="birthDay" name="birthDay" autocomplete="bday" placeholder="Дата рождения" required="">
+            <br>
+            <select id="gender" name="gender">
+                <option>male</option>
+                <option>female</option>
+                <option>unknown</option>
+            </select>
+            <br>
+            <input type="submit" class="button submit" value="Отправить"/>
+            <input type="hidden" id="userId" name="userId" />
+            <br>
+            <input type="button" class="button back" value="Назад"/>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <div id="pagination-panel">
+        <div id="pagination-range">
+            <span>Показывать:</span>
+            <select id="list-limit">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+        <div id="pagination-pages"></div>
+    </div>
+</footer>
+
+</body>
+</html>

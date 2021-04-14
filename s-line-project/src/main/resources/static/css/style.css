@@ -1,0 +1,113 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+header {
+
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    background: aliceblue;
+    text-align: center;
+}
+
+header #navbar ul {
+    list-style: none;
+    display: inline-flex;
+}
+
+header .container {
+    text-align: center;
+    display: block;
+}
+
+.panel-default {
+    padding: 2em;
+}
+
+.container{
+    max-width: 50em;
+}
+
+aside {
+    float: left;
+    position: fixed;
+    padding: 2em;
+    max-width: 20em;
+}
+
+#admin-nav {
+
+}
+
+.panel-default {
+    max-width: 150em;
+    margin-top: 3em;
+    display: inline-block;
+}
+
+form h1 {
+    margin: 0 0 1em 0;
+}
+
+form input {
+    margin: 1em auto;
+}
+
+/* FORMS */
+
+.users-panel {
+    background: whitesmoke;
+    height: 3.5em;
+    overflow: hidden;
+    padding: 0;
+}
+
+.user-preview {
+
+}
+
+.users-panel form {
+    padding: 3em;
+}
+
+.users-panel .id {
+    max-width: 3em;
+}
+
+.form-group {
+    display: inline-block;
+}
+
+.form-group.user-active {
+    display: block;
+}
+
+.form-group.user-roles {
+    display: inline-grid;
+}
+
+.form-group.user-active {
+    display: inline-block;
+    margin: 2em;
+}
+
+form h3,
+form h4 {
+    text-align: center;
+}
+
+.user-employee {
+    background: gainsboro;
+}
+

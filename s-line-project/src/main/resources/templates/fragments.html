@@ -1,0 +1,86 @@
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>S-Line project - [[${title}]]</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon-32x32.png}" />
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon-16x16.png}" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/functions.js}"></script>
+
+    <script>
+        var userData = {"authorization":"[[${authorization}]]"};
+    </script>
+</head>
+
+<body>
+<header th:fragment="header">
+    <nav id="top-nav-bar">
+        <div class="container">
+            <div class="nav-header">
+                <!--<span><img th:src="@{/img/logo_s_line-h.png}" /></span>-->
+                <span>Some header text</span>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Главная</a></li>
+                    <li sec:authorize="hasRole('ADMIN')"><a href="/admin">Администратор</a></li>
+                    <li sec:authorize="hasAnyRole('ADMIN', 'USER')"><a href="/user">Пользователь</a></li>
+                    <li><a href="/test">Test</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right account-info">
+                    <li sec:authorize="!isAuthenticated()"><a class="login" href="/login">Войти</a></li>
+                    <li sec:authorize="isAuthenticated()" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span sec:authentication="name"></span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a class="logout-btn" href="#">Выйти</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section th:fragment="admin-nav" sec:authorize="hasRole('ADMIN')" id="admin-nav">
+    <nav>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="/admin">Главная администратора</a></li>
+            <li><a href="/admin/users">Пользователи</a></li>
+            <li><a href="/admin/employees">Сотрудники</a></li>
+            <li><a href="/admin/works">Works</a></li>
+        </ul>
+    </nav>
+</section>
+
+<section th:fragment="user-nav" sec:authorize="hasAnyRole('USER', 'ADMIN')" id="user-nav">
+    <nav>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="/user">Главная пользователя</a></li>
+            <li><a href="/user/user">Редактировать данные пользователя</a></li>
+            <li><a href="/user/employee">Редактировать данные сотрудника</a></li>
+            <li><a href="/user/works">Works</a></li>
+        </ul>
+    </nav>
+</section>
+
+<footer th:fragment="footer">
+    <span>This is a footer</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+
+body{
+    background: linear-gradient(to top, #EDEDED 0%, #DADFE4 0%, lightslategrey 100%, #fff 100%);
+    font-size: 12px;
+    padding: 0;
+    height: 100%;
+}
+
+div#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .3;
+    z-index: 100;
+    background: url(/resources/img/loader.gif) no-repeat center black;
+}
+/*
+div#loader {
+    display: block;
+    position: absolute;
+    top: 25%;
+    width: 100%;
+}
+
+div#loader img {
+    border: none;
+}
+*/
+
+div#wrapper {
+    position: relative;
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    min-width: 320px;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+h1 {
+    font: 100% century gothic;
+    text-transform: uppercase;
+    background: white;
+    color: gray;
+    border: 1px solid cornsilk;
+    width: 25%;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+ul#main-list{
+    padding: 0;
+}
+
+ul ul {
+    border: #c0c8c5 2px solid;
+    padding: 2em;
+    background: #778899;
+    width: 50%;
+    max-width: 600px;
+}
+
+ul li {
+    margin-bottom: 1.5em;
+    list-style: none;
+    text-transform: uppercase;
+    color: white;
+}
+
+.button {
+    text-transform: uppercase;
+    border: #999 2px solid;
+    font-size: 1.5em;
+    padding: 1em 2em;
+    background-image: linear-gradient(to top, #EDEDED 0%, #EAEAEA 8%, #dcdde0 100%, #AAAAAA 100%);
+    display: inline-block;
+    border-radius: 4px;
+    color: #337ab7;
+}
+.button.small-size {
+
+ }
+.button.medium-size {
+    max-width: 350px;
+    width: 100%;
+    margin-bottom: inherit;
+}
+.button.large-size {
+    max-width: 500px;
+    width: 100%;
+}
+a.button span {
+    font-size: .7em;
+}
+
+input.file {
+    width: unset;
+    height: unset;
+}
+
+/* CUSTOM DROPDOWN MENU */
+ul#dropdown-menu-list {
+    width: 100%;
+}
+div.dropdown-menu {
+    overflow: auto;
+}
+.dropdown-menu {
+    position: relative;
+    left: unset;
+    padding: 5px 0 0;
+}
+.dropdown-menu li {
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* LOGIN FORM */
+.input-sm{
+    font-size: 2em;
+    margin: inherit;
+    max-width: 500px;
+}
+.input-group-addon{
+    font-size: 1em;
+}
+label {
+    color: white;
+}
+select,
+input,
+textarea{
+    width: 100%;
+    height: 100%;
+}
+div.form-custom {
+    width: 100%;
+}
+.form-custom select,
+.form-custom input,
+.form-custom textarea {
+    height: unset;
+}
+
+select:after{
+    content: "▼";
+    padding: 0 8px;
+    font-size: 12px;
+    position: absolute;
+    right: 8px;
+    top: 4px;
+    z-index: 1;
+    text-align: center;
+    width: 10%;
+    height: 100%;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+
+/* FORM OF STAGE */
+div#form-container {
+    padding: 20px;
+}
+
+/*  FORM OF TASK */
+div.btn-group.bootstrap-select.input-group-btn {
+    width: 100%;
+    display: inherit;
+}
+button.btn.dropdown-toggle {
+    border-radius: 4px !important;
+    font-size: 15px;
+    max-width: 480px;
+}
+div.dropdown-menu.open {
+    position: absolute;
+    max-width: 480px !important;
+    max-height: 16em;
+}
+input.form-control {
+    font-size: 15px;
+}
+ul.dropdown-menu.inner {
+    font-size: 15px;
+}
+ul.dropdown-menu li {
+    margin-bottom: 0;
+    border-bottom: solid 1px gray;
+}
+div.image-preview {
+    position: relative;
+    max-width: 600px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+button#close-image {
+    min-width: 100px;
+    min-height: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: red;
+    opacity: .5;
+    border: 2px solid white;
+    font-size: 3em;
+}
+button#close-image:hover {
+    opacity: .75;
+}
+label#lbl-file {
+    font-size: 1em;
+}
+input#file {
+    display: none;
+}
+
+/* не дает выбрать на мобилке */
+div.dropdown-backdrop {
+    z-index: 0;
+}
+
+
+/**/
+h2 {
+    color: white;
+    font-weight: bold;
+}
+a:focus, a:hover {
+    text-decoration: none;
+}
+p {
+    font-size: large;
+    background: white;
+    border: 2px solid lightblue;
+    padding: 6px;
+    min-height: 5em;
+    width: 50%;
+}
+p.error {
+    font-stretch: extra-expanded;
+    font-weight: bold;
+    color: red;
+}
+img{
+    width: 100%;
+    border: solid 6px lightblue;
+}
+
+/* ACTIONS */
+.completed {
+    color: white;
+    border-color: white;
+}
+a.button.completed span{
+    color: white;
+}
+
+.active {
+    color: blue;
+    border-color: blue;
+}
+a.button.active span {
+    color: darkblue;
+}
+
+.planned {
+    color: blue;
+    border-color: lightblue;
+}
+a.button.planned span {
+    color: black;
+}
+
+@media only screen and (max-width: 960px) {
+    body {
+        width: unset;
+    }
+}
+
+@media only screen and (orientation: portrait) and (max-width: 1024px) {
+
+    html {
+        -webkit-text-size-adjust: none;
+    }
+    body {
+        width: unset;
+    }
+    h1 {
+        width: 50%;
+    }
+    h2 {
+        font-size: unset;
+    }
+    p {
+        font-size: unset;
+        width: 100%;
+    }
+    ul ul {
+        width: unset;
+    }
+
+    img {
+
+    }
+    div#wrapper {
+    }
+    .input-sm {
+        max-width: unset;
+    }
+    .button.small-size {
+
+    }
+    .button.medium-size {
+        width: 100%;
+    }
+    .button.large-size {
+        width: 100%;
+    }
+
+
+    /* LOGIN FORM */
+    select {
+        width: 100%;
+        height: 100%;
+    }
+
+    /*  FORM OF TASK */
+       div.dropdown-menu.open {
+           min-width: 340px !important;
+           max-width: 340px !important;
+           min-height: 6em !important;
+           max-height: 20em !important;
+       }
+       button.btn.dropdown-toggle {
+           max-width: 340px;
+       }
+       div.image-preview {
+           width: 100%;
+       }
+}
+
+@media only screen and (orientation: landscape) and (max-width: 1366px) {
+
+    body {
+        width: unset;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    p{
+/*        font-size: unset; */
+    }
+    img {
+
+    }
+
+    /* LOGIN FORM */
+    select {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* ADD FORM */
+    div.dropdown-menu.open {
+        min-width: 480px !important;
+        max-width: 480px !important;
+        min-height: 6em !important;
+        max-height: 14em !important;
+    }
+    button.btn.dropdown-toggle {
+        max-width: 480px;
+    }
+
+}
+
+@media only screen and (orientation: landscape) and (min-width: 1367px) {
+
+    body {
+        width: unset;
+    }
+    h2 {
+        font-size: unset;
+    }
+    p{
+        font-size: unset;
+    }
+    img {
+
+    }
+
+    /* LOGIN FORM */
+    select {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* ADD FORM */
+    div.dropdown-menu.open {
+        max-width: 100%;
+        min-height: 12em !important;
+        max-height: 18em !important;
+    }
+}

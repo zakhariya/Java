@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <object th:include="fragments :: head" th:remove="tag" />
+
+    <script th:src="@{/js/admin/works.js}"></script>
+</head>
+<body>
+
+<header th:replace="fragments :: header" />
+
+<main>
+    <aside>
+
+    </aside>
+    <article sec:authorize="hasRole('ADMIN')">
+        <div>
+            <section th:replace="fragments :: admin-nav" />
+            <div id="works-container" class="container">
+                Here is all works paged;
+            </div>
+        </div>
+    </article>
+</main>
+
+<footer th:replace="fragments :: footer" />
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <object th:include="fragments :: head" th:remove="tag" />
+
+    <script th:src="@{/js/admin/users.js}"></script>
+</head>
+<body>
+
+<header th:replace="fragments :: header" />
+
+<main>
+    <aside>
+        <section th:replace="fragments :: admin-nav" />
+    </aside>
+    <article sec:authorize="hasRole('ADMIN')" id="users-container" class="container">
+        <div class="panel panel-default users-panel" th:each="user : ${users}">
+            <div class="navbar-header" data-wrap="unwrap">
+                <a class="navbar-brand user-info" href="#">Пользователь: [[${user.login}]]</a>
+            </div>
+            <form>
+                <h3>User:</h3>
+                <div class="form-group">
+                    <label th:for="id- + ${user.id}">ID</label>
+                    <input type="text" th:value="${user.id}" th:id="id- + ${user.id}" class="form-control id" placeholder="ID" readonly />
+                </div>
+                <div class="form-group">
+                    <label th:for="login- + ${user.id}">Логин:</label>
+                    <input type="text" th:value="${user.login}" th:id="login- + ${user.id}" class="form-control" placeholder="Login" />
+                </div>
+                <div class="form-group">
+                    <label th:for="email- + ${user.id}">Email:</label>
+                    <input type="text" th:value="${user.email}" th:id="email- + ${user.id}" class="form-control" placeholder="Email" />
+                </div>
+                <div class="form-group panel panel-default user-roles">
+                    <h5>Роли:</h5>
+                    <label th:each="role : ${roles}">
+                        <input type="checkbox" th:checked="${user.roles.contains(role)}"> [[${role.name}]]
+                    </label>
+                </div>
+                <div class="form-group user-active">
+                    <label><input type="checkbox" th:checked="${user.enabled}" /> active</label>
+                </div>
+                <div class="form-group panel panel-default user-employee" th:unless="${user.employee == null}">
+                    <h4>Сотрудник:</h4>
+                    <label>Фамилия:<input th:value="${user.employee.lastName}" class="form-control" readonly /></label>
+                    <label>Имя:<input th:value="${user.employee.firstName}" class="form-control" readonly /></label>
+                    <label>Отчество:<input th:value="${user.employee.secondName}" class="form-control" readonly /></label>
+                    <br />
+                    <button class="remove-employee btn btn-default" th:data-user-id="${user.id}">Убрать</button>
+                </div>
+                <div class="form-group">
+                    <button class="change-password btn btn-default" th:data-user-id="${user.id}">Сменить пароль</button>
+                    <button class="change-employee btn btn-default" th:data-user-id="${user.id}">Назначить сотрудника</button>
+                </div>
+                <div class="form-group">
+                    <button class="remove-user btn btn-default" th:data-user-id="${user.id}">Удалить пользователя</button>
+                    <button type="submit" class="save-user btn btn-default" th:data-user-id="${user.id}">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </article>
+</main>
+
+<footer th:replace="fragments :: footer" />
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <object th:include="fragments :: head" th:remove="tag" />
+</head>
+<body>
+
+<header th:replace="fragments :: header" />
+
+<main>
+    <div id="wrapper">
+        <h2 th:inline="text" class="hello-title">Hello [[${name}]]!</h2>
+        <nav>
+            <ul>
+                <li><a class="login-btn" href="/logout">Login</a></li>
+                <li><a class="logout-btn" href="/logout">Logout</a></li>
+                <li><a class="authorize" href="/authorize">Authorize</a></li>
+                <li>Три</li>
+                <li>Четыре</li>
+            </ul>
+        </nav>
+        <nav>
+            <p>Authorities: <span sec:authentication="authorities"></span></p>
+            <div sec:authorize="isAuthenticated()">Authenticated as <b><span sec:authentication="name"></span></b> can see this text.
+                <p>Principal authorities: <span sec:authentication="principal.authorities"></span></p>
+                <div sec:authorize="hasRole('ADMIN')">
+                    This content is only shown to <b>administrators</b>.
+                </div>
+            </div>
+        </nav>
+    </div>
+</main>
+
+<script>
+    $(".login-btn").on('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/users',
+            type: 'GET',
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", "Basic " + btoa("admin:admin"));
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function (xhr) {
+                console.log(xhr.status);
+            }
+        });
+    });
+    $(".authorize").on('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/users',
+            type: 'GET',
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", userData.authorization);
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function (xhr) {
+                console.log(xhr.status);
+            }
+        });
+    });
+</script>
+
+<footer th:insert="~{fragments :: footer}" />
+
+</body>
+</html>

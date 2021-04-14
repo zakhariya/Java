@@ -1,0 +1,150 @@
+body {
+    font: 100% century gothic;
+}
+
+/***  HEADER STYLE ***/
+header {
+    width: 100%;
+    color: white;
+    background: cadetblue;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+header h1 {
+    margin: 10px auto;
+    font-size: 1.5em;
+}
+
+/*** STYLE OF INNER CONTANT  ***/
+#content {
+    width: 70%;
+    min-width: 400px;
+    min-height: 400px;
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+    margin: 120px auto;
+    z-index: 1;
+}
+#content #table-title {
+
+}
+#content #table-container {
+    min-height: 200px;
+}
+#content #user-form-container {
+    display: none;
+}
+
+/*** FORM STYLE ***/
+form {
+    display: inline-grid;
+}
+form input {
+
+}
+
+/***  FOOTER AND PAGINATION STYLES ***/
+footer {
+    width: 100%;
+    height: 100px;
+    background: cadetblue;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    z-index: 2;
+}
+footer #pagination-panel {
+    width: 100%;
+}
+footer #pagination-panel #pagination-range,
+footer #pagination-panel #pagination-pages {
+    margin: 20px auto;
+    color: white;
+}
+#content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#content table td{
+    border: lightgray 1px solid;
+}
+a.next {
+    background: url("/img/next.png") no-repeat center;
+}
+a.previous {
+    background: url("/img/previous.png") no-repeat center;
+}
+a.next, a.previous {
+    border-radius: 50%;
+    background-color: white;
+    padding: 2px 12px;
+}
+a.page_number {
+    color: white;
+}
+a.page_number.current {
+    background: none;
+    border: 2px solid white;
+}
+
+    /***  STYLES OF BUTTONS  ***/
+div.btn_cont {
+    display: inline-grid;
+    padding: 10px 0;
+}
+.button {
+    background: transparent;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: lowercase;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+.button.add {
+    color: white;
+    border: 2px solid #fff;
+}
+.button.edit,
+.button.submit,
+.button.reload,
+.button.back {
+    border: 2px solid #4CAF50;
+    color: #4CAF50;
+}
+.button.add:hover {
+    background-color: white;
+    color: cadetblue;
+}
+.button.edit:hover,
+.button.submit:hover,
+.button.reload:hover,
+.button.back:hover {
+    background-color: #3e8e41;
+    color: white;
+    border-color: transparent;
+}
+.button.remove {
+    background: transparent;
+    border: 2px solid #B22222;
+    color: #B22222;
+
+}
+.button.remove:hover {
+    background-color: #B22222;
+    color: white;
+    border-color: transparent;
+}
+
+
+/*** SHOW LOADING IMAGE WHEN REQUEST STILL NOT RETURNED ***/
+.loading {
+    background: url("/img/ico-loader.gif") no-repeat center;
+}
