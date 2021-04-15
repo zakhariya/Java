@@ -1,11 +1,13 @@
 package ua.lpr.dao;
 
+import com.mysql.cj.exceptions.WrongArgumentException;
 import org.slf4j.Logger;
 import ua.lpr.entity.Recipient;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -41,17 +43,22 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
     public Recipient findById(int id) {
         Recipient recipient = null;
 
-        try (Connection connection = getConnection()) {
-            String sql = "SELECT * FROM polygraphy_email_list WHERE id=?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "SELECT * FROM polygraphy_email_list WHERE id=?";
+
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+
             statement.setInt(1, id);
+
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
-                return null;
+                throw new NoSuchElementException("Данных с таким id не существует");
             }
 
             recipient = RecipientMapper.getInstance().mapTo(resultSet);
+
+            resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,6 +68,11 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
 
     @Override
     public Recipient save(Recipient recipient) throws SQLException {
+        //TODO: validation if needed
+        if (recipient.getEmail() == null || recipient.getEmail().length() < 3) {
+            throw new WrongArgumentException("Введите корректный email");
+        }
+
         int id = recipient.getId();
         String sql = "INSERT INTO polygraphy_email_list (name, company, city, email, sent, subscribed, md5) VALUES (?, ?, ?, ?, ?, ?, ?)";
 

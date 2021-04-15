@@ -9,7 +9,7 @@ CREATE TABLE `polygraphy_email_list` (
 `sent` TINYINT NULL DEFAULT 0,
 `subscribed` TINYINT NULL DEFAULT 1,
 `md5` VARCHAR(200) NULL,
-`last_modyfied` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`last_modyfied` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 PRIMARY KEY (`id`));
 
 INSERT INTO polygraphy_email_list (`name`, `company`, `email`) VALUES ('Александр', 'LPR.UA', 'admin@lpr.ua');

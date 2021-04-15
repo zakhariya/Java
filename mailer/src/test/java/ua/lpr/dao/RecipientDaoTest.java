@@ -1,29 +1,29 @@
 package ua.lpr.dao;
 
+import com.mysql.cj.exceptions.WrongArgumentException;
 import org.junit.*;
-import org.junit.runner.RunWith;
-import ua.lpr.MailerApplication;
+import org.junit.rules.ExpectedException;
+import org.slf4j.Logger;
 import ua.lpr.entity.Recipient;
 import ua.lpr.util.PropertiesReader;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-//@RunWith(MailerApplication.class)
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class RecipientDaoTest {
-    private static PropertiesReader reader;
+    private static final Logger log = getLogger(RecipientDaoTest.class);
+
     private static RecipientDao recipientDao;
-    private static int recipientId;
     private static Recipient recipient;
 
     @BeforeClass
     public static void init() {
-        System.out.println("Before class");
-
         recipient = new Recipient(1, "Александр", "LPR.UA", null, "admin@lpr.ua", false, true);
-        recipientId = recipient.getId();
 
-        reader = new PropertiesReader();
+        PropertiesReader reader = new PropertiesReader();
 
         recipientDao =
                 new RecipientDaoImpl(reader.getDBUrl(), reader.getDBUser(), reader.getDBPassword());
@@ -31,42 +31,18 @@ public class RecipientDaoTest {
 
     @AfterClass
     public static void destroy() {
-        System.out.println("After class");
+
     }
 
     @Before
-    public void updateDB() throws SQLException {
-        String sql =
-                "TRUNCATE polygraphy_email_list;";
-
-        recipientDao.executeSql(sql);
-
-        System.out.println("Database truncated");
-
-        sql = "INSERT INTO polygraphy_email_list (`name`, `company`, `email`) VALUES ('Александр', 'LPR.UA', 'admin@lpr.ua');";
-
-        recipientDao.executeSql(sql);
-
-        sql = "INSERT INTO polygraphy_email_list (`email`) VALUES ('alexander.zakhariya@gmail.com');";
-
-        recipientDao.executeSql(sql);
-
-        sql = "INSERT INTO polygraphy_email_list (`name`, `email`, `subscribed`) VALUES ('Alexander', 'master-kap@ukr.net', 0);";
-
-        recipientDao.executeSql(sql);
-
-
-        System.out.println("Database updated");
+    public void beforeTest() {
+        truncateDB();
+        updateDB();
     }
 
     @After
-    public void truncateDB() throws SQLException {
-//        String sql =
-//                "TRUNCATE polygraphy_email_list;";
-//
-//        recipientDao.executeSql(sql);
-//
-//        System.out.println("Database truncated");
+    public void afterTest() {
+
     }
 
     @Test
@@ -79,9 +55,10 @@ public class RecipientDaoTest {
 
     @Test
     public void findOne() {
-        Recipient recipient = recipientDao.findById(recipientId);
+        int id = RecipientDaoTest.recipient.getId();
+        Recipient recipient = recipientDao.findById(id);
 
-        Assert.assertEquals(recipient, RecipientDaoTest.recipient);
+        Assert.assertEquals(RecipientDaoTest.recipient, recipient);
     }
 
     @Test
@@ -101,5 +78,63 @@ public class RecipientDaoTest {
         Assert.assertNotEquals(newRecipient, recipient);
         Assert.assertEquals(updated, updated);
         Assert.assertEquals(updated, recipientDao.findById(updated.getId()));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void findNotExists() {
+        recipientDao.findById(5);
+    }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void createNullEmail() throws SQLException {
+        thrown.expect(WrongArgumentException.class);
+        thrown.expectMessage("Введите корректный email");
+
+        Recipient nullEmail = new Recipient("Alex", null, null, null);
+        recipientDao.save(nullEmail);
+    }
+
+    @Test
+    public void createEmptyEmail() {
+        Recipient emptyEmail = new Recipient("Alex", null, null, "");
+
+        Exception exception =
+                Assert.assertThrows(WrongArgumentException.class, () -> recipientDao.save(emptyEmail));
+
+        Assert.assertEquals("Введите корректный email", exception.getMessage());
+    }
+
+    private void truncateDB() {
+        String sql =
+                "TRUNCATE polygraphy_email_list;";
+
+        try {
+            recipientDao.executeSql(sql);
+            log.debug("Database truncated");
+        } catch (SQLException e) {
+            log.error("Cannot truncate table", e);
+        }
+    }
+
+    private void updateDB() {
+        String sql = "INSERT INTO polygraphy_email_list (`name`, `company`, `email`) VALUES ('Александр', 'LPR.UA', 'admin@lpr.ua');";
+
+        try {
+            recipientDao.executeSql(sql);
+            sql = "INSERT INTO polygraphy_email_list (`email`) VALUES ('alexander.zakhariya@gmail.com');";
+
+            recipientDao.executeSql(sql);
+
+            sql = "INSERT INTO polygraphy_email_list (`name`, `email`, `subscribed`) VALUES ('Alexander', 'master-kap@ukr.net', 0);";
+
+            recipientDao.executeSql(sql);
+
+            log.debug("Database updated");
+        } catch (SQLException e) {
+            log.error("Cannot update table", e);
+        }
     }
 }
