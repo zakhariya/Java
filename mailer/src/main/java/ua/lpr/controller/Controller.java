@@ -1,6 +1,5 @@
 package ua.lpr.controller;
 
-import com.mysql.cj.exceptions.WrongArgumentException;
 import org.slf4j.Logger;
 import ua.lpr.entity.Recipient;
 import ua.lpr.model.Model;
@@ -18,24 +17,16 @@ public class Controller {
     private final View view = new ViewImpl(this);
     private static final Logger log = getLogger(Controller.class);
 
-    public Map<String, String> getViewData() {
-        return view.getViewData();
-    }
-
-    public List<Recipient> getRecipientList() throws SQLException {
-        return model.getRecipientList();
-    }
-
-    public void exit() {
-        System.exit(0);
+    public void showView() {
+        view.setVisible(true);
     }
 
     public void hideView() {
         view.setVisible(false);
     }
 
-    public void showView() {
-        view.setVisible(true);
+    public void exit() {
+        System.exit(0);
     }
 
     public void startSending() {
@@ -51,7 +42,15 @@ public class Controller {
 
     }
 
-    public void addRecipient() throws SQLException, WrongArgumentException {
+    public Map<String, String> getViewData() {
+        return view.getViewData();
+    }
+
+    public List<Recipient> getRecipientList() throws SQLException {
+        return model.getRecipientList();
+    }
+
+    public void addRecipient() throws SQLException {
         Recipient recipient = view.showAddDialog();
 
         if (recipient != null) {
@@ -60,9 +59,9 @@ public class Controller {
         }
     }
 
-    public void removeRecipients() {
-//        List<Recipient> recipients = view.getSelectedRecipients();
-//        recipients = model.delete(recipients);
-//        view.updateList(recipients);
+    public void removeRecipients() throws SQLException {
+        List<Recipient> recipients = view.getSelectedRecipients();
+        model.delete(recipients);
+        view.updateList(model.getRecipientList());
     }
 }

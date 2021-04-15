@@ -18,7 +18,7 @@ public class Constants {
     public static final ImageIcon ICON_ADD =  new ImageIcon(MailerApplication.class.getResource("/img/add.png"));
     public static final ImageIcon ICON_REMOVE =  new ImageIcon(MailerApplication.class.getResource("/img/remove.png"));
     public static final ImageIcon ICON_CLEAR =  new ImageIcon(MailerApplication.class.getResource("/img/clear.png"));
-    public static final ImageIcon ICON_DOWNLOAD =  new ImageIcon(MailerApplication.class.getResource("/img/download.png"));
+    public static final ImageIcon ICON_LOAD =  new ImageIcon(MailerApplication.class.getResource("/img/download.png"));
     public static final ImageIcon ICON_TO_TRAY =  new ImageIcon(MailerApplication.class.getResource("/img/toTray.png"));
     public static final ImageIcon ICON_FROM_TRAY =  new ImageIcon(MailerApplication.class.getResource("/img/fromTray.png"));
     public static final ImageIcon ICON_CLOSE =  new ImageIcon(MailerApplication.class.getResource("/img/close.png"));

@@ -76,6 +76,11 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
     }
 
     @Override
+    public List<Recipient> getSelectedRecipients() {
+        return emailListPanel.getSelected();
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("выйти")) {
             controller.exit();
@@ -110,7 +115,18 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
                     showMessage("Ошибка", ex.getMessage());
                 }
             } else if (icon.equals(Constants.ICON_REMOVE)) {
-                controller.removeRecipients();
+                try {
+                    controller.removeRecipients();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            } else if (icon.equals(Constants.ICON_LOAD)) {
+                try {
+                    List<Recipient> recipients = controller.getRecipientList();
+                    updateList(recipients);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
 

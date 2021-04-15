@@ -18,6 +18,8 @@ public class Recipient {
         this.city = city;
         this.email = email;
         this.md5 = generateMD5(this.email);
+        this.sent = false;
+        this.subscribed = true;
     }
 
     public Recipient(int id, String name, String company, String city, String email, boolean sent, boolean subscribed) {

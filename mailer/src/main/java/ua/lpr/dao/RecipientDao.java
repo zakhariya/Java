@@ -15,4 +15,6 @@ public interface RecipientDao {
     boolean delete(int id);
 
     void executeSql(String sql) throws SQLException;
+
+    void delete(List<Recipient> recipients);
 }

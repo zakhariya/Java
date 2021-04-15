@@ -65,7 +65,7 @@ public class EmailListPanel extends JPanel {
         buttClear.setBounds(273, 75, 20, 20);
 
         add(buttLoad);
-        buttLoad.setIcon(Constants.ICON_DOWNLOAD);
+        buttLoad.setIcon(Constants.ICON_LOAD);
         buttLoad.setToolTipText("Загрузить список");
         buttLoad.setFocusPainted(false);
         buttLoad.setBounds(295, 75, 20, 20);
@@ -76,27 +76,6 @@ public class EmailListPanel extends JPanel {
         add(scrollRecipients);
         scrollRecipients.setViewportView(listRecipients);
         scrollRecipients.setBounds(10, 100, 305, 245);
-
-//        listRecipients.getModel().addListDataListener(new ListDataListener() {
-//            public void intervalRemoved(ListDataEvent e) {
-//                if(listRecipients.getModel().getSize() == 0) {
-//                    textURL.setEditable(false);
-//                } else if(textURL.isEnabled()) {
-//                    textURL.setEditable(true);
-//                }
-//            }
-//            public void intervalAdded(ListDataEvent e) {
-//                if(listRecipients.getModel().getSize() == 0) {
-//                    textURL.setEditable(false);
-//                } else if(textURL.isEnabled()) {
-//                    textURL.setEditable(true);
-//                }
-//            }
-//            public void contentsChanged(ListDataEvent e) {}
-//        });
-
-//        listRecipients.addListSelectionListener(lsl);
-
     }
 
     public String getFrom() {
@@ -116,12 +95,21 @@ public class EmailListPanel extends JPanel {
 
     public void updateList(Recipient recipient) {
         listModel.addEntity(recipient);
-        listRecipients.updateUI();
+        updateListUI();
     }
 
     public void updateList(List<Recipient> recipients) {
         listModel.clear();
         listModel.addEntities(recipients);
+        updateListUI();
+    }
+
+    public List<Recipient> getSelected() {
+        return listModel.getEntities(listRecipients.getSelectedIndices());
+    }
+
+    private void updateListUI() {
         listRecipients.updateUI();
+        listRecipients.clearSelection();
     }
 }

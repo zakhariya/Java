@@ -134,6 +134,11 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
     }
 
     @Override
+    public void delete(List<Recipient> recipients) {
+        recipients.forEach(recipient -> delete(recipient.getId()));
+    }
+
+    @Override
     public void executeSql(String sql) throws SQLException {
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement()) {

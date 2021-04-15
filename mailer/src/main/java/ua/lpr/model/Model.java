@@ -27,4 +27,8 @@ public class Model {
 
         return created;
     }
+
+    public void delete(List<Recipient> recipients) throws SQLException {
+        recipientDao.delete(recipients);
+    }
 }

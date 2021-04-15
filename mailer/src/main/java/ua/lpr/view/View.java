@@ -17,4 +17,6 @@ public interface View {
     void updateList(List<Recipient> recipients);
 
     void setVisible(boolean b);
+
+    List<Recipient> getSelectedRecipients();
 }

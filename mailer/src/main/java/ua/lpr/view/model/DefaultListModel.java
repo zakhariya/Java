@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class DefaultListModel<T> extends AbstractListModel {
 
-    protected List<T> entities = new ArrayList<T>();
+    protected final List<T> entities = new ArrayList<>();
 
     @Override
     public int getSize() {
@@ -15,12 +15,10 @@ public abstract class DefaultListModel<T> extends AbstractListModel {
 
     public void addEntity(T entity) {
         entities.add(0, entity);
-        //fireTableDataChanged();
     }
 
     public void addEntities(List<T> entities) {
         this.entities.addAll(entities);
-        //fireContentsChanged();
     }
 
     public T getEntityByRow(int row) {
@@ -31,13 +29,21 @@ public abstract class DefaultListModel<T> extends AbstractListModel {
         return entities;
     }
 
+    public List<T> getEntities(int[] indices) {
+        List<T> entities = new ArrayList<>();
+
+        for (int idx : indices) {
+            entities.add(getEntityByRow(idx));
+        }
+
+        return entities;
+    }
+
     public void removeRow(int row) {
         entities.remove(row);
-        //fireTableDataChanged();
     }
 
     public void clear() {
         entities.clear();
     }
-
 }
