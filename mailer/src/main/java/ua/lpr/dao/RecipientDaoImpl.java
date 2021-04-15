@@ -21,20 +21,21 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
     }
 
     @Override
-    public List<Recipient> findAll() {
+    public List<Recipient> findAll() throws SQLException {
         List<Recipient> recipients = new ArrayList<>();
+        String sql = "SELECT * FROM polygraphy_email_list WHERE sent=0 AND subscribed=1 ORDER BY id DESC";
 
-        try (Connection connection = getConnection()) {
-            String sql = "SELECT * FROM polygraphy_email_list WHERE sent=0 AND subscribed=1 ORDER BY id DESC";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 recipients.add(RecipientMapper.getInstance().mapTo(resultSet));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         return recipients;
     }
@@ -42,7 +43,6 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
     @Override
     public Recipient findById(int id) {
         Recipient recipient = null;
-
         String sql = "SELECT * FROM polygraphy_email_list WHERE id=?";
 
         try (Connection connection = getConnection();
@@ -68,23 +68,22 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
 
     @Override
     public Recipient save(Recipient recipient) throws SQLException {
-        //TODO: validation if needed
+        //TODO: email validation if needed
         if (recipient.getEmail() == null || recipient.getEmail().length() < 3) {
             throw new WrongArgumentException("Введите корректный email");
         }
 
         int id = recipient.getId();
         String sql = "INSERT INTO polygraphy_email_list (name, company, city, email, sent, subscribed, md5) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         if (id > 0) {
-            log.info("Update: " + recipient);
+            log.info("Update: {}", recipient);
             sql = "UPDATE polygraphy_email_list SET name=?, company=?, city=?, email=?, sent=?, subscribed=?, md5=? WHERE id=?";
         } else {
-            log.info("Create: " + recipient);
+            log.info("Create: {}", recipient);
         }
 
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, recipient.getName());
             statement.setString(2, recipient.getCompany());
@@ -98,20 +97,47 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
                 statement.setInt(8, id);
             }
 
-            id = statement.executeUpdate();
-        } catch (SQLException e) {
-            log.error(e.getLocalizedMessage(), e);
-
-            throw e;
+            statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
         }
+//        catch (SQLException e) {
+//            log.error(e.getLocalizedMessage(), e);
+//
+//            throw e;
+//        }
 
         return findById(id);
     }
 
     @Override
+    public boolean delete(int id) {
+        String sql = "DELETE FROM polygraphy_email_list WHERE id=?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, id);
+
+            if (statement.executeUpdate() == 0) {
+                throw new NoSuchElementException("Данных с таким id не существует");
+            }
+
+            return true;
+        } catch (SQLException e) {
+            log.error(e.getLocalizedMessage(), e);
+
+            return false;
+        }
+    }
+
+    @Override
     public void executeSql(String sql) throws SQLException {
-        try (Connection connection = getConnection()) {
-            Statement statement = connection.createStatement();
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement()) {
+
             statement.execute(sql);
         }
     }

@@ -1,9 +1,12 @@
 package ua.lpr.view.components;
 
+import ua.lpr.entity.Recipient;
 import ua.lpr.util.Constants;
+import ua.lpr.view.model.EmailListModel;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class EmailListPanel extends JPanel {
     private final JTextField textFrom;
@@ -13,6 +16,7 @@ public class EmailListPanel extends JPanel {
     private final JButton buttClear;
     private final JButton buttLoad;
     private final JList<String> listRecipients;
+    private final EmailListModel listModel;
 
 
     public EmailListPanel() {
@@ -66,7 +70,8 @@ public class EmailListPanel extends JPanel {
         buttLoad.setFocusPainted(false);
         buttLoad.setBounds(295, 75, 20, 20);
 
-        listRecipients.setModel(new DefaultListModel<String>());
+        listModel = new EmailListModel();
+        listRecipients.setModel(listModel);
         JScrollPane scrollRecipients = new JScrollPane();
         add(scrollRecipients);
         scrollRecipients.setViewportView(listRecipients);
@@ -107,5 +112,16 @@ public class EmailListPanel extends JPanel {
         buttRemove.addActionListener(listener);
         buttClear.addActionListener(listener);
         buttLoad.addActionListener(listener);
+    }
+
+    public void updateList(Recipient recipient) {
+        listModel.addEntity(recipient);
+        listRecipients.updateUI();
+    }
+
+    public void updateList(List<Recipient> recipients) {
+        listModel.clear();
+        listModel.addEntities(recipients);
+        listRecipients.updateUI();
     }
 }
