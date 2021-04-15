@@ -8,6 +8,7 @@ import ua.lpr.entity.Recipient;
 import ua.lpr.util.PropertiesReader;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -46,7 +47,7 @@ public class RecipientDaoTest {
     }
 
     @Test
-    public void findAll() {
+    public void findAll() throws SQLException {
         List<Recipient> recipients = recipientDao.findAll();
 
         Assert.assertNotNull(recipients);
@@ -63,7 +64,7 @@ public class RecipientDaoTest {
 
     @Test
     public void create() throws SQLException {
-        Recipient newRecipient = new Recipient("Alex", null, null, "admin@lpr.ua");
+        Recipient newRecipient = new Recipient("Alex", null, null, "admin4ik@lpr.ua");
         Recipient created = recipientDao.save(newRecipient);
 
         Assert.assertNotEquals(created, newRecipient);
@@ -89,7 +90,7 @@ public class RecipientDaoTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void createNullEmail() throws SQLException {
+    public void createWithNullEmail() throws SQLException {
         thrown.expect(WrongArgumentException.class);
         thrown.expectMessage("Введите корректный email");
 
@@ -98,13 +99,44 @@ public class RecipientDaoTest {
     }
 
     @Test
-    public void createEmptyEmail() {
+    public void createWithEmptyEmail() {
         Recipient emptyEmail = new Recipient("Alex", null, null, "");
 
         Exception exception =
                 Assert.assertThrows(WrongArgumentException.class, () -> recipientDao.save(emptyEmail));
 
         Assert.assertEquals("Введите корректный email", exception.getMessage());
+    }
+
+    @Test
+    public void createWithExistsEmail() throws SQLException {
+        thrown.expect(SQLIntegrityConstraintViolationException.class);
+        thrown.expectMessage("admin@lpr.ua");
+
+        recipientDao.save(new Recipient("Александр", "LPR.UA", null, "admin@lpr.ua"));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void updateWithNonExistsId() throws SQLException {
+        recipientDao.save(new Recipient(5, "Александр", "LPR.UA", null, "admin@lpr.ua", false, false));
+    }
+
+    @Test
+    public void updateWithExistsEmail() throws SQLException {
+        thrown.expect(SQLIntegrityConstraintViolationException.class);
+        thrown.expectMessage("admin@lpr.ua");
+
+        recipientDao.save(new Recipient(2, "", "LPR.UA", null, "admin@lpr.ua", false, true));
+    }
+
+    @Test
+    public void delete() {
+        Assert.assertTrue(recipientDao.delete(3));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void deleteWithNotExists() {
+        recipientDao.delete(5);
     }
 
     private void truncateDB() {

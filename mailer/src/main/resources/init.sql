@@ -5,7 +5,7 @@ CREATE TABLE `polygraphy_email_list` (
 `name` VARCHAR(120) NULL,
 `company` VARCHAR(120) NULL,
 `city` VARCHAR(120) NULL,
-`email` VARCHAR(120) NOT NULL,
+`email` VARCHAR(120) NOT NULL UNIQUE,
 `sent` TINYINT NULL DEFAULT 0,
 `subscribed` TINYINT NULL DEFAULT 1,
 `md5` VARCHAR(200) NULL,
