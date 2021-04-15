@@ -1,16 +1,17 @@
 package ua.lpr.dao;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.lpr.entity.Recipient;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(RecipientDao.class);
+    private static final Logger log = getLogger(RecipientDao.class);
 
 
     public RecipientDaoImpl(String url, String user, String password) {
@@ -64,10 +65,10 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
         String sql = "INSERT INTO polygraphy_email_list (name, company, city, email, sent, subscribed, md5) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         if (id > 0) {
-            logger.info("Update: " + recipient);
+            log.info("Update: " + recipient);
             sql = "UPDATE polygraphy_email_list SET name=?, company=?, city=?, email=?, sent=?, subscribed=?, md5=? WHERE id=?";
         } else {
-            logger.info("Create: " + recipient);
+            log.info("Create: " + recipient);
         }
 
         try (Connection connection = getConnection()) {
@@ -87,7 +88,7 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
 
             id = statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e.getLocalizedMessage(), e);
+            log.error(e.getLocalizedMessage(), e);
 
             throw e;
         }

@@ -1,5 +1,6 @@
 package ua.lpr.controller;
 
+import org.slf4j.Logger;
 import ua.lpr.entity.Recipient;
 import ua.lpr.model.Model;
 import ua.lpr.view.View;
@@ -8,10 +9,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class Controller {
     private final Model model = new Model();
     private final View view = new View(this);
-    //TODO: logging
+    private static final Logger log = getLogger(Controller.class);
 
     public Map<String, String> getViewData() {
         return view.getViewData();
