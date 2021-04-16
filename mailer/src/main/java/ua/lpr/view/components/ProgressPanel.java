@@ -64,4 +64,8 @@ public class ProgressPanel extends JPanel {
     public void addMouseListener(MouseListener listener) {
 //        textStatus.addMouseListener(listener);
     }
+
+    public void log(String s) {
+        textStatus.append(String.format("%s%n", s));
+    }
 }

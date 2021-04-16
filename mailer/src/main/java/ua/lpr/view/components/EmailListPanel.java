@@ -112,4 +112,8 @@ public class EmailListPanel extends JPanel {
         listRecipients.updateUI();
         listRecipients.clearSelection();
     }
+
+    public List<Recipient> getList() {
+        return listModel.getEntities();
+    }
 }

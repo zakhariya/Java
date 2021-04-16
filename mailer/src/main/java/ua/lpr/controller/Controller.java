@@ -3,10 +3,13 @@ package ua.lpr.controller;
 import org.slf4j.Logger;
 import ua.lpr.entity.Recipient;
 import ua.lpr.model.Model;
+import ua.lpr.util.EmailSender;
 import ua.lpr.view.View;
 import ua.lpr.view.ViewImpl;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +19,7 @@ public class Controller {
     private final Model model = new Model();
     private final View view = new ViewImpl(this);
     private static final Logger log = getLogger(Controller.class);
+    private final EmailSender emailSender = new EmailSender(this);
 
     public void showView() {
         view.setVisible(true);
@@ -30,12 +34,18 @@ public class Controller {
     }
 
     public void startSending() {
-        Map<String, String> viewData = view.getViewData();
+        Map<String, String> viewData = getViewData();
         System.out.println(viewData);
+        log.info("Рассылка начата");
+//        try {
+//            emailSender.startSending(viewData, view.getRecipients());
+//        } catch (MessagingException e) {
+//            log.error(e.getLocalizedMessage(), e);
+//        }
     }
 
     public void stopSending() {
-
+        log.info("Рассылка остановлена");
     }
 
     public void showDetails() {
@@ -46,22 +56,55 @@ public class Controller {
         return view.getViewData();
     }
 
-    public List<Recipient> getRecipientList() throws SQLException {
-        return model.getRecipientList();
-    }
-
-    public void addRecipient() throws SQLException {
-        Recipient recipient = view.showAddDialog();
-
-        if (recipient != null) {
-            Recipient newRecipient = model.addRecipient(recipient);
-            view.updateList(newRecipient);
+    public List<Recipient> getRecipientList() {
+        try {
+            return model.getRecipientList();
+        } catch (SQLException e) {
+            log.error(e.getLocalizedMessage(), e);
+            return Collections.EMPTY_LIST;
         }
     }
 
-    public void removeRecipients() throws SQLException {
-        List<Recipient> recipients = view.getSelectedRecipients();
-        model.delete(recipients);
-        view.updateList(model.getRecipientList());
+    public void addRecipient() {
+        Recipient recipient = view.showAddDialog();
+
+        if (recipient != null) {
+            try {
+                Recipient newRecipient = model.addRecipient(recipient);
+                view.updateList(newRecipient);
+            } catch (SQLException e) {
+                log.error(e.getLocalizedMessage(), e);
+            }
+        }
+    }
+
+    public void saveRecipient(Recipient recipient) {
+        try {
+            model.saveRecipient(recipient);
+        } catch (SQLException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+    }
+
+    public void removeRecipients() {
+        try {
+            List<Recipient> recipients = view.getSelectedRecipients();
+            model.delete(recipients);
+            view.updateList(model.getRecipientList());
+        } catch (SQLException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+    }
+
+    public void resetSent() {
+        try {
+            model.resetSent();
+        } catch (SQLException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+    }
+
+    public View getView() {
+        return view;
     }
 }

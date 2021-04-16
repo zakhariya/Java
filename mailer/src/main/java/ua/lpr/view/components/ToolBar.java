@@ -10,7 +10,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
 
 public class ToolBar extends JToolBar {
-    private final JCheckBox toolC1;
     private final JButton toolB1;
     private final JTextField textURL;
     private final JLabel labURL;
@@ -18,8 +17,7 @@ public class ToolBar extends JToolBar {
 
 
     public ToolBar() {
-        toolC1 = new JCheckBox();
-        toolB1 = new JButton("MD5");
+        toolB1 = new JButton("Сброс отправки");
         textURL = new JTextField();
         labURL = new JLabel();
         buttExit = new JButton(Constants.ICON_EXIT);
@@ -29,23 +27,22 @@ public class ToolBar extends JToolBar {
         setEnabled(false);
         setRollover(true);
 
-        toolC1.setFocusable(false);
-        toolC1.setText("ссылка отписки");
-        toolC1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        toolC1.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(toolC1);
+        buttExit.setToolTipText("Свернуть в трей");
+        buttExit.setActionCommand("в трей");
+        add(buttExit);
+        buttExit.setHorizontalTextPosition(SwingConstants.RIGHT);
+        buttExit.setVerticalTextPosition(SwingConstants.BOTTOM);
+        buttExit.setBounds(500, 435, 80, 40);
+
         add(Box.createHorizontalStrut(5));
 
-        toolB1.setToolTipText("сгенерировать MD5 в БД");
+        toolB1.setToolTipText("<html>сбросить всем кому было отправлено письмо<br>и добавть в список снова");
         toolB1.setFocusable(false);
-        toolB1.setEnabled(false);
         toolB1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         toolB1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         add(toolB1);
         add(Box.createHorizontalStrut(5));
 
-        textURL.setEnabled(false);
-        textURL.setEditable(false);
         textURL.setText("https://");
         textURL.setToolTipText("адрес страницы отписки");
         textURL.setMinimumSize(new Dimension(150, 20));
@@ -56,13 +53,6 @@ public class ToolBar extends JToolBar {
         labURL.setForeground(Color.BLUE);
         add(labURL);
         add(Box.createHorizontalStrut(5));
-
-        buttExit.setToolTipText("Свернуть в трей");
-        buttExit.setActionCommand("в трей");
-        add(buttExit);
-        buttExit.setHorizontalTextPosition(SwingConstants.RIGHT);
-        buttExit.setVerticalTextPosition(SwingConstants.BOTTOM);
-        buttExit.setBounds(500, 435, 80, 40);
     }
 
     public void addActionListener(ActionListener listener) {
@@ -77,10 +67,6 @@ public class ToolBar extends JToolBar {
 
     public void addDocumentListener(DocumentListener listener) {
         textURL.getDocument().addDocumentListener(listener);
-    }
-
-    public void addItemListener(ItemListener listener) {
-        toolC1.addItemListener(listener);
     }
 
     public String getUnsubscribeUrl() {

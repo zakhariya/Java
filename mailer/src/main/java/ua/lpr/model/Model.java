@@ -28,7 +28,15 @@ public class Model {
         return created;
     }
 
-    public void delete(List<Recipient> recipients) throws SQLException {
+    public void delete(List<Recipient> recipients) {
         recipientDao.delete(recipients);
+    }
+
+    public void resetSent() throws SQLException {
+        recipientDao.resetSent();
+    }
+
+    public void saveRecipient(Recipient recipient) throws SQLException {
+        recipientDao.save(recipient);
     }
 }

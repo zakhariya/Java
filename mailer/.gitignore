@@ -5,6 +5,7 @@ target/
 !**/src/test/**
 
 *.properties
+*.log
 
 ### STS ###
 .apt_generated
@@ -20,6 +21,9 @@ target/
 *.iws
 *.iml
 *.ipr
+target/
+META-INF/
+out/
 
 ### NetBeans ###
 /nbproject/private/

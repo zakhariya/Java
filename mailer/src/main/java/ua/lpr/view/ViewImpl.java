@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,19 +32,17 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
 
     @Override
     public Map<String, String> getViewData() {
-        Map<String, String> smtpData = smtpPanel.getSmtpData();
-        Map<String, String> messageData = textPanel.getMessageData();
-
-        Map<String, String> allData = new HashMap<>(smtpData);
+        Map<String, String> allData = new HashMap<>();
+        allData.put("html", textPanel.getHtml());
+        allData.put("text", textPanel.getText());
         allData.put("unsubscribe", toolBar.getUnsubscribeUrl());
         allData.put("from", emailListPanel.getFrom());
         allData.put("subject", emailListPanel.getSubject());
 
-        return Stream.concat(messageData.entrySet().stream(), allData.entrySet().stream())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        allData::put));
+        Map<String, String> smtpData = smtpPanel.getSmtpData();
+
+        return Stream.concat(smtpData.entrySet().stream(), allData.entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, allData::put));
     }
 
     @Override
@@ -81,6 +79,27 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
     }
 
     @Override
+    public List<Recipient> getRecipients() {
+        return emailListPanel.getList();
+    }
+
+    @Override
+    public String getMessageHtml() {
+        return textPanel.getHtml();
+    }
+
+    @Override
+    public String getMessageText() {
+        return textPanel.getText();
+    }
+
+    @Override
+    public void setLog(String s) {
+        progressPanel.log(s);
+    }
+
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("выйти")) {
             controller.exit();
@@ -90,8 +109,13 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
             controller.showView();
         } else if (e.getActionCommand().equals("детали")) {
             controller.showDetails();
-        } else if (e.getActionCommand().equals("md5")) {
-            //TODO: md5 or clear
+        } else if (e.getActionCommand().equals("Сброс отправки")) {
+            String q = "Вы уверены, что хотите сбросить всем\nкому было отправлено письмо и добавть в список снова";
+            int a = JOptionPane.showConfirmDialog(this, q, "", JOptionPane.YES_NO_OPTION);
+            if (a == 0) {
+                controller.resetSent();
+                updateList(controller.getRecipientList());
+            }
         } else {
             Component c = (Component) e.getSource();
 
@@ -111,43 +135,18 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
             } else if (icon.equals(Constants.ICON_ADD)) {
                 try {
                     controller.addRecipient();
-                } catch (SQLException | WrongArgumentException ex) {
+                } catch (WrongArgumentException ex) {
                     showMessage("Ошибка", ex.getMessage());
                 }
             } else if (icon.equals(Constants.ICON_REMOVE)) {
-                try {
-                    controller.removeRecipients();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+                controller.removeRecipients();
+            } else if (icon.equals(Constants.ICON_CLEAR)) {
+                updateList(Collections.EMPTY_LIST);
             } else if (icon.equals(Constants.ICON_LOAD)) {
-                try {
-                    List<Recipient> recipients = controller.getRecipientList();
-                    updateList(recipients);
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+                updateList(controller.getRecipientList());
             }
         }
 
-//        if(e.getSource().equals(buttAddEmail)){
-//            if(!Engine.inProgress)
-//                Engine.addRecipient(listModel);
-//        }else if(e.getSource().equals(buttRemoveSelectedEmails)){
-//            if(!Engine.inProgress){
-//                int[] idx = listRecipients.getSelectedIndices();
-//                for(int i=0; i<idx.length; i++)
-//                    listModel.removeElementAt(idx[i]-i);
-//            }
-//        }else if(e.getSource().equals(buttClearList)){
-//            if(!Engine.inProgress)
-//                listModel.clear();
-//        }else if(e.getSource().equals(buttFillList)){
-//            if(!Engine.inProgress){
-//                Engine.reading = true;
-//                new ThreadShowReadWriteProgress(listRecipients, (Component) e.getSource()).start();
-//                Engine.fillList(listModel);
-//            }
 //        }else if(e.getSource().equals(toolB1)){
 //            if(!Engine.inProgress){
 //                Engine.writing = true;

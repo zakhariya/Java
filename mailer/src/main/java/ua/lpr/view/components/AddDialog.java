@@ -22,6 +22,7 @@ public class AddDialog extends JDialog {
     private Map<String, String> recipientData;
 
     public AddDialog() {
+        super();
         setIconImage(Constants.LOGO);
         setTitle("Добавление");
         setContentPane(contentPane);

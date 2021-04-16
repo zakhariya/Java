@@ -1,21 +1,25 @@
 package ua.lpr.util;
 
-import com.sun.xml.internal.ws.api.pipe.Engine;
+import ua.lpr.controller.Controller;
+import ua.lpr.entity.Recipient;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.swing.*;
-import java.util.Calendar;
-import java.util.Enumeration;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class EmailSender {
+public class EmailSender implements Runnable {
+    private final Controller controller;
 
-    public void start(Map<String, String> params) throws MessagingException {
+    public EmailSender(Controller controller) {
+        this.controller = controller;
+    }
+
+    public void startSending(Map<String, String> params, List<Recipient> recipients) throws MessagingException {
 
         Session session = createSession(params);
         MimeMessage mimeMessage = prepareMessage(session, params);
@@ -25,7 +29,7 @@ public class EmailSender {
         Properties properties = System.getProperties();
 
         properties.setProperty("mail.smtp.auth", "true");
-        properties.setProperty("mail.smtp.host", params.get("smtp"));
+        properties.setProperty("mail.smtp.host", params.get("host"));
         properties.setProperty("mail.smtp.port", params.get("port"));
 
         if(params.get("protocol").equalsIgnoreCase("ssl")){
@@ -52,22 +56,21 @@ public class EmailSender {
     private MimeMessage prepareMessage(Session session, Map<String, String> params) throws MessagingException {
         MimeMessage message = new MimeMessage(session);
 
-        message.setSentDate(new java.util.Date());
         message.setFrom(new InternetAddress(params.get("from")));
-
-
         message.setSubject(params.get("subject"));
 
         MimeBodyPart textPart = new MimeBodyPart();
-        textPart.setContent(params.get("messageText"), "text/plain; charset=utf-8");
+        textPart.setContent(params.get("html"), "text/plain; charset=utf-8");
         MimeBodyPart htmlPart = new MimeBodyPart();
-        htmlPart.setContent("<html>" + params.get("messageHtml") + "</html>", "text/html; charset=utf-8");
+        htmlPart.setContent(params.get("text"), "text/html; charset=utf-8");
 
         return message;
     }
 
     private void sendMessages(Session session, MimeMessage message) throws MessagingException {
-        Transport t = session.getTransport("smtp");
+        message.setSentDate(new Date());
+
+        Transport t = session.getTransport("host");
 
 //        Engine.progress = "Соединение с сервером";
 //        Engine.writeLog(Engine.progress, true);
@@ -177,5 +180,10 @@ public class EmailSender {
         Engine.progress = "Процесс отправки завершен";
         Engine.endMillis = Calendar.getInstance().getTimeInMillis();
         Engine.writeLog(Engine.progress, true);*/
+    }
+
+    @Override
+    public void run() {
+
     }
 }

@@ -1,8 +1,6 @@
 package ua.lpr.view.components;
 
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class TextPanel extends JPanel {
     private final JTextArea htmlTextArea;
@@ -37,16 +35,13 @@ public class TextPanel extends JPanel {
         JScrollPane scrollTextArea = new JScrollPane();
         scrollTextArea.setViewportView(textArea);
         tabbedPane.add("plain/text", scrollTextArea);
-
-//        scrollTextArea.setBounds(10, 10, 570, 150);
     }
 
-    public Map<String, String> getMessageData() {
-        Map<String, String> data = new HashMap<>();
+    public String getHtml() {
+        return htmlTextArea.getText();
+    }
 
-        data.put("html", htmlTextArea.getText());
-        data.put("text", textArea.getText());
-
-        return data;
+    public String getText() {
+        return textArea.getText();
     }
 }

@@ -19,4 +19,12 @@ public interface View {
     void setVisible(boolean b);
 
     List<Recipient> getSelectedRecipients();
+
+    List<Recipient> getRecipients();
+
+    String getMessageHtml();
+
+    String getMessageText();
+
+    void setLog(String s);
 }

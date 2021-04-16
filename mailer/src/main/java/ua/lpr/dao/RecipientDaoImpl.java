@@ -139,6 +139,18 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
     }
 
     @Override
+    public void resetSent() throws SQLException {
+        String sql = "UPDATE polygraphy_email_list SET sent=?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, 0);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
     public void executeSql(String sql) throws SQLException {
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement()) {

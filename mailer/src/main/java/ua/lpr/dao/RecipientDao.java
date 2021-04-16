@@ -17,4 +17,6 @@ public interface RecipientDao {
     void executeSql(String sql) throws SQLException;
 
     void delete(List<Recipient> recipients);
+
+    void resetSent() throws SQLException;
 }
