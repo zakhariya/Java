@@ -1,6 +1,7 @@
 package ua.lpr.view.components;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TextPanel extends JPanel {
     private final JTextArea htmlTextArea;
@@ -35,6 +36,12 @@ public class TextPanel extends JPanel {
         JScrollPane scrollTextArea = new JScrollPane();
         scrollTextArea.setViewportView(textArea);
         tabbedPane.add("plain/text", scrollTextArea);
+    }
+
+    @Override
+    public void setEnabled(boolean b) {
+        htmlTextArea.setEnabled(b);
+        textArea.setEnabled(b);
     }
 
     public String getHtml() {

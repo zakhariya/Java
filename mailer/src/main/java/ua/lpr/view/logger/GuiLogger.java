@@ -1,4 +1,4 @@
-package ua.lpr.util;
+package ua.lpr.view.logger;
 
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.Context;
@@ -11,7 +11,7 @@ import ua.lpr.view.ViewImpl;
 
 import java.util.List;
 
-public class LogAppender implements Appender {
+public class GuiLogger implements Appender {
     private static View view;
 
     private String name = "GUI Logger";
@@ -19,7 +19,7 @@ public class LogAppender implements Appender {
     private Status status;
 
     public static void setView(View view) {
-        LogAppender.view = view;
+        GuiLogger.view = view;
     }
 
     @Override

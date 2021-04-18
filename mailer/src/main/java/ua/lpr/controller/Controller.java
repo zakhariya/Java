@@ -35,21 +35,19 @@ public class Controller {
 
     public void startSending() {
         Map<String, String> viewData = getViewData();
-        System.out.println(viewData);
-        log.info("Рассылка начата");
-//        try {
-//            emailSender.startSending(viewData, view.getRecipients());
-//        } catch (MessagingException e) {
-//            log.error(e.getLocalizedMessage(), e);
-//        }
+
+        try {
+            view.changeElementsState(false);
+            emailSender.startSending(viewData, view.getRecipients());
+        } catch (MessagingException e) {
+            view.changeElementsState(true);
+            log.error(e.getLocalizedMessage(), e);
+        }
     }
 
     public void stopSending() {
-        log.info("Рассылка остановлена");
-    }
-
-    public void showDetails() {
-
+        emailSender.stopSending();
+        view.changeElementsState(true);
     }
 
     public Map<String, String> getViewData() {
@@ -102,6 +100,10 @@ public class Controller {
         } catch (SQLException e) {
             log.error(e.getLocalizedMessage(), e);
         }
+    }
+
+    public void setProgressValue(int value) {
+        view.setProgressValue(value);
     }
 
     public View getView() {

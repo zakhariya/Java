@@ -11,7 +11,7 @@ public class SMTPPanel extends JPanel {
     private final JTextField textPort;
     private final JComboBox<String> comPort;
     private final JTextField textLogin;
-    private final JTextField textPassword;
+    private final JPasswordField textPassword;
     private final JSpinner spinDelay;
     private final JComboBox<String> comDelay;
 
@@ -56,7 +56,7 @@ public class SMTPPanel extends JPanel {
         JLabel labPassword = new JLabel("Пароль");
         add(labPassword);
         labPassword.setBounds(15, 95, 90, 20);
-        textPassword = new JTextField();
+        textPassword = new JPasswordField();
         add(textPassword);
         textPassword.setBounds(105, 95, 145, 20);
 
@@ -73,6 +73,15 @@ public class SMTPPanel extends JPanel {
         comDelay.setBounds(190, 120, 60, 20);
     }
 
+    @Override
+    public void setEnabled(boolean b) {
+        Component[] components = this.getComponents();
+
+        for (Component component : components) {
+            component.setEnabled(b);
+        }
+    }
+
     public Map<String,String> getSmtpData() {
         Map<String, String> smtpData = new HashMap<>();
 
@@ -85,7 +94,7 @@ public class SMTPPanel extends JPanel {
         smtpData.put("port", textPort.getText());
         smtpData.put("protocol", comPort.getSelectedItem().toString());
         smtpData.put("login", textLogin.getText());
-        smtpData.put("password", textPassword.getText());
+        smtpData.put("password", String.valueOf(textPassword.getPassword()));
 
         return smtpData;
     }

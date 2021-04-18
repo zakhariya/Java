@@ -3,11 +3,8 @@ package ua.lpr.view.components;
 import ua.lpr.util.Constants;
 
 import javax.swing.*;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseListener;
 
 public class ToolBar extends JToolBar {
     private final JButton toolB1;
@@ -55,18 +52,18 @@ public class ToolBar extends JToolBar {
         add(Box.createHorizontalStrut(5));
     }
 
+    @Override
+    public void setEnabled(boolean b) {
+        Component[] components = this.getComponents();
+
+        for (Component component : components) {
+            component.setEnabled(b);
+        }
+    }
+
     public void addActionListener(ActionListener listener) {
         toolB1.addActionListener(listener);
         buttExit.addActionListener(listener);
-    }
-
-    public void addMouseListener(MouseListener listener) {
-//        textURL.addMouseListener(listener);
-//        labURL.addMouseListener(listener);
-    }
-
-    public void addDocumentListener(DocumentListener listener) {
-        textURL.getDocument().addDocumentListener(listener);
     }
 
     public String getUnsubscribeUrl() {

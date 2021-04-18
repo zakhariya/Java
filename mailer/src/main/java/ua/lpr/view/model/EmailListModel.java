@@ -8,6 +8,8 @@ public class EmailListModel extends DefaultListModel<Recipient> {
     public Object getElementAt(int index) {
         Recipient recipient = entities.get(index);
 
-        return recipient.getEmail();
+        String email = recipient.getName() + " <" + recipient.getEmail() + ">";
+
+        return recipient.getName() != null ? email : recipient.getEmail();
     }
 }

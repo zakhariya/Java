@@ -25,7 +25,6 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
         emailListPanel.addActionListener(this);
         progressPanel.addActionListener(this);
         toolBar.addActionListener(this);
-        addDialog.addActionListener(this);
         trayItemUnwrap.addActionListener(this);
         trayItemExit.addActionListener(this);
     }
@@ -98,6 +97,20 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
         progressPanel.log(s);
     }
 
+    @Override
+    public void setProgressValue(int value) {
+        progressPanel.setProgressValue(value);
+    }
+
+    @Override
+    public void changeElementsState(boolean b) {
+        emailListPanel.setEnabled(b);
+        smtpPanel.setEnabled(b);
+        textPanel.setEnabled(b);
+        toolBar.setEnabled(b);
+        progressPanel.changeButtonIcon(b);
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -107,8 +120,6 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
             controller.hideView();
         } else if(e.getActionCommand().equals("развернуть")) {
             controller.showView();
-        } else if (e.getActionCommand().equals("детали")) {
-            controller.showDetails();
         } else if (e.getActionCommand().equals("Сброс отправки")) {
             String q = "Вы уверены, что хотите сбросить всем\nкому было отправлено письмо и добавть в список снова";
             int a = JOptionPane.showConfirmDialog(this, q, "", JOptionPane.YES_NO_OPTION);
@@ -128,10 +139,8 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
 
             if (icon.equals(Constants.ICON_START)) {
                 controller.startSending();
-                button.setIcon(Constants.ICON_PAUSE);
             } else if (icon.equals(Constants.ICON_PAUSE)){
                 controller.stopSending();
-                button.setIcon(Constants.ICON_START);
             } else if (icon.equals(Constants.ICON_ADD)) {
                 try {
                     controller.addRecipient();

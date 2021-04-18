@@ -27,4 +27,8 @@ public interface View {
     String getMessageText();
 
     void setLog(String s);
+
+    void setProgressValue(int value);
+
+    void changeElementsState(boolean b);
 }

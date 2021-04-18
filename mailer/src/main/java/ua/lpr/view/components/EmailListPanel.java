@@ -5,6 +5,7 @@ import ua.lpr.util.Constants;
 import ua.lpr.view.model.EmailListModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -76,6 +77,15 @@ public class EmailListPanel extends JPanel {
         add(scrollRecipients);
         scrollRecipients.setViewportView(listRecipients);
         scrollRecipients.setBounds(10, 100, 305, 245);
+    }
+
+    @Override
+    public void setEnabled(boolean b) {
+        Component[] components = this.getComponents();
+
+        for (Component component : components) {
+            component.setEnabled(b);
+        }
     }
 
     public String getFrom() {

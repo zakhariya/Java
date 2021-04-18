@@ -1,6 +1,6 @@
 package ua.lpr.notificationservice.service.impl;
 
-import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import ua.lpr.notificationservice.entity.Manager;
 import ua.lpr.notificationservice.entity.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,12 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 @Service
 public class EmailNotificationService {
 
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(EmailNotificationService.class);
+    private static final Logger logger = getLogger(EmailNotificationService.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -81,5 +83,4 @@ public class EmailNotificationService {
 
         return list;
     }
-
 }

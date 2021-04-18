@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <appender name="gui" class="ua.lpr.util.LogAppender"></appender>
+    <appender name="gui" class="ua.lpr.view.logger.GuiLogger"></appender>
 
     <logger name="ua.lpr.mailer" level="debug"/>
 

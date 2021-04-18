@@ -45,14 +45,16 @@ public class ViewComponents extends JFrame {
     }
 
     private void initView() {
-        JPanel panelFullContent = new JPanel(null);
-        panelFullContent.setPreferredSize(new Dimension(590, 500));
+        JPanel contentPane = new JPanel(null);
+        contentPane.setPreferredSize(new Dimension(590, 500));
 
-        panelFullContent.add(emailListPanel);
-        panelFullContent.add(smtpPanel);
-        panelFullContent.add(progressPanel);
-        panelFullContent.add(textPanel);
-        panelFullContent.add(toolBar);
+        contentPane.add(emailListPanel);
+        contentPane.add(smtpPanel);
+        contentPane.add(progressPanel);
+        contentPane.add(textPanel);
+        contentPane.add(toolBar);
+
+        addDialog.setLocationRelativeTo(contentPane);
 
         setResizable(true);
         setIconImage(Constants.LOGO);
@@ -60,9 +62,9 @@ public class ViewComponents extends JFrame {
         setJMenuBar(menuBar);
         setMinimumSize(new Dimension(610, 620));
         setSize(610, 620);
-        getContentPane().add(new JScrollPane(panelFullContent), BorderLayout.CENTER);
+        getContentPane().add(new JScrollPane(contentPane), BorderLayout.CENTER);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        setLocation(300, 50);
+        setLocationRelativeTo(null);
 
 //        addComponentListener(cl);
 //        addMouseListener(ml);
