@@ -1,5 +1,7 @@
 package ua.lpr.view.components;
 
+import ua.lpr.util.parser.HtmlParser;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,6 +22,7 @@ public class TextPanel extends JPanel {
         htmlTextArea.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         htmlTextArea.setRows(5);
         htmlTextArea.setLineWrap(true);
+        htmlTextArea.setWrapStyleWord(true);
         htmlTextArea.setToolTipText("<html>Текст письма<br>(можно с тегами HTML)");
         htmlTextArea.setCaretColor(new java.awt.Color(50, 150, 0));
 
@@ -32,6 +35,9 @@ public class TextPanel extends JPanel {
         textArea.setFont(new java.awt.Font("Arial Unicode MS", 0, 12)); // NOI18N
         textArea.setRows(5);
         textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+
+        tabbedPane.addChangeListener(e -> fillTextPane());
 
         JScrollPane scrollTextArea = new JScrollPane();
         scrollTextArea.setViewportView(textArea);
@@ -50,5 +56,11 @@ public class TextPanel extends JPanel {
 
     public String getText() {
         return textArea.getText();
+    }
+
+    public void fillTextPane() {
+        if (textArea.getText().length() == 0) {
+            textArea.setText(HtmlParser.getTextFromHtml(htmlTextArea.getText()));
+        }
     }
 }

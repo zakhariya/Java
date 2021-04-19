@@ -98,7 +98,7 @@ public class EmailSender {
         //  msg.addHeader("List-Archive", "1");
         //  msg.setHeader("List-Post", "1");
 
-        String url = String.format("%s/?e=%s", params.get("unsubscribe"), recipient.getMd5());
+        String url = String.format("%s?c=%s", params.get("unsubscribe"), recipient.getMd5());
 
         message.setHeader("List-Unsubscribe", String.format("<%s>", url));
 

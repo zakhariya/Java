@@ -22,7 +22,7 @@ public class RecipientDaoTest {
 
     @BeforeClass
     public static void init() {
-        recipient = new Recipient(1, "Александр", "LPR.UA", null, "admin@lpr.ua", false, true);
+        recipient = new Recipient(1, "Александр", "LPR.UA", null, "admin@lpr.ua", false, true, "");
 
         PropertiesReader reader = new PropertiesReader();
 
@@ -55,7 +55,7 @@ public class RecipientDaoTest {
     }
 
     @Test
-    public void findOne() {
+    public void findOne() throws SQLException {
         int id = RecipientDaoTest.recipient.getId();
         Recipient recipient = recipientDao.findById(id);
 
@@ -73,7 +73,7 @@ public class RecipientDaoTest {
 
     @Test
     public void update() throws SQLException {
-        Recipient newRecipient = new Recipient(1, "Александр", "LPR.UA", null, "admin@lpr.ua", true, true);
+        Recipient newRecipient = new Recipient(1, "Александр", "LPR.UA", null, "admin@lpr.ua", true, true, null);
         Recipient updated = recipientDao.save(newRecipient);
 
         Assert.assertNotEquals(newRecipient, recipient);
@@ -82,7 +82,7 @@ public class RecipientDaoTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void findNotExists() {
+    public void findNotExists() throws SQLException {
         recipientDao.findById(5);
     }
 
@@ -118,7 +118,7 @@ public class RecipientDaoTest {
 
     @Test(expected = NoSuchElementException.class)
     public void updateWithNonExistsId() throws SQLException {
-        recipientDao.save(new Recipient(5, "Александр", "LPR.UA", null, "admin@lpr.ua", false, false));
+        recipientDao.save(new Recipient(5, "Александр", "LPR.UA", null, "admin@lpr.ua", false, false, null));
     }
 
     @Test
@@ -126,16 +126,16 @@ public class RecipientDaoTest {
         thrown.expect(SQLIntegrityConstraintViolationException.class);
         thrown.expectMessage("admin@lpr.ua");
 
-        recipientDao.save(new Recipient(2, "", "LPR.UA", null, "admin@lpr.ua", false, true));
+        recipientDao.save(new Recipient(2, "", "LPR.UA", null, "admin@lpr.ua", false, true, null));
     }
 
     @Test
-    public void delete() {
+    public void delete() throws SQLException {
         Assert.assertTrue(recipientDao.delete(3));
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void deleteWithNotExists() {
+    public void deleteWithNotExists() throws SQLException {
         recipientDao.delete(5);
     }
 

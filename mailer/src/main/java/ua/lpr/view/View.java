@@ -31,4 +31,6 @@ public interface View {
     void setProgressValue(int value);
 
     void changeElementsState(boolean b);
+
+    void fillTextPane();
 }

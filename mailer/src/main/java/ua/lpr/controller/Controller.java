@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import ua.lpr.entity.Recipient;
 import ua.lpr.model.Model;
 import ua.lpr.util.EmailSender;
+import ua.lpr.util.parser.XlsParser;
 import ua.lpr.view.View;
 import ua.lpr.view.ViewImpl;
 
 import javax.mail.MessagingException;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -34,15 +36,23 @@ public class Controller {
     }
 
     public void startSending() {
+        view.fillTextPane();
         Map<String, String> viewData = getViewData();
 
-        try {
-            view.changeElementsState(false);
-            emailSender.startSending(viewData, view.getRecipients());
-        } catch (MessagingException e) {
-            view.changeElementsState(true);
-            log.error(e.getLocalizedMessage(), e);
-        }
+        //TODO: remove
+        File file = new File("C:\\Users\\zakhar\\Desktop\\без дубляжей.xlsx");
+
+        XlsParser parser = new XlsParser(this);
+//        parser.parseToDatabase(file);
+        parser.writeToFile(getRecipientList(), file);
+
+//        try {
+//            view.changeElementsState(false);
+//            emailSender.startSending(viewData, view.getRecipients());
+//        } catch (MessagingException e) {
+//            view.changeElementsState(true);
+//            log.error(e.getLocalizedMessage(), e);
+//        }
     }
 
     public void stopSending() {

@@ -25,7 +25,7 @@ public class Recipient {
         this.subscribed = true;
     }
 
-    public Recipient(int id, String name, String company, String city, String email, boolean sent, boolean subscribed) {
+    public Recipient(int id, String name, String company, String city, String email, boolean sent, boolean subscribed, String md5) {
         this.id = id;
         this.name = name;
         this.company = company;
@@ -33,7 +33,7 @@ public class Recipient {
         this.email = email;
         this.sent = sent;
         this.subscribed = subscribed;
-        this.md5 = generateMD5(this.email);
+        this.md5 = (md5 == null || md5.length() < 20) ? generateMD5(this.email) : md5;
 
     }
 
@@ -132,7 +132,6 @@ public class Recipient {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, name, company, city, email, sent, subscribed, md5);
     }
 }

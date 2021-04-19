@@ -111,6 +111,10 @@ public class ViewImpl extends ViewComponents implements View, ActionListener {
         progressPanel.changeButtonIcon(b);
     }
 
+    @Override
+    public void fillTextPane() {
+        textPanel.fillTextPane();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {

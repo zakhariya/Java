@@ -8,11 +8,11 @@ import java.util.List;
 public interface RecipientDao {
     List<Recipient> findAll() throws SQLException;
 
-    Recipient findById(int id);
+    Recipient findById(int id) throws SQLException;
 
     Recipient save(Recipient recipient) throws SQLException;
 
-    boolean delete(int id);
+    boolean delete(int id) throws SQLException;
 
     void executeSql(String sql) throws SQLException;
 

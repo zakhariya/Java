@@ -33,15 +33,12 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
                 recipients.add(RecipientMapper.getInstance().mapTo(resultSet));
             }
         }
-//        catch (SQLException e) {
-//            e.printStackTrace();
-//        }
 
         return recipients;
     }
 
     @Override
-    public Recipient findById(int id) {
+    public Recipient findById(int id) throws SQLException {
         Recipient recipient = null;
         String sql = "SELECT * FROM polygraphy_email_list WHERE id=?";
 
@@ -59,8 +56,6 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
             recipient = RecipientMapper.getInstance().mapTo(resultSet);
 
             resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return recipient;
@@ -88,7 +83,7 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
             statement.setString(1, recipient.getName());
             statement.setString(2, recipient.getCompany());
             statement.setString(3, recipient.getCity());
-            statement.setString(4, recipient.getEmail());
+            statement.setString(4, recipient.getEmail().trim());
             statement.setBoolean(5, recipient.isSent());
             statement.setBoolean(6, recipient.isSubscribed());
             statement.setString(7, recipient.getMd5());
@@ -103,17 +98,12 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
                 id = rs.getInt(1);
             }
         }
-//        catch (SQLException e) {
-//            log.error(e.getLocalizedMessage(), e);
-//
-//            throw e;
-//        }
 
         return findById(id);
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws SQLException {
         String sql = "DELETE FROM polygraphy_email_list WHERE id=?";
 
         try (Connection connection = getConnection();
@@ -126,16 +116,18 @@ public class RecipientDaoImpl extends AbstractDao  implements RecipientDao {
             }
 
             return true;
-        } catch (SQLException e) {
-            log.error(e.getLocalizedMessage(), e);
-
-            return false;
         }
     }
 
     @Override
     public void delete(List<Recipient> recipients) {
-        recipients.forEach(recipient -> delete(recipient.getId()));
+        recipients.forEach(recipient -> {
+            try {
+                delete(recipient.getId());
+            } catch (SQLException e) {
+                log.error(e.getMessage());
+            }
+        });
     }
 
     @Override
@@ -182,7 +174,8 @@ class RecipientMapper {
         String email = set.getString("email");
         boolean sent = set.getBoolean("sent");
         boolean subscribed = set.getBoolean("subscribed");
+        String md5 = set.getString("md5");
 
-        return new Recipient(id, name, company, city, email, sent, subscribed);
+        return new Recipient(id, name, company, city, email, sent, subscribed, md5);
     }
 }

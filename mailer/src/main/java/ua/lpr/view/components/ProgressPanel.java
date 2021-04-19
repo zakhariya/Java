@@ -11,6 +11,7 @@ public class ProgressPanel extends JPanel {
     private final JButton buttStart;
     private final JProgressBar progressBar;
     private final JTextArea textStatus;
+    private final JScrollPane scrollStatus;
 
     public ProgressPanel() {
         buttStart = new JButton();
@@ -32,11 +33,13 @@ public class ProgressPanel extends JPanel {
         textStatus.setEditable(false);
         textStatus.setName("статус");
         textStatus.setLineWrap(true);
+        textStatus.setWrapStyleWord(true);
         textStatus.setBackground(new java.awt.Color(248, 248, 248));
         textStatus.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        textStatus.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(0), null));
+        textStatus.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(0), null));
 
-        JScrollPane scrollStatus = new JScrollPane();
+        scrollStatus = new JScrollPane();
+        scrollStatus.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollStatus.setViewportView(textStatus);
         add(scrollStatus);
         scrollStatus.setBounds(10, 55, 255, 120);
@@ -58,7 +61,11 @@ public class ProgressPanel extends JPanel {
     }
 
     public void log(String s) {
-        textStatus.append(String.format("%s%n", s));
+        new Thread(() -> {
+            textStatus.append(String.format("%s%n", s));
+            textStatus.setCaretPosition(textStatus.getText().length() - 1);
+            textStatus.update(textStatus.getGraphics());
+        }).start();
     }
 
     public void setProgressValue(int value) {
