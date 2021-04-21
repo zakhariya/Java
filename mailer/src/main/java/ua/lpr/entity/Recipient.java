@@ -19,7 +19,7 @@ public class Recipient {
         this.name = name;
         this.company = company;
         this.city = city;
-        this.email = email;
+        this.email = email.replaceAll(" ", "");
         this.md5 = generateMD5(this.email);
         this.sent = false;
         this.subscribed = true;
@@ -30,7 +30,7 @@ public class Recipient {
         this.name = name;
         this.company = company;
         this.city = city;
-        this.email = email;
+        this.email = email.replaceAll(" ", "");
         this.sent = sent;
         this.subscribed = subscribed;
         this.md5 = (md5 == null || md5.length() < 20) ? generateMD5(this.email) : md5;

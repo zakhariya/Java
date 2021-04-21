@@ -88,8 +88,10 @@ public class EmailSender {
         message.setSubject(params.get("subject"));
         message.setSentDate(new Date());
 
-        String email = recipient.getName() != null ?
-                Coder.encodeToBase64(recipient.getName()) + " <" + recipient.getEmail() + ">" :
+
+        String name = recipient.getName();
+        String email = (name != null && name.length() > 0) ?
+                Coder.encodeToBase64(name) + " <" + recipient.getEmail() + ">" :
                 recipient.getEmail();
 
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
@@ -110,9 +112,12 @@ public class EmailSender {
 
         StringBuilder html = new StringBuilder("<html><head></head><body>");
         html.append(params.get("html"));
-        html.append("<br><br>Вы можете отписаться перейдя по <b><a href='");
+        //TODO: change
+        html.append("<br><br><p class=\"unsub\">Відписатись є можливість за <b><a href='");
+//        html.append("<br><br>Вы можете отписаться перейдя по <b><a href='");
         html.append(url);
-        html.append("' title='List-Unsubscribe'>ссылке</a></b></body></html>");
+        html.append("' title='List-Unsubscribe'>посиланням</a></p></b></body></html>");
+//        html.append("' title='List-Unsubscribe'>ссылке</a></b></body></html>");
 
         MimeBodyPart htmlPart = new MimeBodyPart();
         htmlPart.setContent(html.toString(), "text/html; charset=utf-8");
@@ -186,9 +191,9 @@ public class EmailSender {
 
             if(!isRunning) break;
 
-
-            String email = recipient.getName() != null ?
-                    Coder.encodeToBase64(recipient.getName()) + " <" + recipient.getEmail() + ">" :
+            String name = recipient.getName();
+            String email = (name != null && name.length() > 0) ?
+                    Coder.encodeToBase64(name) + " <" + recipient.getEmail() + ">" :
                     recipient.getEmail();
             try{
 

@@ -171,7 +171,7 @@ class RecipientMapper {
         String name = set.getString("name");
         String company = set.getString("company");
         String city = set.getString("city");
-        String email = set.getString("email");
+        String email = set.getString("email").replaceAll(" ", "");
         boolean sent = set.getBoolean("sent");
         boolean subscribed = set.getBoolean("subscribed");
         String md5 = set.getString("md5");

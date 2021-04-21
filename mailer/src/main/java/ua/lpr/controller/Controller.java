@@ -40,19 +40,19 @@ public class Controller {
         Map<String, String> viewData = getViewData();
 
         //TODO: remove
-        File file = new File("C:\\Users\\zakhar\\Desktop\\без дубляжей.xlsx");
-
-        XlsParser parser = new XlsParser(this);
+        File file = new File("file.xlsx");
+//
+//        XlsParser parser = new XlsParser(this);
 //        parser.parseToDatabase(file);
-        parser.writeToFile(getRecipientList(), file);
+//        parser.writeToFile(getRecipientList(), file);
 
-//        try {
-//            view.changeElementsState(false);
-//            emailSender.startSending(viewData, view.getRecipients());
-//        } catch (MessagingException e) {
-//            view.changeElementsState(true);
-//            log.error(e.getLocalizedMessage(), e);
-//        }
+        try {
+            view.changeElementsState(false);
+            emailSender.startSending(viewData, view.getRecipients());
+        } catch (MessagingException e) {
+            view.changeElementsState(true);
+            log.error(e.getLocalizedMessage(), e);
+        }
     }
 
     public void stopSending() {

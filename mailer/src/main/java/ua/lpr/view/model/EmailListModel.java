@@ -7,9 +7,9 @@ public class EmailListModel extends DefaultListModel<Recipient> {
     @Override
     public Object getElementAt(int index) {
         Recipient recipient = entities.get(index);
-
-        String email = recipient.getName() + " <" + recipient.getEmail() + ">";
-
-        return recipient.getName() != null ? email : recipient.getEmail();
+        String name = recipient.getName();
+        return (name != null && name.length() > 0) ?
+                name + " <" + recipient.getEmail() + ">" :
+                recipient.getEmail();
     }
 }

@@ -18,6 +18,8 @@ import ua.lpr.entity.Recipient;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Iterator;
@@ -83,12 +85,25 @@ public class XlsParser {
             int colIdx = 0;
             while(colIdx <= 4) {
                 Cell cell = row.createCell(colIdx);
-                cell.setCellStyle(style);
+//                cell.setCellStyle(style);
 
                 try {
                     cell.setCellType(CellType.STRING);
+
+                    String value = "";
+
+                    if (colIdx == 0) {
+                        value = recipient.getEmail();
+                    } else if (colIdx == 1) {
+                        value = recipient.getName();
+                    } else if (colIdx == 2) {
+                        value = recipient.getCompany();
+                    } else if (colIdx == 3) {
+                        value = recipient.getCity();
+                    }
+
                     cell.setCellValue(String.valueOf(value));
-                } catch (NumberFormatException | ParseException ex) {
+                } catch (NumberFormatException ex) {
                     ex.printStackTrace();
                 }
 
@@ -98,6 +113,17 @@ public class XlsParser {
 
             rowIdx++;
 
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            wb.write(fos);
+            fos.close();
+            wb.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
