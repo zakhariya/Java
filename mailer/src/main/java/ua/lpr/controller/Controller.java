@@ -40,11 +40,9 @@ public class Controller {
         Map<String, String> viewData = getViewData();
 
         //TODO: remove
-        File file = new File("file.xlsx");
-//
 //        XlsParser parser = new XlsParser(this);
-//        parser.parseToDatabase(file);
-//        parser.writeToFile(getRecipientList(), file);
+//        parser.parseToDatabase();
+//        parser.writeToFile(getRecipientList());
 
         try {
             view.changeElementsState(false);

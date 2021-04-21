@@ -9,4 +9,9 @@ public class Coder {
 
         return "=?UTF-8?B?" + s + "?=";
     }
+
+    public static String decode(String s) {
+        byte[] decodedBytes = Base64.getDecoder().decode(s);
+        return new String(decodedBytes);
+    }
 }

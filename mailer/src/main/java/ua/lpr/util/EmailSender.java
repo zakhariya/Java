@@ -45,12 +45,12 @@ public class EmailSender {
         properties.setProperty("mail.smtp.port", params.get("port"));
 
         String protocol = params.get("protocol");
-        boolean encrypt = protocol.equals("ssl") || protocol.equals("tls");
+        boolean encrypt = protocol.equalsIgnoreCase("ssl") || protocol.equalsIgnoreCase("tls");
         properties.setProperty("mail.smtp.starttls.enable", String.valueOf(encrypt));
 
-        String sslClass = protocol.equals("ssl") ? "javax.net.ssl.SSLSocketFactory" : "null";
-        properties.setProperty("mail.smtp.socketFactory.class", sslClass);
+        String sslClass = protocol.equalsIgnoreCase("ssl") ? "javax.net.ssl.SSLSocketFactory" : "null";
 
+        properties.setProperty("mail.smtp.socketFactory.class", sslClass);
         properties.setProperty("mail.smtp.socketFactory.port", params.get("port"));
 
 //        if(protocol.equalsIgnoreCase("ssl")){

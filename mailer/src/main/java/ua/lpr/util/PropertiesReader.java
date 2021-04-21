@@ -30,4 +30,7 @@ public class PropertiesReader {
         return properties.getProperty("db.password");
     }
 
+    public String getXlsFileName() {
+        return properties.getProperty("file.xls");
+    }
 }

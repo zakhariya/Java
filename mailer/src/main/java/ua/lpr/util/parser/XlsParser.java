@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import ua.lpr.controller.Controller;
 import ua.lpr.entity.Recipient;
+import ua.lpr.util.PropertiesReader;
 
 import javax.swing.*;
 import java.io.File;
@@ -28,16 +29,19 @@ import java.util.List;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class XlsParser {
+    private final PropertiesReader propertiesReader;
     private final Controller controller;
+    private final File file;
 
     private static final Logger log = getLogger(XlsParser.class);
 
     public XlsParser(Controller controller) {
         this.controller = controller;
-
+        this.propertiesReader = new PropertiesReader();
+        this.file = new File(propertiesReader.getXlsFileName());
     }
 
-    public void parseToDatabase(File file) {
+    public void parseToDatabase() {
         Workbook wb = null;
 
         try {
@@ -73,7 +77,7 @@ public class XlsParser {
         }
     }
 
-    public void writeToFile(List<Recipient> recipients, File file) {
+    public void writeToFile(List<Recipient> recipients) {
         Workbook wb = new SXSSFWorkbook(100);
         Sheet sheet = wb.createSheet("Полиграфисты");
 
@@ -176,6 +180,4 @@ public class XlsParser {
             controller.saveRecipient(recipient);
         }
     }
-
-
 }
