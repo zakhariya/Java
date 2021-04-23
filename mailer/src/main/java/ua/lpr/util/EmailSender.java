@@ -53,14 +53,6 @@ public class EmailSender {
         properties.setProperty("mail.smtp.socketFactory.class", sslClass);
         properties.setProperty("mail.smtp.socketFactory.port", params.get("port"));
 
-//        if(protocol.equalsIgnoreCase("ssl")){
-//
-//        }else if(params.get("protocol").equalsIgnoreCase("tls")){
-//
-//        }else{
-//
-//        }
-
         Authenticator auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -138,15 +130,11 @@ public class EmailSender {
     private void sendMessages(Session session, Map<String, String> params, List<Recipient> recipients)
             throws MessagingException {
 
-        Transport transport = session.getTransport("smtp");
-
-        transport.connect();
-
         Thread t = new Thread(() -> {
             try {
                 log.info("Процесс отправки начат");
                 controller.setProgressValue(0);
-                sendMessages(session, params, recipients, transport);
+                send(session, params, recipients);
                 log.info("Процесс отправки завершен");
                 controller.setProgressValue(100);
                 controller.getView().updateList(controller.getRecipientList());
@@ -163,15 +151,14 @@ public class EmailSender {
             try {
                 t.start();
                 t.join();
-                transport.close();
-            } catch (MessagingException | InterruptedException e) {
+            } catch (InterruptedException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
         }).start();
     }
 
-    private void sendMessages(Session session, Map<String, String> params, List<Recipient> recipients, Transport t)
-            throws MessagingException, InterruptedException {
+    private void send(Session session, Map<String, String> params, List<Recipient> recipients)
+            throws InterruptedException, MessagingException {
 
         for (int i = 0; i < recipients.size(); i++) {
             Recipient recipient = recipients.get(i);
@@ -196,8 +183,11 @@ public class EmailSender {
                     Coder.encodeToBase64(name) + " <" + recipient.getEmail() + ">" :
                     recipient.getEmail();
             try{
+                Transport transport = session.getTransport("smtp");
 
-                t.sendMessage(message, new Address[] { new InternetAddress(email) });
+                transport.connect();
+
+                transport.sendMessage(message, new Address[] { new InternetAddress(email) });
 
                 String s = String.format("№ %d %s отправлено", i + 1, recipient.getEmail());
                 log.info(s);
@@ -205,6 +195,8 @@ public class EmailSender {
 
                 recipient.setSent(true);
                 controller.saveRecipient(recipient);
+
+                transport.close();
             }catch (Exception ex) {
                 String s =
                         String.format("№ %d %s ошибка отправки:%n%s", i + 1, recipient.getEmail(), ex.getLocalizedMessage());
