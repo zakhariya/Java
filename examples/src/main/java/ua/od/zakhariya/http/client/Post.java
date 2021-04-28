@@ -14,7 +14,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
-public class Post {
+public class Post extends ResponseContent {
 
     private static final String USER_AGENT = "Mozilla/5.0";
 
@@ -25,11 +25,16 @@ public class Post {
     private static String url3 = "https://api.lpr.ua/test/curl/get/?a=3&b=5";
     private static String url4 = "https://chatapi.viber.com/pa/send_message";
     private static String url5 = "https://192.168.0.60:9494/print/image";
+    private static final String url18 = "https://lpr.ua/bejdzhi/beidzhy-dlia-konferentsyi";
+    private static final String url19 = "https://lpr.ua/ru/bejdzhi/beidzhy-dlia-konferentsyi";
 
     public static void main(String... args)  {
+        two();
+    }
 
+    public static void one() {
         try (CloseableHttpClient httpsClient= WebClientUtil.createHttpsClient()) {
-            HttpPost post = new HttpPost(url5);
+            HttpPost post = new HttpPost(url18);
 
             //httpget.addHeader("Host", "api.lpr.ua");
             //post.setHeader("User-Agent", USER_AGENT);
@@ -65,24 +70,33 @@ public class Post {
 //            IOUtils.copy(inputStream, writer, encoding);
 //            String theString = writer.toString();
 
-            String theString = IOUtils.toString(input, "UTF-8");
+            String s = IOUtils.toString(input, "UTF-8");
 
-            System.out.println(theString);
+            System.out.println(s);
 
-
-
-
-            JFrame frame = new JFrame();
-
-            frame.setLayout(new BorderLayout());
-            frame.add(new JScrollPane(new JLabel("<html>" + theString.replace("<!DOCTYPE html>", ""))));
-
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(500, 500);
-            frame.setVisible(true);
-            frame.setLocationRelativeTo(null);
+            showInWindow(s);
 
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void two() {
+        try (CloseableHttpClient httpsClient = WebClientUtil.createHttpsClient(WebClientUtil.getTrustContext())) {
+            HttpPost post = new HttpPost(url19);
+
+            System.out.println("Executing request: " + post.getRequestLine());
+
+            HttpResponse response = httpsClient.execute(post);
+
+            InputStream input = response.getEntity().getContent();
+
+            String s = IOUtils.toString(input, "UTF-8");
+
+            System.out.println(s);
+
+//            showInWindow(s);
+        } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
             throw new RuntimeException(e);
         }
     }

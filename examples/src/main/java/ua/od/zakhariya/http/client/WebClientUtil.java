@@ -1,9 +1,7 @@
 package ua.od.zakhariya.http.client;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.RedirectStrategy;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
@@ -13,10 +11,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 
 import javax.net.ssl.*;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.*;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -54,7 +52,7 @@ public class WebClientUtil {
                 .build();
     }
 
-    protected static CloseableHttpClient createHttpsClient(SSLContext sslContext) throws NoSuchAlgorithmException, KeyManagementException {
+    protected static CloseableHttpClient createHttpsClient(SSLContext sslContext) {
         HostnameVerifier allowAllHosts = new NoopHostnameVerifier();
 
         // create an SSL Socket Factory to use the SSLContext with the trust self signed certificate strategy
@@ -64,6 +62,21 @@ public class WebClientUtil {
         return HttpClients
                 .custom()
                 .setSSLSocketFactory(connectionFactory)
+                .build();
+    }
+
+    protected static CloseableHttpClient createHttpsClient(SSLContext sslContext, RedirectStrategy redirectStrategy) {
+        HostnameVerifier allowAllHosts = new NoopHostnameVerifier();
+
+        // create an SSL Socket Factory to use the SSLContext with the trust self signed certificate strategy
+        // and allow all hosts verifier.
+        SSLConnectionSocketFactory connectionFactory = new SSLConnectionSocketFactory(sslContext, allowAllHosts);
+
+        return HttpClients
+                .custom()
+                .setSSLSocketFactory(connectionFactory)
+                .setRedirectStrategy(redirectStrategy)
+//                .setDefaultRequestConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.BROWSER_COMPATIBILITY).build())
                 .build();
     }
 

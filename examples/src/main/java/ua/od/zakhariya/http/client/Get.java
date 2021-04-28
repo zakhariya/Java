@@ -1,23 +1,29 @@
 package ua.od.zakhariya.http.client;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.RedirectStrategy;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultRedirectStrategy;
 
 import javax.net.ssl.*;
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
+import java.net.URI;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.List;
 
-public class Get {
+public class Get extends ResponseContent {
 
     private static String file = System.getProperty("user.dir") + "\\log\\site.txt";
 
@@ -44,9 +50,10 @@ public class Get {
     private static final String url16 = "https://185.104.45.157";
     private static final String url17 = "https://web.telegram.org/#/im?p=@fornod";
     private static final String url18 = "https://lpr.ua/bejdzhi/beidzhy-dlia-konferentsyi";
+    private static final String url19 = "https://lpr.ua/ru/bejdzhi/beidzhy-dlia-konferentsyi";
 
-    public static void main(String... args)  {
-        two();
+    public static void main(String... args) throws NoSuchAlgorithmException, KeyManagementException {
+        three();
     }
 
     private static void one() throws NoSuchAlgorithmException, KeyManagementException, IOException {
@@ -66,15 +73,15 @@ public class Get {
 
     private static void two() {
         try (CloseableHttpClient httpclient = WebClientUtil.createHttpsClient(WebClientUtil.getTrustContext())) {
-            HttpGet httpget = new HttpGet(url18);
+            HttpGet get = new HttpGet(url18);
 
-//            httpget.addHeader("Host", "lpr.ua");
+//            get.addHeader("Host", "lpr.ua");
 
-//            System.out.println("Executing request: " + httpget.getRequestLine());
+            System.out.println("Executing request: " + get.getRequestLine());
 
             long start = System.currentTimeMillis();
 
-            HttpResponse response = httpclient.execute(httpget);
+            HttpResponse response = httpclient.execute(get);
 
             String info = "Response time: " + (System.currentTimeMillis() - start) / 1000.0 + " seconds ";
 //            System.out.println(info);
@@ -90,21 +97,73 @@ public class Get {
 
 //            StringWriter writer = new StringWriter();
 //            IOUtils.copy(inputStream, writer, encoding);
-//            String theString = writer.toString();
+//            String s = writer.toString();
 
-            String theString = IOUtils.toString(input, "UTF-8");
+            String s = IOUtils.toString(input, "UTF-8");
 
-//            showInConsole(theString);
+//            showInConsole(s);
 
-            saveToFile(theString);
+            saveToFile(file, s);
 
-            //showInWindow(theString);
+            //showInWindow(s);
         } catch (NoSuchAlgorithmException | KeyManagementException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void three() throws NoSuchAlgorithmException, KeyManagementException, IOException, KeyStoreException, CertificateException {
+    private static void three() throws KeyManagementException, NoSuchAlgorithmException {
+
+        RedirectStrategy strategy = new DefaultRedirectStrategy() {
+
+            private List<String> methods = Arrays.asList(new String[] {
+                    HttpGet.METHOD_NAME, HttpPost.METHOD_NAME, HttpHead.METHOD_NAME
+            });
+
+            @Override
+            protected boolean isRedirectable(String method) {
+//                return methods.contains(method);
+
+                return false;
+            }
+        };
+
+        HttpClientContext context = HttpClientContext.create();
+        HttpGet get = new HttpGet(url19);
+        SSLContext sslContext = WebClientUtil.getTrustContext();
+
+        try (CloseableHttpClient httpclient = WebClientUtil.createHttpsClient(sslContext, strategy);
+             CloseableHttpResponse response = httpclient.execute(get, context)) {
+
+            int status = response.getStatusLine().getStatusCode();
+            System.out.println("Status code: " + status);
+
+            if (status >= 301 && status <= 307) {
+                List<URI> locations = context.getRedirectLocations();
+//                locations.forEach(System.out::println);
+
+                System.out.println(response.getHeaders("Location")[0].getValue());
+
+            }
+
+            for (Header header : response.getAllHeaders()) {
+                System.out.println(header);
+            }
+
+            InputStream input = response.getEntity().getContent();
+
+            String s = IOUtils.toString(input, "UTF-8");
+
+//            showInConsole(s);
+
+//            saveToFile(file, s);
+
+            //showInWindow(s);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void four() throws NoSuchAlgorithmException, KeyManagementException, IOException, KeyStoreException, CertificateException {
         String args[] = {"", ""};
         String host;
         int port;
@@ -210,48 +269,4 @@ public class Get {
                 ("Added certificate to keystore 'jssecacerts' using alias '"
                         + alias + "'");
     }
-
-    private static final char[] HEXDIGITS = "0123456789abcdef".toCharArray();
-
-    private static String toHexString(byte[] bytes) {
-        StringBuilder sb = new StringBuilder(bytes.length * 3);
-        for (int b : bytes) {
-            b &= 0xff;
-            sb.append(HEXDIGITS[b >> 4]);
-            sb.append(HEXDIGITS[b & 15]);
-            sb.append(' ');
-        }
-        return sb.toString();
-    }
-
-    private static void showInConsole(String text) {
-        System.out.println(text);
-    }
-
-    private static void saveToFile(String text) throws IOException {
-
-//        Files.deleteIfExists(Paths.get(file));
-//        Files.createFile(Paths.get(file));
-
-        Files.write(
-                Paths.get(file),
-                text.getBytes(),
-//                text.getBytes("utf-8"),
-                StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING);
-
-    }
-
-    private static void showInWindow(String text) {
-        JFrame frame = new JFrame();
-
-        frame.setLayout(new BorderLayout());
-        frame.add(new JScrollPane(new JLabel("<html>" + text.replace("<!DOCTYPE html>", ""))));
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-    }
-
 }
