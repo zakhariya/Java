@@ -18,12 +18,14 @@ public class HtmlDoublesFinderApplication {
 	@Bean
 	public Executor taskExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+
 		executor.setCorePoolSize(10);
 		executor.setMaxPoolSize(100);
 		executor.setQueueCapacity(500);
 		executor.setWaitForTasksToCompleteOnShutdown(true);
 		executor.setThreadNamePrefix("Async-");
 //		executor.initialize();
+
 		return executor;
 	}
 

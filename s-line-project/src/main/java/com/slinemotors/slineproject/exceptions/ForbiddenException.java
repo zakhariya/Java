@@ -34,7 +34,7 @@ public class ForbiddenException extends RuntimeException implements AccessDenied
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException {
-        httpServletResponse.sendError(403);
+        httpServletResponse.sendError(403, "Access denied");
 
         e.setStackTrace(new StackTraceElement[0]);
     }
