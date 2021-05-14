@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <object th:include="fragments :: head" th:remove="tag" />
+
+    <script th:src="@{/js/emails.js}"></script>
+</head>
+<body>
+
+<header th:replace="fragments :: header" />
+
+<main>
+    <aside>
+        <section id="navigation">
+            <nav>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/emails">Получить список <em>e-mail</em> co страниц</a></li>
+                    <li><a href="/links">Получить ссылки сайта</a></li>
+                    <li><a href="/comparator">Пока ничего</a></li>
+                </ul>
+            </nav>
+        </section>
+    </aside>
+    <div id="result-container">
+        <h2>Результат:</h2>
+        <ul></ul>
+    </div>
+    <article class="container">
+        <h2>Список адресов страниц:</h2>
+        <form id="urls-list">
+            <textarea rows="20" cols="70"></textarea>
+            <button type="submit">GO</button>
+            <button type="reset">Clear</button>
+        </form>
+        <aside>
+            <span>Time gone: </span>
+            <span id="timer">00:00:00</span>
+        </aside>
+        <div id="invalid-list">
+            <h2>Invalid links:</h2>
+            <ol></ol>
+        </div>
+    </article>
+</main>
+
+
+<footer th:replace="fragments :: footer" />
+
+</body>
+</html>

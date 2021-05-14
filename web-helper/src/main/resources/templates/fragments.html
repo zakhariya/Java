@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Web-helper</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon-32x32.png}" />
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon-16x16.png}" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/functions.js}"></script>
+</head>
+
+<body>
+<header th:fragment="header">
+    <nav id="top-nav-bar">
+        <div class="container">
+            <div class="nav-header">
+                <span>Spring Boot project for help to work with web</span>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section th:fragment="navigation" id="navigation">
+    <nav>
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="/">Главная</a></li>
+            <li><a href="/emails">Получить список <em>e-mail</em> co страниц</a></li>
+            <li><a href="/links">Получить ссылки сайта</a></li>
+            <li><a href="/comparator">Пока ничего</a></li>
+        </ul>
+    </nav>
+</section>
+
+<footer th:fragment="footer">
+    <section>
+        <span>Developed by <a href="mailto:alexander.zakhariya@gmail.com">alexander.zakhariya@gmail.com</a></span>
+    </section>
+    <span id="footer-down"><img src="/img/down.png"></span>
+</footer>
+
+</body>
+</html>

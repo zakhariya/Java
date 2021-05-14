@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <object th:include="fragments :: head" th:remove="tag" />
+
+    <script th:src="@{/static/js/comparator.js}"></script>
+</head>
+<body>
+
+<header th:replace="fragments :: header" />
+
+<main>
+    <aside>
+        <section th:replace="fragments :: navigation" />
+    </aside>
+    <article class="container">
+        <div >
+
+        </div>
+    </article>
+</main>
+
+<footer th:replace="fragments :: footer" />
+
+</body>
+</html>

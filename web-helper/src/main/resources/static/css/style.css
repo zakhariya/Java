@@ -1,0 +1,199 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+    color: #8C8C8C;
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background: darkcyan;
+    color: white;
+    padding: 0.5em;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    background: darkcyan;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    height: 3em;
+    bottom: 0;
+    color: white;
+}
+
+header #navbar ul {
+    list-style: none;
+    display: inline-flex;
+}
+
+header .container {
+    text-align: center;
+    display: block;
+}
+
+.panel-default {
+    padding: 2em;
+}
+
+.container{
+    max-width: 50em;
+}
+
+aside {
+    float: left;
+    padding: 2em;
+    max-width: 20em;
+    display: inline-block;
+}
+
+#admin-nav {
+
+}
+
+.panel-default {
+    max-width: 150em;
+    margin-top: 3em;
+    display: inline-block;
+}
+
+form h1 {
+    margin: 0 0 1em 0;
+}
+
+form input {
+    margin: 1em auto;
+}
+
+/* FORMS */
+
+.users-panel {
+    background: whitesmoke;
+    height: 3.5em;
+    overflow: hidden;
+    padding: 0;
+}
+
+.user-preview {
+
+}
+
+.users-panel form {
+    padding: 3em;
+}
+
+.users-panel .id {
+    max-width: 3em;
+}
+
+.form-group {
+    display: inline-block;
+}
+
+.form-group.user-active {
+    display: block;
+}
+
+.form-group.user-roles {
+    display: inline-grid;
+}
+
+.form-group.user-active {
+    display: inline-block;
+    margin: 2em;
+}
+
+form h3,
+form h4 {
+    text-align: center;
+}
+
+.user-employee {
+    background: gainsboro;
+}
+
+footer section {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    padding: 0.5em;
+}
+
+#footer-down {
+    cursor: pointer;
+}
+
+#footer-down img {
+    width: 20px;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: auto;
+}
+
+#wrapper {
+
+}
+
+#content {
+    display: inline-flex;
+    margin: auto;
+}
+
+#content div {
+    margin: 2em;
+}
+
+main article.container {
+    padding: 3em;
+}
+
+#result-container {
+    max-width: 20em;
+    max-height: 25em;
+    overflow: auto;
+}
+
+#invalid-list {
+    display: inline-block;
+    padding: 0 2em;
+    visibility: hidden;
+}
+
+#invalid-list ol {
+    text-align: initial;
+}
+
+form {
+    display: table-caption;
+}
+
+header a,
+footer a {
+    color: white;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+ul {
+    display: inline-block;
+    list-style-type: none;
+    text-align: initial;
+    color: black;
+    padding: 0;
+}
+
+.input-group label {
+    /*display: flex;*/
+}
