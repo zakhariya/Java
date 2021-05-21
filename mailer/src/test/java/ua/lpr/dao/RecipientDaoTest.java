@@ -117,7 +117,7 @@ public class RecipientDaoTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void updateWithNonExistsId() throws SQLException {
+    public void updateWithNotExistsId() throws SQLException {
         recipientDao.save(new Recipient(5, "Александр", "LPR.UA", null, "admin@lpr.ua", false, false, null));
     }
 
