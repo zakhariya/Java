@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <logger name="org.apache" level="WARN" />
+    <logger name="httpclient" level="WARN" />
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%-5level %logger{0} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="ua.od.zakhariya" level="debug"/>
+
+    <root level="info">
+        <!--<appender-ref ref="file"/>-->
+        <appender-ref ref="console"/>
+        <!--<appender-ref ref="gui"/>-->
+    </root>
+</configuration>
