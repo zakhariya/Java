@@ -52,6 +52,7 @@ public class Get extends ResponseContent {
     private static final String url18 = "https://lpr.ua/nashi-produktyi";
     private static final String url19 = "https://lpr.ua/ru/bejdzhi/beidzhy-dlia-konferentsyi";
     private static final String url20 = "https://lpr.ua/wp-content/uploads/2014/06/img_2204.jpg";
+    private static final String url21 = "https://dev.fotoservice.lpr.ua/o_nas/";
 
     public static void main(String... args) throws NoSuchAlgorithmException, KeyManagementException {
         three();
@@ -129,7 +130,7 @@ public class Get extends ResponseContent {
         };
 
         HttpClientContext context = HttpClientContext.create();
-        HttpGet get = new HttpGet(url18);
+        HttpGet get = new HttpGet(url21);
         SSLContext sslContext = WebClientUtil.getTrustContext();
 
         try (CloseableHttpClient httpclient = WebClientUtil.createHttpsClient(sslContext, strategy);
@@ -155,8 +156,6 @@ public class Get extends ResponseContent {
             String s = IOUtils.toString(input, "UTF-8");
 
 //            showInConsole(s);
-
-//            saveToFile(file, s);
 
             saveToFile(file, s);
 

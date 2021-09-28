@@ -13,6 +13,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultRedirectStrategy;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
 import ua.od.zakhariya.http.client.WebClientUtil;
 
 import javax.net.ssl.SSLContext;
@@ -26,9 +27,12 @@ import java.nio.file.StandardOpenOption;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class LinkSearcher extends WebClientUtil {
 
@@ -37,6 +41,7 @@ public class LinkSearcher extends WebClientUtil {
     private static final Map<String, Link> linkMap = new ConcurrentHashMap();
     private static String domain;
     private static Document htmlDocument = Jsoup.parse("").normalise();
+    private static final Logger log = getLogger(LinkSearcher.class);
 
     static {
         try {
@@ -75,19 +80,23 @@ public class LinkSearcher extends WebClientUtil {
     public static void main(String[] args)
             throws NoSuchAlgorithmException, IOException, KeyManagementException {
 
+        long start = new Date().getTime();
+
+        log.info("Started");
+
         addLinks(url, URLType.PAGE);
+
+        log.info(String.format("Completed at %d millis", (new Date().getTime() - start)));
 
         linkMap.forEach((k, v) -> addToDocument(v));
 
         saveToFile(file, htmlDocument.html());
+
+        log.info("Saved");
     }
 
     private static void addLinks(String url, URLType type)
             throws NoSuchAlgorithmException, KeyManagementException, IOException {
-
-        if (!url.contains(domain)) {
-            return;
-        }
 
         HttpClient client = getHttpClient();
         HttpResponse response = getResponse(url, client);
@@ -99,9 +108,16 @@ public class LinkSearcher extends WebClientUtil {
             link.setStatus(status);
 //            addToDocument(link);
 //            saveToFile(file, String.format("%s%n", htmlDocument));
+        } else if (linkMap.isEmpty()) {
+            Link link = new Link(url, status, type);
+            linkMap.put(url, link);
         }
 
         closeSocket((CloseableHttpClient) client, (CloseableHttpResponse) response);
+
+        if (!url.contains(domain)) {
+            return;
+        }
 
         HtmlParser parser = new HtmlParser();
         List<String> links = parser.getLinkUrls(html);
