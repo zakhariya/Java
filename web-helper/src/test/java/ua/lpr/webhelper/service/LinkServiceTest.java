@@ -1,5 +1,7 @@
 package ua.lpr.webhelper.service;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,6 +17,16 @@ public class LinkServiceTest {
 
     private LinkService service;
 
+    @BeforeAll
+    public static void beforeAll() {
+
+    }
+
+    @AfterAll
+    public static void afterAll() {
+
+    }
+
     @BeforeEach
     public void initMock() {
         service = Mockito.mock(LinkServiceImpl.class);
@@ -28,4 +40,5 @@ public class LinkServiceTest {
         assertThat(actual).isNotNull()
             .isEqualTo("");
     }
+
 }
