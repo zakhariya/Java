@@ -31,9 +31,15 @@ $(document).ready(function () {
            },
            success: function(response) {
                // showLoading(false);
-               console.log(response);
-               // showResult(response['emails']);
-               // showErrors(response['urlErrors']);
+
+               var row = $('#response-container table tr');
+
+               console.log(row);
+
+               $.each(response, function (key, value) {
+
+                   // resultList.append('<li>' + value + '</li>');
+               });
            },
            error: function(xhr) {
                // showLoading(false);
@@ -50,7 +56,7 @@ $(document).ready(function () {
     });
 });
 
-// .append("<table id=\"content\" border=\"1\"><tbody></tbody></table>")
+// .append("")
 //        StringBuffer buffer =
 //                new StringBuffer(String.format("<tr class=\"s-%d\">", link.getStatus()));
 //

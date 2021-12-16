@@ -4,9 +4,9 @@ import ua.lpr.webhelper.entity.Link;
 import ua.lpr.webhelper.entity.URLType;
 
 import java.net.URISyntaxException;
-import java.util.Map;
+import java.util.Set;
 
 public interface LinkService {
 
-    Map<String, Link> get(String url, URLType type) throws URISyntaxException;
+    Set<Link> get(String url, URLType type) throws URISyntaxException;
 }

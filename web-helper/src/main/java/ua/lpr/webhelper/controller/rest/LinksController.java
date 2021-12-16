@@ -13,8 +13,7 @@ import ua.lpr.webhelper.entity.URLType;
 import ua.lpr.webhelper.service.LinkService;
 
 import java.net.URISyntaxException;
-import java.util.Collections;
-import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/links")
@@ -24,7 +23,7 @@ public class LinksController {
     private LinkService linkService;
 
     @GetMapping("/get")
-    public ResponseEntity<Map<String, Link>> get(
+    public ResponseEntity<Set<Link>> get(
                     @RequestParam String url,
                     @RequestParam URLType type) {
 

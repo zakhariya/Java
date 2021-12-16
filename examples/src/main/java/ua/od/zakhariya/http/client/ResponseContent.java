@@ -21,7 +21,7 @@ class ResponseContent {
         return sb.toString();
     }
 
-    private static void showInConsole(String text) {
+    static void showInConsole(String text) {
         System.out.println(text);
     }
 

@@ -8,7 +8,7 @@ import ua.lpr.webhelper.service.LinkService;
 import ua.lpr.webhelper.util.LinkSearcher;
 
 import java.net.URISyntaxException;
-import java.util.Map;
+import java.util.Set;
 
 @Service
 public class LinkServiceImpl implements LinkService {
@@ -17,7 +17,7 @@ public class LinkServiceImpl implements LinkService {
     private LinkSearcher linkSearcher;
 
     @Override
-    public Map<String, Link> get(String url, URLType type) throws URISyntaxException {
+    public Set<Link> get(String url, URLType type) throws URISyntaxException {
 
         return linkSearcher.find(url, type);
     }
