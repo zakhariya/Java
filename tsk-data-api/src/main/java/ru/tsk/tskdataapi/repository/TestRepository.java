@@ -1,4 +1,5 @@
 package ru.tsk.tskdataapi.repository;
 
-public class TestRepository {
+public interface TestRepository {
+    String grr();
 }

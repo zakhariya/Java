@@ -1,4 +1,5 @@
 package ru.tsk.tskdataapi.service;
 
-public class TestService {
+public interface TestService {
+    String getMessage();
 }
