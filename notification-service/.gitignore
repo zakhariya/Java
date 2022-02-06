@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+notification-service/src/main/resources/static/
+notification-service/src/main/resources/templates/
+vk-msg-parser/src/main/resources/
