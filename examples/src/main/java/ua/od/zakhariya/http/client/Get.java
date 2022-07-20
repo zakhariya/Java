@@ -25,7 +25,7 @@ import java.util.List;
 
 public class Get extends ResponseContent {
 
-    private static String file = System.getProperty("user.dir") + "\\log\\site.txt";
+    private static final String file = System.getProperty("user.dir") + "\\log\\site.txt";
 
     private static final String ip = "https://46.149.60.40/viber";
     private static final String ip1 = "https://46.149.60.40";
@@ -53,6 +53,7 @@ public class Get extends ResponseContent {
     private static final String url19 = "https://lpr.ua/ru/bejdzhi/beidzhy-dlia-konferentsyi";
     private static final String url20 = "https://lpr.ua/wp-content/uploads/2014/06/img_2204.jpg";
     private static final String url21 = "https://dev.fotoservice.lpr.ua/o_nas/";
+    private static final String url22 = "https://lpr.ua/zaryazhateli-magazinov-ak";
 
     public static void main(String... args) throws NoSuchAlgorithmException, KeyManagementException {
         three();
@@ -117,9 +118,7 @@ public class Get extends ResponseContent {
 
         RedirectStrategy strategy = new DefaultRedirectStrategy() {
 
-            private List<String> methods = Arrays.asList(new String[] {
-                    HttpGet.METHOD_NAME, HttpPost.METHOD_NAME, HttpHead.METHOD_NAME
-            });
+            private final List<String> methods = Arrays.asList(HttpGet.METHOD_NAME, HttpPost.METHOD_NAME, HttpHead.METHOD_NAME);
 
             @Override
             protected boolean isRedirectable(String method) {
@@ -130,7 +129,7 @@ public class Get extends ResponseContent {
         };
 
         HttpClientContext context = HttpClientContext.create();
-        HttpGet get = new HttpGet(url21);
+        HttpGet get = new HttpGet(url22);
         SSLContext sslContext = WebClientUtil.getTrustContext();
 
         try (CloseableHttpClient httpclient = WebClientUtil.createHttpsClient(sslContext, strategy);
@@ -166,10 +165,11 @@ public class Get extends ResponseContent {
     }
 
     private static void four() throws NoSuchAlgorithmException, KeyManagementException, IOException, KeyStoreException, CertificateException {
-        String args[] = {"", ""};
+        String[] args = {"", ""};
         String host;
         int port;
         char[] passphrase;
+
         if ((args.length == 1) || (args.length == 2)) {
             String[] c = args[0].split(":");
             host = c[0];
@@ -182,16 +182,18 @@ public class Get extends ResponseContent {
         }
 
         File file = new File("jssecacerts");
-        if (file.isFile() == false) {
+        if (!file.isFile()) {
             char SEP = File.separatorChar;
             File dir = new File(System.getProperty("java.home") + SEP
                     + "lib" + SEP + "security");
             file = new File(dir, "jssecacerts");
-            if (file.isFile() == false) {
+            if (!file.isFile()) {
                 file = new File(dir, "cacerts");
             }
         }
+
         System.out.println("Loading KeyStore " + file + "...");
+
         InputStream in = new FileInputStream(file);
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
         ks.load(in, passphrase);
@@ -201,12 +203,14 @@ public class Get extends ResponseContent {
         TrustManagerFactory tmf =
                 TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         tmf.init(ks);
+
         X509TrustManager defaultTrustManager = (X509TrustManager) tmf.getTrustManagers()[0];
         WebClientUtil.SavingTrustManager tm = new WebClientUtil.SavingTrustManager(defaultTrustManager);
         context.init(null, new TrustManager[]{tm}, null);
         SSLSocketFactory factory = context.getSocketFactory();
 
         System.out.println("Opening connection to " + host + ":" + port + "...");
+
         SSLSocket socket = (SSLSocket) factory.createSocket(host, port);
         socket.setSoTimeout(10000);
         try {
@@ -232,8 +236,10 @@ public class Get extends ResponseContent {
         System.out.println();
         System.out.println("Server sent " + chain.length + " certificate(s):");
         System.out.println();
+
         MessageDigest sha1 = MessageDigest.getInstance("SHA1");
         MessageDigest md5 = MessageDigest.getInstance("MD5");
+
         for (int i = 0; i < chain.length; i++) {
             X509Certificate cert = chain[i];
             System.out.println
@@ -247,8 +253,10 @@ public class Get extends ResponseContent {
         }
 
         System.out.println("Enter certificate to add to trusted keystore or 'q' to quit: [1]");
+
         String line = reader.readLine().trim();
         int k;
+
         try {
             k = (line.length() == 0) ? 0 : Integer.parseInt(line) - 1;
         } catch (NumberFormatException e) {
