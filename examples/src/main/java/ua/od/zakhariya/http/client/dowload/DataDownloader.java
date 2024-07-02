@@ -10,7 +10,7 @@ import org.blinkenlights.jid3.MP3File;
 import org.blinkenlights.jid3.MediaFile;
 import org.blinkenlights.jid3.v2.ID3V2_3_0Tag;
 import org.json.simple.parser.ParseException;
-import ua.od.zakhariya.Constants;
+import ua.od.zakhariya.system.Constants;
 import ua.od.zakhariya.http.client.dowload.parser.HtmlParser;
 import ua.od.zakhariya.http.client.dowload.parser.JsonParser;
 

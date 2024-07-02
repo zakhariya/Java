@@ -5,7 +5,7 @@ import java.io.IOException;
 public class ShutdownSystem {
     public static void main(String arg[]) throws IOException {
 //        shutdownWindows();
-//        shutdownWithOSCheck();
+        shutdownWithOSCheck();
     }
 
     private static void shutdownWindows() throws IOException {

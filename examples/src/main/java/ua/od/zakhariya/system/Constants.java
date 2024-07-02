@@ -1,4 +1,4 @@
-package ua.od.zakhariya;
+package ua.od.zakhariya.system;
 
 import java.awt.*;
 
