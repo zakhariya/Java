@@ -34,6 +34,8 @@ public class MainMVCController {
         return "test";
     }
 
+    //test of login to github
+
     @GetMapping("login")
     public String login() {
 
