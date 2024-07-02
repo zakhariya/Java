@@ -18,10 +18,10 @@ public class ShutdownSystem {
         String shutdownCommand;
         String operatingSystem = System.getProperty("os.name");
 
-        if ("Linux".contains(operatingSystem) || "Mac OS X".contains(operatingSystem)) {
+        if (operatingSystem.contains("Linux") || operatingSystem.contains("Mac OS")) {
             shutdownCommand = "shutdown -h now";
         }
-        else if ("Windows".contains(operatingSystem)) {
+        else if (operatingSystem.contains("Windows")) {
             shutdownCommand = "shutdown.exe -s -t 0";
         }
         else {
