@@ -37,7 +37,7 @@ public class SystemController {
         if (!this.token.equals(token)) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         } else if (! systemService.shutdown()) {
-
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return new ResponseEntity(HttpStatus.OK);
