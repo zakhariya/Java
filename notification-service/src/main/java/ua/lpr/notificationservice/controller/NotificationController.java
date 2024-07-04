@@ -22,7 +22,7 @@ public class NotificationController {
     @GetMapping("/")
     public @ResponseBody String welcome() {
 
-        return "This is notification service";
+        return "Welcome! This is notification service.";
     }
 
     @PostMapping("/all")
@@ -33,7 +33,7 @@ public class NotificationController {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
-        notificationService.notifyEmployeesByAll(parameters);
+        notificationService.notifyByAll(parameters);
 
         return new ResponseEntity(HttpStatus.OK);
     }

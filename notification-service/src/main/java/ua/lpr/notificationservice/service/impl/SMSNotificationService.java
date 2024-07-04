@@ -2,7 +2,7 @@ package ua.lpr.notificationservice.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.lpr.notificationservice.entity.Manager;
+import ua.lpr.notificationservice.entity.Recipient;
 import ua.lpr.notificationservice.entity.Parameters;
 import ua.lpr.notificationservice.entity.RestTemplateSSL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,17 +61,17 @@ public class SMSNotificationService {
     }
 
     private String getRequestXmlString(Parameters parameters) {
-        Manager[] managers = parameters.getManagers();
+        Recipient[] recipients = parameters.getRecipients();
         phones = new ArrayList<>();
 
-        for (Manager manager : managers) {
-            if (manager.isActive() && manager.isPhoneNotify()
-                    && manager.getPhone() != null && manager.getPhone().length() > 0) {
-                phones.add(manager.getPhone());
+        for (Recipient recipient : recipients) {
+            if (recipient.isActive() && recipient.isPhoneNotify()
+                    && recipient.getPhone() != null && recipient.getPhone().length() > 0) {
+                phones.add(recipient.getPhone());
             }
         }
 
-        String xml = "<?xml version='1.0' encoding='utf-8'?>" +
+        return  "<?xml version='1.0' encoding='utf-8'?>" +
                         "<request_sendsms>" +
                             "<username><![CDATA["+parameters.getConfigValue(paramLogin)+"]]></username>" +
                             "<password><![CDATA["+parameters.getConfigValue(paramPassword)+"]]></password>" +
@@ -79,7 +79,5 @@ public class SMSNotificationService {
                             "<to><![CDATA"+phones.toString().replace(", ", ";")+"]></to>" +
                             "<text><![CDATA["+parameters.getConfigValue(paramText)+"]]></text>" +
                         "</request_sendsms>";
-
-        return xml;
     }
 }

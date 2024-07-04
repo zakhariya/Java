@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Parameters {
 
     private Config[] configs;
-    private Manager[] managers;
+    private Recipient[] recipients;
 
     public String getConfigValue(String parameter){
         for (Config config : configs) {
@@ -26,12 +26,12 @@ public class Parameters {
         this.configs = configs;
     }
 
-    public Manager[] getManagers() {
-        return managers;
+    public Recipient[] getRecipients() {
+        return recipients;
     }
 
-    public void setManagers(Manager[] managers) {
-        this.managers = managers;
+    public void setRecipients(Recipient[] recipients) {
+        this.recipients = recipients;
     }
 
     //TODO: toString
@@ -39,7 +39,7 @@ public class Parameters {
     public String toString() {
         return "Parameters{" +
                 "configs=" + Arrays.toString(configs) +
-                ", managers=" + Arrays.toString(managers) +
+                ", recipients=" + Arrays.toString(recipients) +
                 '}';
     }
 }

@@ -1,7 +1,7 @@
 package ua.lpr.notificationservice.service.impl;
 
 import org.slf4j.Logger;
-import ua.lpr.notificationservice.entity.Manager;
+import ua.lpr.notificationservice.entity.Recipient;
 import ua.lpr.notificationservice.entity.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +42,7 @@ public class EmailNotificationService {
     @Async
     public void sendBroadcastMessage(Parameters parameters) {
 
-        emailList = getEmailList(parameters.getManagers());
+        emailList = getEmailList(parameters.getRecipients());
 
         if (emailList.size() < 1) {
             logger.info("No recipients for e-mail notify.");
@@ -61,23 +61,28 @@ public class EmailNotificationService {
             helper.setText(parameters.getConfigValue(paramText), true);
 
             for (String email : emailList) {
-                helper.setTo(email);
-                mailSender.send(message);
+                try {
+                    helper.setTo(email);
+                    mailSender.send(message);
+                } catch (MailException | MessagingException ex) {
+                    emailList.remove(email);
+                    logger.error("E-mail was not sent. Error: " + ex.getLocalizedMessage());
+                }
             }
 
             logger.info("E-mail messages sent.\nRecipients: " + emailList);
-        } catch (MailException | MessagingException ex) {
+        } catch (MessagingException ex) {
            logger.error("E-mail was not sent. Error: " + ex.getLocalizedMessage());
         }
     }
 
-    private ArrayList<String> getEmailList(Manager[] managers) {
+    private ArrayList<String> getEmailList(Recipient[] recipients) {
         ArrayList<String> list = new ArrayList<>();
 
-        for (Manager manager : managers) {
-            if (manager.isActive() && manager.isEmailNotify()
-                    && manager.getEmail() != null && manager.getEmail().length() > 0) {
-                list.add(manager.getName() + " <" + manager.getEmail() + ">");
+        for (Recipient recipient : recipients) {
+            if (recipient.isActive() && recipient.isEmailNotify()
+                    && recipient.getEmail() != null && recipient.getEmail().length() > 0) {
+                list.add(recipient.getName() + " <" + recipient.getEmail() + ">");
             }
         }
 

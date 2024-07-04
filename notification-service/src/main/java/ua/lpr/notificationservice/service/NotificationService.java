@@ -4,12 +4,12 @@ import ua.lpr.notificationservice.entity.Parameters;
 
 public interface NotificationService {
 
-    void notifyEmployeesByAll(Parameters parameters);
+    void notifyByAll(Parameters parameters);
 
-    void notifyEmployeesBySms();
+    void notifyBySms();
 
-    void notifyEmployeesByEmail();
+    void notifyByEmail();
 
-    void notifyEmployeesByViber();
+    void notifyByViber();
 
 }

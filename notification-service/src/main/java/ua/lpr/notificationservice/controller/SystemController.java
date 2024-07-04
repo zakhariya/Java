@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import ua.lpr.notificationservice.entity.Parameters;
 import ua.lpr.notificationservice.service.SystemService;
 
 @Controller
@@ -32,7 +30,8 @@ public class SystemController {
     }
 
     @PostMapping("shutdown")
-    public @ResponseBody ResponseEntity systemShutdown(String token) {
+    public @ResponseBody ResponseEntity systemShutdown(
+            @RequestBody Parameters parameters, @RequestHeader("token") String token) {
 
         if (!this.token.equals(token)) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);

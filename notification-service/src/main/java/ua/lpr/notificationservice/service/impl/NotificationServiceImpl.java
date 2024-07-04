@@ -34,7 +34,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Async
     @Override
-    public void notifyEmployeesByAll(Parameters parameters) {
+    public void notifyByAll(Parameters parameters) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -46,46 +46,31 @@ public class NotificationServiceImpl implements NotificationService {
                         Thread.sleep(1000 * seconds);
                     }
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            viberNotificationService.sendBroadcastMessage(parameters);
-                        }
-                    }).start();
+                    new Thread(() -> viberNotificationService.sendBroadcastMessage(parameters)).start();
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            smsNotificationService.sendBroadcastMessage(parameters);
-                        }
-                    }).start();
+                    new Thread(() -> smsNotificationService.sendBroadcastMessage(parameters)).start();
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            emailNotificationService.sendBroadcastMessage(parameters);
-                        }
-                    }).run();
+                    new Thread(() -> emailNotificationService.sendBroadcastMessage(parameters)).start();
                 } catch (InterruptedException | ParseException ex) {
                     ex.printStackTrace();
                 }
 
             }
-        }).run();
+        }).start();
     }
 
     @Override
-    public void notifyEmployeesBySms() {
-
-    }
-
-    @Override
-    public void notifyEmployeesByEmail() {
+    public void notifyBySms() {
 
     }
 
     @Override
-    public void notifyEmployeesByViber() {
+    public void notifyByEmail() {
+
+    }
+
+    @Override
+    public void notifyByViber() {
 
     }
 
