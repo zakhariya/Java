@@ -64,15 +64,13 @@ public class EmailNotificationService {
                 try {
                     helper.setTo(email);
                     mailSender.send(message);
+                    logger.info("E-mail message sent to recipient: " + email);
                 } catch (MailException | MessagingException ex) {
-                    emailList.remove(email);
                     logger.error("E-mail was not sent. Error: " + ex.getLocalizedMessage());
                 }
             }
-
-            logger.info("E-mail messages sent.\nRecipients: " + emailList);
         } catch (MessagingException ex) {
-           logger.error("E-mail was not sent. Error: " + ex.getLocalizedMessage());
+           logger.error("E-mail was't sent. Error: " + ex.getLocalizedMessage());
         }
     }
 
