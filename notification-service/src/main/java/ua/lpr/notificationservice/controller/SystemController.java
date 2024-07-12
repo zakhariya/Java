@@ -31,11 +31,11 @@ public class SystemController {
 
     @PostMapping("shutdown")
     public @ResponseBody ResponseEntity systemShutdown(
-            @RequestBody Parameters parameters, @RequestHeader("token") String token) {
+            @RequestBody(required = false) Parameters parameters, @RequestHeader("token") String token) {
 
         if (!this.token.equals(token)) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
-        } else if (! systemService.shutdown()) {
+        } else if (! systemService.shutdown(parameters)) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
