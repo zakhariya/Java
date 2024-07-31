@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebMvc
 @ComponentScan({"ua.lpr.*"})
-@PropertySource(value = "classpath:application.properties", encoding="UTF-8")
+@PropertySource(value = "classpath:application-local.properties", encoding="UTF-8")
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
