@@ -16,7 +16,7 @@ public class PropertiesReader {
         catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(properties.getProperty("host"));
+        System.out.println(properties.getProperty("url"));
 
         Set<String> keys = properties.stringPropertyNames();
 

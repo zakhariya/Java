@@ -15,6 +15,9 @@ public class ShutdownBackupServer {
 
 //        ShutdownBackupServer sbs = new ShutdownBackupServer();
 //        sbs.sendRequest(url, token);
+
+        PropertiesReader propertiesReader = new PropertiesReader();
+
     }
 
     private void sendRequest(String url, String token) {
