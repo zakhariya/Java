@@ -9,13 +9,15 @@ public class Parameters {
     private Recipient[] recipients;
 
     public String getConfigValue(String parameter){
-        for (Config config : configs) {
-            if (config.getName().equalsIgnoreCase(parameter)) {
-                return config.getValue();
+        if (!isEmpty()) {
+            for (Config config : configs) {
+                if (config.getName().equalsIgnoreCase(parameter)) {
+                    return config.getValue();
+                }
             }
         }
 
-        return "";
+        return null;
     }
 
     public Config[] getConfigs() {
@@ -41,6 +43,14 @@ public class Parameters {
                 "configs=" + Arrays.toString(configs) +
                 ", recipients=" + Arrays.toString(recipients) +
                 '}';
+    }
+
+    public boolean isEmpty() {
+        return configs == null || configs.length == 0 || recipients == null || recipients.length == 0;
+    }
+
+    public boolean isValid() {
+        return !isEmpty();
     }
 }
 

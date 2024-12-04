@@ -4,7 +4,6 @@ import ua.lpr.notificationservice.entity.Parameters;
 import ua.lpr.notificationservice.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -30,20 +29,25 @@ public class NotificationServiceImpl implements NotificationService {
     private String paramEnd;
 
     @Value("${param.time.delay.seconds}")
-    private int seconds;
+    private int delaySeconds;
 
-    @Async
+//    @Async
     @Override
-    public void notifyByAll(Parameters parameters) {
+    public boolean notifyByAll(Parameters parameters) {
+        if (!parameters.isValid()) {
+            return false;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
+                System.out.println("dfsfdfsfdf");
                 try {
                     String beginTime = parameters.getConfigValue(paramBegin);
                     String endTime = parameters.getConfigValue(paramEnd);
 
                     while (!isWorkingTime(beginTime, endTime)) {
-                        Thread.sleep(1000 * seconds);
+                        Thread.sleep(1000 * delaySeconds);
                     }
 
                     new Thread(() -> viberNotificationService.sendBroadcastMessage(parameters)).start();
@@ -57,6 +61,8 @@ public class NotificationServiceImpl implements NotificationService {
 
             }
         }).start();
+
+        return true;
     }
 
     @Override

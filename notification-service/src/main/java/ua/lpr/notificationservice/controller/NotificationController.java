@@ -33,7 +33,9 @@ public class NotificationController {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
 
-        notificationService.notifyByAll(parameters);
+        if (!notificationService.notifyByAll(parameters)) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity(HttpStatus.OK);
     }
