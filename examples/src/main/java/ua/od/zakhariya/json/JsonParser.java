@@ -19,16 +19,18 @@ public class JsonParser {
         StringWriter writer = new StringWriter();
         writer.append(json);
 
+        System.out.println("1 " + writer.toString());
+
         User user = new User(5, "Olha", "qwerty");
 
         convertToJSON(writer, user);
 
-        System.out.println(writer.toString());
-        System.out.println(convertToUser(json));
+        System.out.println("2 " + writer.toString());
+        System.out.println("3 " + convertToUser(json));
 
         json = "[{\"id\":3,\"login\":\"Sasha\",\"password\":\"VerySecuredPassword\"},{\"id\":5,\"login\":\"Olha\",\"password\":\"qwerty\"}]";
 
-        System.out.println(convertToUserList(json));
+        System.out.println("4 " + convertToUserList(json));
     }
 
     private static User convertToUser(String json) throws IOException {

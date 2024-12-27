@@ -13,6 +13,7 @@ import java.io.IOException;
 @Service
 public class SystemServiceImpl implements SystemService {
 
+    private final String OS = System.getProperty("os.name");
     private static final Logger logger = LoggerFactory.getLogger(SystemServiceImpl.class);
 
     @Autowired
@@ -20,26 +21,48 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public boolean shutdown(Parameters parameters) {
-        if (parameters != null) {
-            notificationService.notifyByAll(parameters);
-        }
+        String command;
 
-        String shutdownCommand;
-        String operatingSystem = System.getProperty("os.name");
-
-        if (operatingSystem.contains("Linux") || operatingSystem.contains("Mac OS")) {
-            shutdownCommand = "shutdown -h 1"; // minutes
+        if (OS.contains("Linux") || OS.contains("Mac OS")) {
+            command = "shutdown -h 1"; // minutes
         }
-        else if (operatingSystem.contains("Windows")) {
-            shutdownCommand = "shutdown.exe /s /t 60"; // seconds
+        else if (OS.contains("Windows")) {
+            command = "shutdown.exe /s /t 60"; // seconds
         }
         else {
             throw new RuntimeException("Unsupported operating system.");
         }
 
         try {
-            Runtime.getRuntime().exec(shutdownCommand);
+            Runtime.getRuntime().exec(command);
+            notificationService.notifyByAll(parameters);
             logger.info("System shutdown terminate in 1 minute.");
+
+            return true;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean reboot(Parameters parameters) {
+        String command;
+
+        if (OS.contains("Linux") || OS.contains("Mac OS")) {
+            command = "restart -h 1"; // minutes
+        }
+        else if (OS.contains("Windows")) {
+            command = "shutdown.exe /r /t 60"; // seconds
+        }
+        else {
+            throw new RuntimeException("Unsupported operating system.");
+        }
+
+        try {
+            Runtime.getRuntime().exec(command);
+            notificationService.notifyByAll(parameters);
+            logger.info("System reboot terminate in 1 minute.");
 
             return true;
         } catch (IOException ex) {

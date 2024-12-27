@@ -34,14 +34,13 @@ public class NotificationServiceImpl implements NotificationService {
 //    @Async
     @Override
     public boolean notifyByAll(Parameters parameters) {
-        if (!parameters.isValid()) {
+        if (parameters == null || !parameters.isValid()) {
             return false;
         }
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("dfsfdfsfdf");
                 try {
                     String beginTime = parameters.getConfigValue(paramBegin);
                     String endTime = parameters.getConfigValue(paramEnd);

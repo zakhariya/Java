@@ -30,16 +30,29 @@ public class SystemController {
     }
 
     @PostMapping("shutdown")
-    public @ResponseBody ResponseEntity systemShutdown(
+    public @ResponseBody ResponseEntity<HttpStatus> systemShutdown(
             @RequestBody(required = false) Parameters parameters, @RequestHeader("token") String token) {
 
         if (!this.token.equals(token)) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
-        } else if (! systemService.shutdown(parameters)) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else if (parameters != null && ! systemService.shutdown(parameters)) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("reboot")
+    public @ResponseBody ResponseEntity<HttpStatus> systemReboot(
+            @RequestBody(required = false) Parameters parameters, @RequestHeader("token") String token) {
+
+        if (!this.token.equals(token)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else if (parameters != null && ! systemService.reboot(parameters)) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
