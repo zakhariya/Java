@@ -50,7 +50,7 @@ public class SystemServiceImpl implements SystemService {
         String command;
 
         if (OS.contains("Linux") || OS.contains("Mac OS")) {
-            command = "restart -h 1"; // minutes
+            command = "shutdown -r 1"; // minutes
         }
         else if (OS.contains("Windows")) {
             command = "shutdown.exe /r /t 60"; // seconds
