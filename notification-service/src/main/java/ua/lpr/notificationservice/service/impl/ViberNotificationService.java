@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.lpr.notificationservice.entity.Manager;
 import ua.lpr.notificationservice.entity.Parameters;
+import ua.lpr.notificationservice.entity.Recipient;
 import ua.lpr.notificationservice.entity.RestTemplateSSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,7 +61,7 @@ class ViberNotificationService {
         jsonBody = new JsonBody();
 
         jsonBody.setType("text");
-        jsonBody.setBroadcastList(parameters.getManagers());
+        jsonBody.setBroadcastList(parameters.getRecipients());
         jsonBody.setText(parameters.getConfigValue(paramMessage));
 
         ObjectMapper mapper = new ObjectMapper();
@@ -105,11 +105,11 @@ class ViberNotificationService {
             this.broadcastList = broadcastList;
         }
 
-        public void setBroadcastList(Manager[] managers) {
+        public void setBroadcastList(Recipient[] recipients) {
             broadcastList = new ArrayList<>();
             recipientNames = new ArrayList<>();
 
-            for (Manager manager : managers) {
+            for (Recipient manager : recipients) {
                 if (manager.isActive() && manager.isViberNotify()
                         && manager.getViberId() != null && manager.getViberId().length() > 0) {
 

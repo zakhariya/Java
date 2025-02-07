@@ -2,7 +2,7 @@ package ua.lpr.notificationservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Manager {
+public class Recipient {
     private long id;
     private boolean active;
     private String name;
@@ -26,7 +26,7 @@ public class Manager {
     //TODO: toString
     @Override
     public String toString() {
-        return "Manager{" +
+        return "Recipient{" +
                 "id=" + id +
                 ", active=" + active +
                 ", name='" + name + '\'' +

@@ -4,7 +4,6 @@ import ua.lpr.notificationservice.entity.Parameters;
 import ua.lpr.notificationservice.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -30,11 +29,15 @@ public class NotificationServiceImpl implements NotificationService {
     private String paramEnd;
 
     @Value("${param.time.delay.seconds}")
-    private int seconds;
+    private int delaySeconds;
 
-    @Async
+//    @Async
     @Override
-    public void notifyEmployeesByAll(Parameters parameters) {
+    public boolean notifyByAll(Parameters parameters) {
+        if (parameters == null || !parameters.isValid()) {
+            return false;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -43,49 +46,36 @@ public class NotificationServiceImpl implements NotificationService {
                     String endTime = parameters.getConfigValue(paramEnd);
 
                     while (!isWorkingTime(beginTime, endTime)) {
-                        Thread.sleep(1000 * seconds);
+                        Thread.sleep(1000 * delaySeconds);
                     }
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            viberNotificationService.sendBroadcastMessage(parameters);
-                        }
-                    }).start();
+                    new Thread(() -> viberNotificationService.sendBroadcastMessage(parameters)).start();
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            smsNotificationService.sendBroadcastMessage(parameters);
-                        }
-                    }).start();
+                    new Thread(() -> smsNotificationService.sendBroadcastMessage(parameters)).start();
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            emailNotificationService.sendBroadcastMessage(parameters);
-                        }
-                    }).run();
+                    new Thread(() -> emailNotificationService.sendBroadcastMessage(parameters)).start();
                 } catch (InterruptedException | ParseException ex) {
                     ex.printStackTrace();
                 }
 
             }
-        }).run();
+        }).start();
+
+        return true;
     }
 
     @Override
-    public void notifyEmployeesBySms() {
+    public void notifyBySms() {
 
     }
 
     @Override
-    public void notifyEmployeesByEmail() {
+    public void notifyByEmail() {
 
     }
 
     @Override
-    public void notifyEmployeesByViber() {
+    public void notifyByViber() {
 
     }
 

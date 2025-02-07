@@ -1,0 +1,82 @@
+//Headers:
+//Content-Type = application/json
+//token = notification-token
+
+{
+  "managers":[
+    {
+      "id":"2",
+      "active":"true",
+      "name":"Name1",
+      "phone":"380000000000",
+      "viber_id":"viberID1",
+      "email":"email1@gmail.com",
+      "email_notify":"true",
+      "phone_notify":"false",
+      "viber_notify":"true"
+
+    },{
+      "id":"54",
+      "active":"true",
+      "name":"Name2",
+      "phone":"380000000000",
+      "viber_id":"viberID2",
+      "email":"email1@gmail.com",
+      "email_notify":"false",
+      "phone_notify":"false",
+      "viber_notify":"false"
+
+    }
+  ],
+  "configs":[
+    {
+      "param":"email_box",
+      "value":"from@email.cpm"
+    },{
+      "param":"email_from",
+      "value":"Sender name"
+    },{
+      "param":"sms_from",
+      "value":"Lucky Print"
+    },{
+      "param":"sms_login",
+      "value":"smsServiceLogin"
+    },{
+      "param":"sms_password",
+      "value":"smsServicePssword"
+    },{
+      "param":"sms_url",
+      "value":"https:\/\/gate.smsclub.mobi\/http\/?"
+    },{
+      "param":"timed_notification",
+      "value":"on"
+    },{
+      "param":"timed_notification_server",
+      "value":"https:\/\/notificationserver.com:port"
+    },{
+      "param":"time_begin",
+      "value":"09:30"
+    },{
+      "param":"time_end",
+      "value":"20:00"
+    },{
+      "param":"viber_token",
+      "value":"tokenForViberAPI"
+    },{
+      "param":"viber_url",
+      "value":"https:\/\/chatapi.viber.com\/pa\/broadcast_message"
+    },{
+      "param":"email_text",
+      "value":"Some text<br>: text: text<br>phone: +38 (099) 999-99-99<br>e-mail: <br>emsil@com: Some text<br>Date: 2019-07-04 11:55:55<br>"
+    },{
+      "param":"sms_text",
+      "value":"Some text e-mail: email@com Some text  date: 2019-07-04 11:55:55"
+    },{
+      "param":"viber_text",
+      "value":"Some text \\n text: phone: \\ne-mail: emai@com\\n: Some text\\nDate: 2019-07-04 11:55:55"
+    },{
+      "param":"email_title",
+      "value":"Title"
+    }
+  ]
+}
