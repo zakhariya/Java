@@ -58,8 +58,6 @@ public class TaskDaoImpl implements TaskDao {
                 "OR act.UserName = ? AND act.PlaneDate IS NOT NULL AND act.DeleteMark = 0 " +
                 "ORDER BY act.ActionStatus, act.Priority, act.AddTime";
 
-        System.out.println(daysBefore + " " + Date.valueOf(daysBefore));
-
         return jdbcTemplate.query(sql, new TaskMapper(), userName, Date.valueOf(daysBefore), Date.valueOf(daysAfter), userName);
     }
 
