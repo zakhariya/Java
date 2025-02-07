@@ -12,7 +12,7 @@ public interface TaskDao {
 
     List<Task> findAll();
 
-    List<Task> findHodiernalByUserName(String userName);
+    List<Task> findActualByUserName(String userName);
 
     Task findById(long id);
 

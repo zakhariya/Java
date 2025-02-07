@@ -6,10 +6,6 @@ import ua.lpr.dao.TaskDao;
 import ua.lpr.model.Task;
 import ua.lpr.service.TaskService;
 
-import java.awt.image.BufferedImage;
-import java.io.InputStream;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -25,7 +21,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> findHodiernalByUserName(String userName) {
-        return taskDao.findHodiernalByUserName(userName);
+        return taskDao.findActualByUserName(userName);
     }
 
     @Override

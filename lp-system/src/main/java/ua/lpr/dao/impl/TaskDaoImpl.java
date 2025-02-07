@@ -43,21 +43,24 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public List<Task> findHodiernalByUserName(String userName) {
+    public List<Task> findActualByUserName(String userName) {
 
-        //String beforeDay =  LocalDate.now().plusDays(-1).toString();
-        String now =  LocalDate.now().toString();
-        String afterDay = LocalDate.now().plusDays(1).toString();
+        String daysBefore =  LocalDate.now().minusDays(7).toString();
+//        String now =  LocalDate.now().toString();
+        String daysAfter = LocalDate.now().plusDays(1).toString();
 
         //String sql = "SELECT * FROM " + table + " WHERE UserName=? AND StartTime BETWEEN ? AND ? ORDER BY ActionStatus, Priority, StartTime";
 
         String sql = "SELECT " + columns + " " +
                 "FROM " + table + " act " +
                 "LEFT JOIN " + joinTable + " cli ON act.ClientID = cli.ID " +
-                "WHERE act.UserName = ? AND act.StartTime BETWEEN ? AND ? AND act.DeleteMark = 0 " +
-                "ORDER BY act.ActionStatus, act.Priority, act.StartTime";
+                "WHERE act.UserName = ? AND act.AddTime BETWEEN ? AND ? AND act.DeleteMark = 0 " +
+                "OR act.UserName = ? AND act.PlaneDate IS NOT NULL AND act.DeleteMark = 0 " +
+                "ORDER BY act.ActionStatus, act.Priority, act.AddTime";
 
-        return jdbcTemplate.query(sql, new TaskMapper(), userName, Date.valueOf(now), Date.valueOf(afterDay));
+        System.out.println(daysBefore + " " + Date.valueOf(daysBefore));
+
+        return jdbcTemplate.query(sql, new TaskMapper(), userName, Date.valueOf(daysBefore), Date.valueOf(daysAfter), userName);
     }
 
 
@@ -75,17 +78,17 @@ public class TaskDaoImpl implements TaskDao {
     public Task create(Task task) throws TransientDataAccessResourceException, IncorrectResultSizeDataAccessException {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        String sql = "INSERT INTO " + table + " (ActionTitle, ActionNotes, ActionStatus, StartTime," +
-                " UserName, ClientID, AddTime, DeleteMark, AddedUser, ImagePic, Priority) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " + table + " (ActionTitle, ActionNotes, ActionStatus, AddTime," +
+                " UserName, ClientID, DeleteMark, AddedUser, ImagePic, Priority) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql);
 
-            ps.setString(1, task.getNotes());
-            ps.setString(2, task.getTitle());
+            ps.setString(1, task.getTitle());
+            ps.setString(2, task.getNotes());
             ps.setString(3, task.getStatus());
-            ps.setTimestamp(4, task.getStartTime());
+            ps.setTimestamp(4, task.getAddTime());
             ps.setString(5, task.getUserName());
 
             if (task.getClientId() == 0)
@@ -93,11 +96,10 @@ public class TaskDaoImpl implements TaskDao {
             else
                 ps.setString(6, String.valueOf(task.getClientId()));
 
-            ps.setTimestamp(7, task.getStartTime());
-            ps.setBoolean(8, task.isDeleted());
-            ps.setString(9, task.getUserName());
-            ps.setBlob(10, task.getImageData());
-            ps.setString(11, null);
+            ps.setBoolean(7, false);
+            ps.setString(8, task.getUserName());
+            ps.setBlob(9, task.getImageData());
+            ps.setString(10, null);
 
             return ps;
         }, keyHolder);

@@ -20,7 +20,7 @@ public class Task {
     private String clientName;
     private String status, title, notes, userName, addedUser;
     private boolean deleted;
-    private Timestamp startTime, endTime, planeTime;
+    private Timestamp addTime, startTime, endTime, planeTime;
     private Blob imageData;
     private String imageBase64String;
 
@@ -87,6 +87,15 @@ public class Task {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    @JsonIgnore
+    public Timestamp getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Timestamp addTime) {
+        this.addTime = addTime;
     }
 
     @JsonIgnore
