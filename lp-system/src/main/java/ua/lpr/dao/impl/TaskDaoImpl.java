@@ -45,7 +45,7 @@ public class TaskDaoImpl implements TaskDao {
     @Override
     public List<Task> findActualByUserName(String userName) {
 
-        String daysBefore =  LocalDate.now().minusDays(7).toString();
+        String daysBefore =  LocalDate.now().minusDays(30).toString();
 //        String now =  LocalDate.now().toString();
         String daysAfter = LocalDate.now().plusDays(1).toString();
 
