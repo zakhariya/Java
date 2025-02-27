@@ -2,7 +2,7 @@ package ua.od.zakhariya.system;
 
 import java.io.IOException;
 
-public class ShutdownSystem {
+public class RebootShutdown {
 
     public static void main(String arg[]) throws IOException {
 //        shutdownWithOSCheck();
@@ -13,10 +13,10 @@ public class ShutdownSystem {
         String shutdownCommand;
 
         if (Constants.OS.contains("Linux") || Constants.OS.contains("Mac OS")) {
-            shutdownCommand = "shutdown -h now";
+            shutdownCommand = "shutdown -h now"; //"shutdown -h 1"; - minutes
         }
         else if (Constants.OS.contains("Windows")) {
-            shutdownCommand = "shutdown.exe -s -t 0";
+            shutdownCommand = "shutdown.exe -s -t 0"; // "shutdown.exe /s /t 60"; - seconds
         }
         else {
             throw new RuntimeException("Unsupported operating system.");

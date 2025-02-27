@@ -1,6 +1,7 @@
 package ua.od.zakhariya.system;
 
 import java.awt.*;
+import java.io.File;
 
 public class Constants {
     public static final String OS = System.getProperty("os.name");
@@ -23,5 +24,7 @@ public class Constants {
 
     public static final int SCREEN_VISIBLE_WIDTH = (int) GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getWidth();
     public static final int SCREEN_VISIBLE_HEIGHT = (int) GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getHeight();
+
+    public static final File FILE = new File("src//main//resources//example.txt");
 
 }

@@ -8,6 +8,7 @@ out
 log
 *.patch
 *.ser
+example.txt
 
 ### STS ###
 .apt_generated
@@ -40,3 +41,7 @@ build/
 
 ### VS Code ###
 .vscode/
+!/src/main/resources/utf8_example.txt
+src/main/resources/utf8_example.txt
+/src/main/resources/utf8_example.txt
+/src/main/resources/example.txt
