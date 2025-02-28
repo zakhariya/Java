@@ -22,11 +22,12 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebMvc
 @ComponentScan({"ua.lpr.*"})
-@PropertySource(value = "classpath:application-local.properties", encoding="UTF-8")
+@PropertySource(value = "classpath:application-local.properties", encoding="UTF-8") //ISO-8859-1
 public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private Environment env;
+
 
     @Bean(name = "dataSource")
     public DataSource getDataSource() {

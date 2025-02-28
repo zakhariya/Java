@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("**/stage")
-public class StagesController {
+public class StageController {
 
     @Autowired
     private HttpSession session;

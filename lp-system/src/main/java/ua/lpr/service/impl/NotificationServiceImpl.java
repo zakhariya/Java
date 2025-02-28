@@ -59,7 +59,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Value("${settings.param.notification.type.viber}")
     private String paramNotificationTypeViber;
 
-    @Value("${setting.param.phone.mask.length}")
+    @Value("${settings.param.phone.mask.length}")
     private int phoneMaskLength;
 
     @Value("${setting.param.mail}")

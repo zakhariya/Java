@@ -153,7 +153,7 @@ public class UserController {
                 model.addObject("title", user.getName());
                 model.addObject("message", message);
                 model.addObject("user", user);
-                model.addObject("maxFileSize", env.getProperty("setting.files.maxImageSize"));
+                model.addObject("maxFileSize", env.getProperty("settings.files.maxImageSize"));
                 model.addObject("plannedStatus", env.getProperty("settings.param.status.active"));
                 model.addObject("activeStatus", env.getProperty("settings.param.status.planned"));
                 model.addObject("completedStatus", env.getProperty("settings.param.status.completed"));

@@ -71,7 +71,7 @@ public class TaskController {
     @Value("${settings.param.status.completed}")
     private String paramStatusCompleted;
 
-    @Value("${setting.files.maxImageSize}")
+    @Value("${settings.files.maxImageSize}")
     private int maxImageSize;
 
 

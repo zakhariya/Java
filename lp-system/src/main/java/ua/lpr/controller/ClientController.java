@@ -27,43 +27,43 @@ public class ClientController {
 
 
     @GetMapping("/list")
-    public ResponseEntity listClients(){
+    public ResponseEntity<List<Client>> listClients(){
         User user = (User) session.getAttribute("user");
 
         if(user == null)
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         List<Client> clients = clientService.getAll();
 
         if(clients.isEmpty())
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     @GetMapping("/list-limit")
-    public ResponseEntity listClients(@RequestParam int limit, @RequestParam int offset){
+    public ResponseEntity<List<Client>> listClients(@RequestParam int limit, @RequestParam int offset){
 
         List<Client> clients = clientService.getLimited(limit, offset);
 
         if(clients.isEmpty())
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     @GetMapping("/list-like")
-    public ResponseEntity listClients(@RequestParam(name = "partsOfName") String[] partsOfName){
+    public ResponseEntity<List<Client>> listClients(@RequestParam(name = "partsOfName") String[] partsOfName){
         User user = (User) session.getAttribute("user");
 
         if(user == null)
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         List<Client> clients = clientService.getByNameLike(partsOfName);
 
         if(clients.isEmpty())
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        return new ResponseEntity<List<Client>>(clients, HttpStatus.OK);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 }

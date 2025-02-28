@@ -40,7 +40,7 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 					.getResourceAsStream("application-local.properties");
 			Properties properties = new Properties();
 			properties.load(is);
-			maxUploadSizeInMb = Integer.parseInt(properties.getProperty("setting.files.maxImageSize"));
+			maxUploadSizeInMb = Integer.parseInt(properties.getProperty("settings.files.maxImageSize"));
 			maxUploadSizeInMb *= 1048576;
 		}catch (IOException | NumberFormatException ex){
 			maxUploadSizeInMb = 5 * 1024 * 1024; // 5Mb

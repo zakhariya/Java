@@ -45,11 +45,11 @@
                 var cont = $('#main-list');
                 var statusClass = '', content = '';
 
-                if(status == 'success'){
+                if(status === 'success'){
                     $.each(data, function (key, task) {
-                        if(task['status'] == planned)
+                        if(task['status'] === planned)
                             statusClass = 'planned';
-                        else if(task['status'] == active)
+                        else if(task['status'] === active)
                             statusClass = 'active';
                         else
                             statusClass = 'completed';
@@ -78,16 +78,16 @@
 
                         showForm(0, 'add');
                     });
-                }else if(status == 'nocontent'){ // 204
+                }else if(status === 'nocontent'){ // 204
                     alert('Ничего не найдено');
                     $.post('/logout').always(function () {
                         $(location).attr("href", '/${user.post}');
                     });
                 }
             }).fail(function (jqXHR) {
-                if(jqXHR.status == 403){ // Forbidden
+                if(jqXHR.status === 403){ // Forbidden
                     alert('Сессия завершена. Необходима повторная авторизация.');
-                }else if(jqXHR.status == 500){
+                }else if(jqXHR.status === 500){
                     alert('Внутренняя ошибка сервера');
                 }
 
@@ -98,7 +98,7 @@
         }
 
         function loadTask(id){
-            if(id == 0){
+            if(id === 0){
 
                 task = {
                     id: 0,
@@ -114,7 +114,7 @@
             }
 
             $.get('/${user.post}/${user.name}/task/' + id).done(function (data, status) {
-                if(status == 'success'){ // 200
+                if(status === 'success'){ // 200
                     task = data;
                 }else{
                     task = null;
@@ -122,11 +122,11 @@
 
                 isTaskLoaded = true;
             }).fail(function (jqXHR) {
-                if(jqXHR.status == 403){ // Forbidden
+                if(jqXHR.status === 403){ // Forbidden
                     alert('Сессия завершена. Необходима повторная авторизация.');
-                }else if(jqXHR.status == 404){
+                }else if(jqXHR.status === 404){
                     alert('Событие не существует');
-                }else if(jqXHR.status == 500){
+                }else if(jqXHR.status === 500){
                     alert('Внутренняя ошибка сервера');
                 }
 
@@ -138,11 +138,11 @@
             $('#overlay').css('display', 'none');
 
             var editBtn = '';
-            if(task != null && task['addedUser'] == '${user.name}')
+            if(task != null && task['addedUser'] === '${user.name}')
                 editBtn = '<br><br><a id="btn-edit" class="button medium-size" href="">Редактировать</a>';
 
             var completeBtnText = 'Завершить';
-            if(task != null && task['status'] == completed)
+            if(task != null && task['status'] === completed)
                 completeBtnText = 'Отменить завершение';
 
             var imageSrc = '', imageUrl = '#', imgPrevDisplay = 'display:none', imgBtnDisplay = '';
@@ -156,10 +156,15 @@
                 imgBtnDisplay = 'display:none';
             }
 
-            if(task['clientName'] == null)
+            if(task['clientName'] === null)
                 task['clientName'] = 'без клиента';
 
-            if(type == 'info'){
+            let logoFilePath = getLogoFilesPath();
+
+            console.log(task['notes']);
+            console.log(logoFilePath);
+
+            if(type === 'info'){
                 $('#form-container').html('' +
                     '<h2>Клиент:</h2><p>' + task['clientName'] + '</p>' +
                     '<h2>Тема:</h2><p>' + task['title'] + '</p>' +
@@ -176,7 +181,7 @@
                     '<a id="btn-change-state" class="button medium-size" href="">' + completeBtnText + '</a>' +
                     editBtn
                 );
-            }else if(type == 'edit' || type == 'add'){
+            }else if(type === 'edit' || type === 'add'){
                 $('#form-container').html('' +
                     '<form id="task" enctype="multipart/form-data">' +
                     '<input id="id" name="id" value="' + task['id'] + '" type="hidden">' +
@@ -280,10 +285,10 @@
             $('#btn-change-state').on('click', function (e){
                 e.preventDefault();
 
-                if(task['status'] == completed)
-                    changeTaskState(task['id'], 'resume');
+                if(task['status'] === completed)
+                    changeTaskStatus(task['id'], 'resume');
                 else
-                    changeTaskState(task['id'], 'complete');
+                    changeTaskStatus(task['id'], 'complete');
             });
 
             $('form#task').on('submit', function (e) {
@@ -300,7 +305,7 @@
 
                 var reqType = 'POST';
 
-                if(type == 'edit')
+                if(type === 'edit')
                     reqType = 'PUT';
 
                 $.ajax({
@@ -356,22 +361,43 @@
             loadTasksList();
         }
 
-        function changeTaskState(id, state){
+        function changeTaskStatus(id, state){
             $.post('/task/state/' + state + '/' + id).done(function (data, status) {
-                if(status == 'success' || status == 'nocontent')
+                if(status === 'success' || status === 'nocontent')
                     hideForm();
             }).fail(function (jqXHR) {
-                if(jqXHR.status == 403){ // Forbidden
+                if(jqXHR.status === 403){ // Forbidden
                     alert('Сессия завершена. Необходима повторная авторизация.');
-                }else if(jqXHR.status == 404){
+                }else if(jqXHR.status === 404){
                     alert('Техпроцесс не существует');
-                }else if(jqXHR.status == 500){
+                }else if(jqXHR.status === 500){
                     alert('Внутренняя ошибка сервера');
                 }
 
                 $.post('/logout').always(function () {
                     $(location).attr("href", '/${user.post}');
                 });
+            });
+        }
+
+        function getLogoFilesPath() {
+            $.get('/logo_files_path').done(function (data, status) {
+                if(status === "success"){
+
+                    <%--$.each(data, function (key, actStatus) {--%>
+                    <%--    if(actStatus['object'].indexOf('${plannedStatus}') > -1){--%>
+                    <%--        planned = actStatus['value'];--%>
+                    <%--    }else if(actStatus['object'].indexOf('${activeStatus}') > -1){--%>
+                    <%--        active = actStatus['value'];--%>
+                    <%--    }else if(actStatus['object'].indexOf('${completedStatus}') > -1){--%>
+                    <%--        completed = actStatus['value'];--%>
+                    <%--    }--%>
+                    <%--});--%>
+
+                    console.log(data);
+                }
+            }).fail(function (jqXHR) {
+
             });
         }
 
@@ -386,7 +412,7 @@
             });
 
             $.get('/task/statuses').done(function (data, status) {
-                if(status == "success"){
+                if(status === "success"){
                     $.each(data, function (key, actStatus) {
                         if(actStatus['object'].indexOf('${plannedStatus}') > -1){
                             planned = actStatus['value'];
