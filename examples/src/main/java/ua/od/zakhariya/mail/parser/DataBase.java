@@ -7,7 +7,7 @@ import java.util.List;
 public class DataBase {
     private String url = "jdbc:mysql://localhost:3306/mail?useUnicode=true&serverTimezone=UTC";
     private String user = "mail";
-    private String password = "S86Ad$";
+    private String password = "mail";
 
     public void updateRecipients(List<String> emails) {
         for (String email : emails) {
