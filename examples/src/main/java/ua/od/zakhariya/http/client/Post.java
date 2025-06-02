@@ -40,13 +40,8 @@ public class Post extends ResponseContent {
             //post.setHeader("User-Agent", USER_AGENT);
             //post.addHeader("content-type", "application/x-www-form-urlencoded");
             post.addHeader("content-type", "application/json"); //; charset=utf-8
-            //post.addHeader("Content-Type", "application/json; charset=utf-8"); //;
-//    		post.addHeader("X-Viber-Auth-Token", "48e61abd0c67d43a-f10bc5336c46ec0-b541b1e1c7ee9c17");
             post.addHeader("token", "someSecurityTokenForPrintService");
 
-            //post.setEntity(new StringEntity("{\"event\":\"get employees\",\"uid\":\"9VdfiZp2nakK0PzxMARjcg==\"}"));
-            //post.setEntity(new StringEntity("{\"event\":\"get all users\",\"uid\":\"9VdfiZp2nakK0PzxMARjcg==\"}"));
-//    		post.setEntity(new StringEntity("{\"receiver\":\"9VdfiZp2nakK0PzxMARjcg==\",\"type\":\"text\",\"text\":\"Добавлено задание\"}", "UTF-8"));
             post.setEntity(new StringEntity("{\"printerName\":\"EPSON L805 Series\",\"file\":\"d:\\test_2.jpg\"}", "UTF-8"));
 
             System.out.println("Executing request: " + post.getRequestLine());

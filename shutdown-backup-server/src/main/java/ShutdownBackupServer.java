@@ -17,10 +17,10 @@ public class ShutdownBackupServer {
             "{\n" +
             "\"id\":\"2\",\n" +
             "\"active\":\"true\",\n" +
-            "\"name\":\"\\u0410\\u043b\\u0435\\u043a\\u0441\\u0430\\u043d\\u0434\\u0440\",\n" +
-            "\"phone\":\"380934537578\",\n" +
-            "\"viber_id\":\"9VdfiZp2nakK0PzxMARjcg==\",\n" +
-            "\"email\":\"admin@lpr.ua\",\n" +
+            "\"name\":\"User\",\n" +
+            "\"phone\":\"number\",\n" +
+            "\"viber_id\":\"token\",\n" +
+            "\"email\":\"mail@domain\",\n" +
             "\"email_notify\":\"true\",\n" +
             "\"phone_notify\":\"false\",\n" +
             "\"viber_notify\":\"true\"\n" +
@@ -29,19 +29,19 @@ public class ShutdownBackupServer {
             "\"configs\":[\n" +
             "{\n" +
             "\"param\":\"email_box\",\n" +
-            "\"value\":\"info@e.lpr.ua\"\n" +
+            "\"value\":\"info@domain\"\n" +
             "},{\n" +
             "\"param\":\"email_from\",\n" +
-            "\"value\":\"\\u0410\\u0432\\u0442\\u043e\\u043c\\u0430\\u0442\\u0438\\u0447\\u0435\\u0441\\u043a\\u043e\\u0435 \\u043e\\u043f\\u043e\\u0432\\u0435\\u0449\\u0435\\u043d\\u0438\\u0435\"\n" +
+            "\"value\":\"From"\n" +
             "},{\n" +
             "\"param\":\"sms_from\",\n" +
-            "\"value\":\"Lucky Print\"\n" +
+            "\"value\":\"Company\"\n" +
             "},{\n" +
             "\"param\":\"sms_login\",\n" +
-            "\"value\":\"380934537578\"\n" +
+            "\"value\":\"user\"\n" +
             "},{\n" +
             "\"param\":\"sms_password\",\n" +
-            "\"value\":\"fej9ob3\"\n" +
+            "\"value\":\"pass\"\n" +
             "},{\n" +
             "\"param\":\"sms_url\",\n" +
             "\"value\":\"https:\\/\\/gate.smsclub.mobi\\/http\\/?\"\n" +
@@ -50,7 +50,7 @@ public class ShutdownBackupServer {
             "\"value\":\"on\"\n" +
             "},{\n" +
             "\"param\":\"timed_notification_server\",\n" +
-            "\"value\":\"https:\\/\\/api.lpr.ua:9393\"\n" +
+            "\"value\":\"https:\\/\\/domain:port\"\n" +
             "},{\n" +
             "\"param\":\"time_begin\",\n" +
             "\"value\":\"09:30\"\n" +
@@ -59,7 +59,7 @@ public class ShutdownBackupServer {
             "\"value\":\"20:00\"\n" +
             "},{\n" +
             "\"param\":\"viber_token\",\n" +
-            "\"value\":\"48e61abd0c67d43a-f10bc5336c46ec0-b541b1e1c7ee9c17\"\n" +
+            "\"value\":\"token\"\n" +
             "},{\n" +
             "\"param\":\"viber_url\",\n" +
             "\"value\":\"https:\\/\\/chatapi.viber.com\\/pa\\/broadcast_message\"\n" +

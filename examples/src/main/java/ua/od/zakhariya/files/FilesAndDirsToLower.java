@@ -5,7 +5,7 @@ import java.io.File;
 
 public class FilesAndDirsToLower {
 
-    private static File dest = new File("C:\\Users\\Саня Z\\Desktop\\lpr.ua\\wp-content\\uploads");
+    private static File dest = new File("\\wp-content\\uploads");
     private static long total;
 
     public static void main(String[] args) {
