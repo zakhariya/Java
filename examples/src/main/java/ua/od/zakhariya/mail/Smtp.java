@@ -36,7 +36,7 @@ public class Smtp {
 
         Authenticator auth = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("info@badges.com.ua", "6Q2h4T8z");
+                return new PasswordAuthentication("info@badges.com.ua", "password");
             }
         };
         Session session = Session.getDefaultInstance(props, auth);
