@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class SqlLite {
 
     private Connection getConnection() throws SQLException {
-        String url = "jdbc:sqlite:C:/Users/Саня Z/Desktop/logsqldb";
+        String url = "jdbc:sqlite:C:/Users/User/Desktop/logsqldb";
 
         return DriverManager.getConnection(url);
     }
