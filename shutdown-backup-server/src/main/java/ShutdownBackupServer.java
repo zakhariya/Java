@@ -32,7 +32,7 @@ public class ShutdownBackupServer {
             "\"value\":\"info@domain\"\n" +
             "},{\n" +
             "\"param\":\"email_from\",\n" +
-            "\"value\":\"From"\n" +
+            "\"value\":\"From\"\n" +
             "},{\n" +
             "\"param\":\"sms_from\",\n" +
             "\"value\":\"Company\"\n" +
