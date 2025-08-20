@@ -41,5 +41,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-/src/main/resources/example.txt
