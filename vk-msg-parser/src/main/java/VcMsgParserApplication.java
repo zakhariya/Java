@@ -15,8 +15,8 @@ public class VcMsgParserApplication {
         VcMsgParserApplication app = new VcMsgParserApplication();
         app.start();
 
-        String filePath = "C:\\Users\\Саня Z\\Desktop\\DownloadDialogs\\792524548 egre\\id297526756_Бодя Мерцалов\\Бодя Мерцалов.html";
-        String dirPath = "C:\\Users\\Саня Z\\Desktop\\DownloadDialogs";
+        String filePath = "C:\\Users\\User\\Desktop\\DownloadDialogs\\792524548 egre\\id297526756_Бодя Мерцалов\\Бодя Мерцалов.html";
+        String dirPath = "C:\\Users\\User\\Desktop\\DownloadDialogs";
 
 
 //        try {
@@ -38,7 +38,7 @@ public class VcMsgParserApplication {
 //        try {
             System.out.println("Введите путь к папке (напр. C:\\DownloadDialogs), или exit для выхода:");
             //TODO: remove
-            String line = "C:\\Users\\Саня Z\\Desktop\\DownloadDialogs";
+            String line = "C:\\Users\\User\\Desktop\\DownloadDialogs";
 //            String line = new BufferedReader(new InputStreamReader(System.in, "windows-1251")).readLine();
             File dir = new File(line);
 
