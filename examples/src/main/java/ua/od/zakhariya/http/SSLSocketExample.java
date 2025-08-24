@@ -73,10 +73,8 @@ public class SSLSocketExample {
             System.out.println("Secured connection performed successfully");
 
         } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
