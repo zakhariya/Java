@@ -1,4 +1,4 @@
-package ua.od.zakhariya.fx.components;
+package ua.od.zakhariya.fx.java_code_gui.components;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -27,7 +27,7 @@ public class FXGraphicsExample {
     private static FXGraphicsExample instance;
 
     private Circle circle = new Circle(50);
-    private Rectangle rectangle = new Rectangle(100, 100, 50, 50);
+    private Rectangle rectangle = new Rectangle(200, 50);
     private Text text1 = new Text("ABC");
     private Text text2 = new Text("XYZBGH");
     private ImageView imageView;
@@ -46,6 +46,7 @@ public class FXGraphicsExample {
         circle.setFill(Color.BLUE);
         circle.setStroke(Color.RED);
         circle.setStrokeWidth(10);
+
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 circle.setCenterX(event.getX());

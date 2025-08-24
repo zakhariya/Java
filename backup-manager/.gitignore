@@ -25,6 +25,7 @@ log
 *.ipr
 mvnw
 mvnw.cmd
+*.form
 
 ### NetBeans ###
 /nbproject/private/
@@ -41,5 +42,4 @@ build/
 ### VS Code ###
 .vscode/
 
-server_reques.json
-application.properties
+application-local.properties

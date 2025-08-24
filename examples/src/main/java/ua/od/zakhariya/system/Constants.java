@@ -6,9 +6,9 @@ import java.io.File;
 public class Constants {
     public static final String OS = System.getProperty("os.name");
     public static final String PROGRAM_PATH = System.getProperty("user.dir");  //directory where java was run from,
-    // where you started JVM (if not on console, it will be path to program)
+    // where you started JVM (if not in console, it will be path to program)
     public static final String USER_NAME = System.getProperty("user.name"); //System.getenv("USER")
-    public static final String USER_DOCUMENTS = System.getProperty("user.home"); // user`s home directory (C:\Users\Саня Z, /home/worker)
+    public static final String USER_DOCUMENTS = System.getProperty("user.home"); // user's home directory (C:\Users\User, /home/user)
     public static final String EXECUTED_FILE_PATH = System.getProperty("java.class.path"); // real path and file name of application
     public static final String FILE_SEPARATOR = System.getProperty("file.separator"); // separation on file system "\" on win, or "/" on unix
     public static final String USER_DOWNLOADS = Constants.USER_DOCUMENTS + Constants.FILE_SEPARATOR + "Downloads" + Constants.FILE_SEPARATOR;
