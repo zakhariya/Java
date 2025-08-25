@@ -26,6 +26,7 @@ public class JavaFXExample extends Application {
     }
 */
 
+    @Override
     public void start(Stage primaryStage) throws Exception {
         componentsExample = FXComponentsExample.getInstance();
         graphicsExample = FXGraphicsExample.getInstance();
@@ -81,11 +82,6 @@ public class JavaFXExample extends Application {
         borderPane.setBottom(hBoxBottom);
         borderPane.setRight(flowPane);
 
-        Scene scene = new Scene(borderPane, 650, 800);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
         scrollPane.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.DOWN) {
                 graphicsExample.getCircle().setCenterY(graphicsExample.getCircle().getCenterY() + 10);
@@ -114,5 +110,10 @@ public class JavaFXExample extends Application {
         a.setValue(300);
 
         System.out.println(a + " " + b);
+
+        Scene scene = new Scene(borderPane, 650, 800);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }

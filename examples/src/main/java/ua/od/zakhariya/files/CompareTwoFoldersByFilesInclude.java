@@ -4,8 +4,8 @@ import java.io.File;
 
 public class CompareTwoFoldersByFilesInclude {
 
-    private static final String FOLDER_1 = "\\\\Server\\e$\\sites\\badges.com.ua\\18.03.2019\\badges.com.ua";
-    private static final String FOLDER_2 = "\\\\Server\\e$\\sites\\badges.com.ua\\05.02.2019\\badges.com.ua";
+    private static final String FOLDER_1 = "\\\\Server\\e$\\\\dir1";
+    private static final String FOLDER_2 = "\\\\Server\\e$\\\\dir2";
     private static final String FILE_EXTENSION = "php";
 
     private static int count = 0;

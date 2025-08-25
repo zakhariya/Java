@@ -42,7 +42,6 @@ public class Json {
 
     private void readJson() throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonInString = "{\"name\" : \"mkyong\"}";
 
         //JSON from file to Object
         User user = mapper.readValue(new File("d:\\user.json"), User.class);
@@ -50,6 +49,7 @@ public class Json {
         System.out.println("From file: " + user.toString());
 
         //JSON from String to Object
+        String jsonInString = "{\"name\" : \"mkyong\"}";
         user = mapper.readValue(jsonInString, User.class);
 
         System.out.println("From string: " + user.toString());
