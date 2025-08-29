@@ -3,10 +3,14 @@ package ua.od.zakhariya.fx.fxml_gui.sub_views;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class S1Controller {
+
+    private Button parentButton;
 
     @FXML
     private ResourceBundle resources;
@@ -28,8 +32,18 @@ public class S1Controller {
         btnOk.setOnAction(event -> {
             btnOk.getScene().getWindow().hide();
 
-            System.out.println(btnOk.getId());
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            if (parentButton != null) {
+                parentButton.setDisable(false);
+                System.out.println(stage.isShowing());
+            }
+
+            System.out.println(btnOk.getId() + " clicked");
         });
     }
 
+    public void setParentButton(Button parentButton) {
+        this.parentButton = parentButton;
+    }
 }

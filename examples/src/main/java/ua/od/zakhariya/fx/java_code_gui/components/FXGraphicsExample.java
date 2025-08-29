@@ -6,12 +6,14 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -28,6 +30,8 @@ public class FXGraphicsExample {
 
     private Circle circle = new Circle(50);
     private Rectangle rectangle = new Rectangle(200, 50);
+    private Polygon triangle = new Polygon(110, 115, 125, 125, 115, 110);
+    private Line line = new Line(20, 45, 30, 45);
     private Text text1 = new Text("ABC");
     private Text text2 = new Text("XYZBGH");
     private ImageView imageView;
@@ -41,11 +45,22 @@ public class FXGraphicsExample {
     }
 
     private FXGraphicsExample() throws FileNotFoundException {
+        triangle.getPoints().setAll(
+                200.0, 200.0,
+                300d, 300d,
+                200., 300.
+        );
+        triangle.setFill(Color.AQUAMARINE);
+
+        line.setStrokeWidth(5);
+        line.setRotate(45);
+
         circle.setCenterX(100);
         circle.setCenterY(100);
         circle.setFill(Color.BLUE);
         circle.setStroke(Color.RED);
         circle.setStrokeWidth(10);
+        circle.setCursor(Cursor.CLOSED_HAND);
 
         circle.setOnMouseDragged(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -112,6 +127,10 @@ public class FXGraphicsExample {
         return rectangle;
     }
 
+    public Polygon getTriangle() {
+        return triangle;
+    }
+
     public Text getText1() {
         return text1;
     }
@@ -122,5 +141,9 @@ public class FXGraphicsExample {
 
     public ImageView getImageView() {
         return imageView;
+    }
+
+    public Line getLine() {
+        return line;
     }
 }

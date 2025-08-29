@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.sub_views.S1Controller">
    <children>
       <DialogPane layoutX="60.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0">
@@ -27,6 +26,6 @@
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
           </expandableContent>
       </DialogPane>
-      <Button fx:id="btnOk" layoutX="540.0" layoutY="361.0" mnemonicParsing="false" styleClass="okBtn" stylesheets="@../style.css" text="OK" />
+      <Button fx:id="btnOk" layoutX="540.0" layoutY="361.0" mnemonicParsing="false" styleClass="okBtn" text="OK" />
    </children>
 </AnchorPane>

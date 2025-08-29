@@ -7,7 +7,9 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -38,6 +40,8 @@ public class JavaFXExample extends Application {
         Pane pane = new Pane();
         pane.getChildren().add(graphicsExample.getCircle());
         pane.getChildren().add(graphicsExample.getImageView());
+        pane.getChildren().add(graphicsExample.getLine());
+        pane.getChildren().add(graphicsExample.getTriangle());
 
         HBox hBoxTop = new HBox();
         hBoxTop.getChildren().add(componentsExample.getCheckBox());
@@ -113,7 +117,12 @@ public class JavaFXExample extends Application {
 
         Scene scene = new Scene(borderPane, 650, 800);
 
+        primaryStage.getIcons().add(new Image("logo_up_1.png"));
+        primaryStage.setTitle("Simple JavaFX example");
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitHint("Выйти из полноэкранного режима - \"Q\"");
+        primaryStage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
         primaryStage.show();
     }
 }

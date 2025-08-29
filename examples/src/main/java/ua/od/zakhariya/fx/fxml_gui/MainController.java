@@ -1,40 +1,17 @@
 package ua.od.zakhariya.fx.fxml_gui;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import com.sun.javafx.tk.FileChooserType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Sphere;
@@ -42,8 +19,17 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ua.od.zakhariya.fx.fxml_gui.anim.Shake;
+import ua.od.zakhariya.fx.fxml_gui.sub_views.S1Controller;
+
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class MainController {
 
@@ -58,6 +44,9 @@ public class MainController {
 
     @FXML
     private Button btnAlright, btnOK, btnDir, btnFile, btnFiles;
+
+    @FXML
+    private CheckBox checkBox;
 
     @FXML
     private ChoiceBox<?> choiseBox;
@@ -137,6 +126,9 @@ public class MainController {
     @FXML
     private PieChart pieChart;
 
+    @FXML
+    private ImageView imageView;
+
 
     @FXML
     void initialize() {
@@ -153,7 +145,7 @@ public class MainController {
 //            btnAlright.getScene().getWindow().hide();
             btnAlright.setDisable(true);
 
-            showView("sub_views/s1.fxml");
+            showView(event, "sub_views/s1.fxml");
         });
 
         btnOK.setOnAction(event -> {
@@ -185,20 +177,50 @@ public class MainController {
 
     }
 
-    public void showView(String view) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(view));
-
+    public void showView(ActionEvent event, String view) {
         try {
+            Button parentButton = (Button) event.getSource();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(view));
+            //loader.setLocation(getClass().getResource(view));
+
             loader.load();
+
+            //TODO: make abstract. create parent class for controllers for common parent and linked resources
+            S1Controller s1Controller = loader.getController();
+            System.out.println(s1Controller);
+            s1Controller.setParentButton(parentButton);
+
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(parentButton.getScene().getWindow());
+            stage.setScene(new Scene(root));
+            stage.getScene().getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+//            When using showAndWait(), the setOnCloseRequest() handler should be set before calling showAndWait()
+            stage.setOnCloseRequest(event1 -> {
+//                event1.consume();// stop the event to do something before quitting
+                if (parentButton != null) {
+                    parentButton.setDisable(false);
+                    System.out.println(stage.isShowing());
+                }
+            });
+
+            stage.showAndWait();
+//            stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.showAndWait();
+    public void changeImage(ActionEvent event) {
+        if (checkBox.isSelected()) {
+            imageView.setImage(new Image("l.png"));
+        } else {
+            imageView.setImage(new Image("r.png"));
+        }
     }
 
 }
