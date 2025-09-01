@@ -1,3 +1,12 @@
+#lblControls {
+    -fx-border-color: blue;
+}
+#progressBar {
+    -fx-accent: #00FF00;
+}
 .okBtn {
     -fx-border-color: green;
+}
+.table-view {
+    -fx-border-color: black;
 }

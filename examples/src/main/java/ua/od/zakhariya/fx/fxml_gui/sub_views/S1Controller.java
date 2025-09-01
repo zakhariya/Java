@@ -8,9 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class S1Controller {
-
-    private Button parentButton;
+public class S1Controller extends SubControllerSuper{
 
     @FXML
     private ResourceBundle resources;
@@ -41,9 +39,5 @@ public class S1Controller {
 
             System.out.println(btnOk.getId() + " clicked");
         });
-    }
-
-    public void setParentButton(Button parentButton) {
-        this.parentButton = parentButton;
     }
 }
