@@ -117,7 +117,13 @@ public class JavaFXExample extends Application {
 
         Scene scene = new Scene(borderPane, 650, 800);
 
-        primaryStage.getIcons().add(new Image("logo_up_1.png"));
+/*
+        If you are creating a native executable (e.g., using jlink or javafx-maven-plugin),
+        you may also need to specify an .ico file in your build configuration for the
+        executable's icon, which can also influence the icon displayed in the Task Manager.
+        Refer to your specific build tool's documentation for details on setting the native package icon.
+*/
+        primaryStage.getIcons().addAll(new Image("logo_up_32x32.png"), new Image("logo_up_16x16.png"));
         primaryStage.setTitle("Simple JavaFX example");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
