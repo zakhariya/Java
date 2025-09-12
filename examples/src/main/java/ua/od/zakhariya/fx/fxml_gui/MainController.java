@@ -1,5 +1,6 @@
 package ua.od.zakhariya.fx.fxml_gui;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -360,6 +361,9 @@ public class MainController {
 
         if (alert.showAndWait().get() == ButtonType.YES) {
             stage.close();
+
+//            Platform.exit();
+//            System.exit(0);
         }
     }
 }
