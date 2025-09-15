@@ -31,7 +31,7 @@ public class S2Controller extends SubControllerSuper implements Initializable {
     private Label lblSliderData, lblSong;
 
     @FXML
-    private Slider slider, sliderVolume;
+    private Slider slider, sliderVolume, sliderDuration;
 
     @FXML
     private ProgressIndicator progIndicator;
@@ -82,14 +82,23 @@ public class S2Controller extends SubControllerSuper implements Initializable {
 
 //        cbSpeed.setOnAction(this::changeSpeed);
 
-        sliderVolume.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                mediaPlayer.setVolume(sliderVolume.getValue() * 0.01);
+//        sliderVolume.valueProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//                mediaPlayer.setVolume(sliderVolume.getValue() * 0.01);
+//            }
+//        });
+
+        sliderDuration.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (sliderDuration.isValueChanging()) { // Only seek if user is dragging
+                mediaPlayer.seek(Duration.seconds(newVal.doubleValue()));
+
+                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double end = media.getDuration().toSeconds();
+
+                pbSong.setProgress(current/end);
             }
         });
-
-
     }
 
     private void disableMediaControls(boolean b) {
@@ -99,6 +108,7 @@ public class S2Controller extends SubControllerSuper implements Initializable {
         btnPrevious.setDisable(b);
         btnNext.setDisable(b);
         sliderVolume.setDisable(b);
+        sliderDuration.setDisable(b);
         cbSpeed.setDisable(b);
     }
 
@@ -108,9 +118,24 @@ public class S2Controller extends SubControllerSuper implements Initializable {
         media = new Media(songs.get(songNumber).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
 
+        mediaPlayer.setVolume(sliderVolume.getValue() * 0.01);
+
+        mediaPlayer.volumeProperty().bind(sliderVolume.valueProperty().divide(100));
+
+        mediaPlayer.setOnReady(() -> {
+            sliderDuration.setMin(0);
+            sliderDuration.setMax(mediaPlayer.getTotalDuration().toSeconds());
+        });
+
+        // Listener for media playback progress
+        mediaPlayer.currentTimeProperty().addListener((obs, oldVal, newVal) -> {
+            if (!sliderDuration.isValueChanging()) { // Avoid updating slider if user is dragging
+                sliderDuration.setValue(newVal.toSeconds());
+            }
+        });
+
         lblSong.setText(songs.get(songNumber).getName());
 
-        mediaPlayer.setVolume(sliderVolume.getValue() * 0.01);
         mediaPlayer.play();
         beginTimer();
         btnPause.setSelected(false);

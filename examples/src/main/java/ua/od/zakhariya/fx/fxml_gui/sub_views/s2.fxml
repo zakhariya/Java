@@ -25,7 +25,7 @@
       <ProgressBar fx:id="progressBar" layoutX="66.0" layoutY="319.0" prefWidth="200.0" progress="0.25" />
       <ProgressIndicator fx:id="progIndicator" layoutX="218.0" layoutY="352.0" progress="0.25" />
       <Button fx:id="btnGo" layoutX="135.0" layoutY="359.0" mnemonicParsing="false" onAction="#increaseProgress" prefHeight="25.0" prefWidth="63.0" text="GO" />
-      <BorderPane layoutX="255.0" layoutY="14.0" prefHeight="164.0" prefWidth="331.0" style="-fx-background-color: #fff;">
+      <BorderPane layoutX="255.0" layoutY="14.0" prefHeight="168.0" prefWidth="331.0" style="-fx-background-color: #fff;">
          <top>
             <VBox prefHeight="20.0" prefWidth="331.0" BorderPane.alignment="CENTER">
                <children>
@@ -33,18 +33,6 @@
                </children>
             </VBox>
          </top>
-         <bottom>
-            <HBox prefHeight="26.0" prefWidth="401.0" spacing="3.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#playMedia" text="Play" />
-                  <ToggleButton fx:id="btnPause" mnemonicParsing="false" onAction="#pauseMedia" text="Pause" />
-                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetMedia" text="Reset" />
-                  <Button fx:id="btnPrevious" mnemonicParsing="false" onAction="#previousMedia" text="&lt;" />
-                  <Button fx:id="btnNext" mnemonicParsing="false" onAction="#nextMedia" text="&gt;" />
-                  <ComboBox fx:id="cbSpeed" onAction="#changeSpeed" prefHeight="25.0" prefWidth="79.0" promptText="Speed" />
-               </children>
-            </HBox>
-         </bottom>
          <right>
             <Slider fx:id="sliderVolume" blockIncrement="5.0" orientation="VERTICAL" prefHeight="157.0" prefWidth="14.0" value="50.0" BorderPane.alignment="CENTER" />
          </right>
@@ -61,6 +49,23 @@
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
+         <bottom>
+            <VBox prefHeight="43.0" prefWidth="321.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="26.0" prefWidth="401.0" spacing="3.0">
+                     <children>
+                        <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#playMedia" text="Play" />
+                        <ToggleButton fx:id="btnPause" mnemonicParsing="false" onAction="#pauseMedia" text="Pause" />
+                        <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetMedia" text="Reset" />
+                        <Button fx:id="btnPrevious" mnemonicParsing="false" onAction="#previousMedia" text="&lt;" />
+                        <Button fx:id="btnNext" mnemonicParsing="false" onAction="#nextMedia" text="&gt;" />
+                        <ComboBox fx:id="cbSpeed" onAction="#changeSpeed" prefHeight="25.0" prefWidth="79.0" promptText="Speed" />
+                     </children>
+                  </HBox>
+                  <Slider fx:id="sliderDuration" blockIncrement="1.0" />
+               </children>
+            </VBox>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>
