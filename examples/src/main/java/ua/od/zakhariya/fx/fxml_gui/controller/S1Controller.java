@@ -1,4 +1,4 @@
-package ua.od.zakhariya.fx.fxml_gui.sub_views;
+package ua.od.zakhariya.fx.fxml_gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class S1Controller extends SubControllerSuper{
+public class S1Controller extends SubControllerSuper {
 
     @FXML
     private ResourceBundle resources;

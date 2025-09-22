@@ -1,4 +1,4 @@
-package ua.od.zakhariya.fx.fxml_gui.sub_views;
+package ua.od.zakhariya.fx.fxml_gui.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +11,6 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class S4Controller extends SubControllerSuper {
     @FXML

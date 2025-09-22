@@ -1,0 +1,86 @@
+/*
+.root {
+    -fx-accent: #FF5733; !* Sets a custom orange accent color *!
+}
+
+.button {
+    -fx-background-color: -fx-accent; !* Uses the accent color for button background *!
+}
+*/
+
+/*access to all elements inside, as using html (or body) tag selector in web dev
+or not!?  :\  */
+.root {
+    -fx-background-color: antiquewhite;/*no propagation*/
+    -fx-text-fill: yellow; /*no propagation*/
+    /*-fx-font-size: 2em;!*do propagation*!*/
+}
+/*ID access*/
+#lblControls {
+    -fx-border-color: blue;
+}
+#pbSong {
+    -fx-accent: #00FF00;
+}
+/*class access*/
+.okBtn {
+    -fx-border-color: green;
+}
+.border-blue-class {
+    -fx-border-color: blue;
+}
+/*element type access*/
+.table-view {
+    -fx-border-color: black;
+}
+.button {
+    -fx-background-radius: 0;
+}
+.toggle-button {
+    -fx-text-fill: blue;
+}
+/*element type + class access*/
+.toggle-button.okBtn {
+    -fx-border-color: red;
+}
+.vertical-progress-bar > .bar {
+    -fx-background-color: darksalmon;
+}
+/*pseudo classes*/
+.button:hover {
+    -fx-background-color: yellow;
+}
+.button:focused {
+    -fx-background-color: orange;
+}
+.button:disabled {
+    -fx-background-color: black;
+}
+.button:pressed {
+    -fx-background-color: blueviolet;
+}
+/*specific pseudo classes*/
+.separator:vertical {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%);
+    -fx-pref-width: 5px;
+}
+.scroll-bar:vertical {
+    -fx-background-color: olive;
+    -fx-accent: red;
+}
+.cell:even {
+    -fx-background-color: beige;
+}
+.cell:odd {
+    -fx-background-color: gray;
+}
+.titled-pane:expanded {
+    -fx-text-fill: blue;
+}
+.titled-pane:collapsed {
+    -fx-text-fill: red;
+}
+/*custom pseudo classes*/
+.shiny-label:shiny {
+    -fx-background-color: gold;
+}

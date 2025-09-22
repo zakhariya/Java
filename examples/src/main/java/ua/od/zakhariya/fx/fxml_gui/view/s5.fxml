@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane prefHeight="668.0" prefWidth="913.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.sub_views.S5Controller">
+<BorderPane prefHeight="668.0" prefWidth="913.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.controller.S5Controller">
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <items>

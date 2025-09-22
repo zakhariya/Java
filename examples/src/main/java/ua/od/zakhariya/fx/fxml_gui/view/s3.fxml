@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.shape.Sphere?>
 
-<AnchorPane prefHeight="644.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.sub_views.S3Controller">
+<AnchorPane prefHeight="644.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.controller.S3Controller">
    <children>
       <Polygon fx:id="triangle" fill="DODGERBLUE" layoutX="78.0" layoutY="74.0" stroke="BLACK" strokeType="INSIDE">
          <points>

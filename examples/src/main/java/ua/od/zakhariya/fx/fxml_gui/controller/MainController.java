@@ -1,8 +1,9 @@
-package ua.od.zakhariya.fx.fxml_gui;
+package ua.od.zakhariya.fx.fxml_gui.controller;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -24,7 +27,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.*;
 import ua.od.zakhariya.fx.fxml_gui.anim.Shake;
-import ua.od.zakhariya.fx.fxml_gui.sub_views.SubControllerSuper;
+import ua.od.zakhariya.fx.fxml_gui.model.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -133,6 +136,18 @@ public class MainController {
     private ImageView imageView;
 
     @FXML
+    private TableView<User> tableView;
+
+    @FXML
+    private TableColumn<User, Long> columnId;
+
+    @FXML
+    private TableColumn<User, String> columnName;
+
+    @FXML
+    private TableColumn<User, Integer> columnAge;
+
+    @FXML
     void initialize() {
 
         SpinnerValueFactory<Integer> valueFactory =
@@ -151,31 +166,31 @@ public class MainController {
 //            btnS1.getScene().getWindow().hide();
             btnS1.setDisable(true);
 
-            showView(event, "sub_views/s1.fxml");
+            showView(event, "../view/s1.fxml");
         });
 
         btnS2.setOnAction(event -> {
             btnS2.setDisable(true);
 
-            showView(event, "sub_views/s2.fxml");
+            showView(event, "../view/s2.fxml");
         });
 
         btnS3.setOnAction(event -> {
             btnS3.setDisable(true);
 
-            showView(event, "sub_views/s3.fxml");
+            showView(event, "../view/s3.fxml");
         });
 
         btnS4.setOnAction(event -> {
             btnS4.setDisable(true);
 
-            showView(event, "sub_views/s4.fxml");
+            showView(event, "../view/s4.fxml");
         });
 
         btnS5.setOnAction(event -> {
             btnS5.setDisable(true);
 
-            showView(event, "sub_views/s5.fxml");
+            showView(event, "../view/s5.fxml");
         });
 
         btnOK.setOnAction(event -> {
@@ -258,6 +273,32 @@ public class MainController {
 
 //        treeView.setShowRoot(false);
         treeView.setRoot(rootItem);
+
+        columnId.setCellValueFactory(new PropertyValueFactory<User, Long>("id"));
+        columnName.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
+        columnAge.setCellValueFactory(new PropertyValueFactory<User, Integer>("age"));
+
+        ObservableList<User> users = FXCollections.observableArrayList(
+                new User("User1", 21),
+                new User("User2", 44),
+                new User("User3", 36)
+        );
+
+        tableView.setItems(users);
+
+        XYChart.Series series1 = new XYChart.Series();
+
+        series1.getData().add(new XYChart.Data<>("1", 5));
+        series1.getData().add(new XYChart.Data<>("2", 3));
+        series1.getData().add(new XYChart.Data<>("1", 8));
+
+        XYChart.Series series2 = new XYChart.Series();
+
+        series2.getData().add(new XYChart.Data<>("0", 3));
+        series2.getData().add(new XYChart.Data<>("1", 5));
+        series2.getData().add(new XYChart.Data<>("0", 7));
+
+        lineChart.getData().addAll(series1, series2);
     }
 
     public void updateChoiceValue(ActionEvent event) {
@@ -277,10 +318,9 @@ public class MainController {
     public void showView(ActionEvent event, String view) {
         try {
             Button parentButton = (Button) event.getSource();
+            Scene primaryScene = parentButton.getScene();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(view));
-            //loader.setLocation(getClass().getResource(view));
-
             loader.load();
 
             SubControllerSuper controller = loader.getController();
@@ -289,9 +329,9 @@ public class MainController {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(parentButton.getScene().getWindow());
+            stage.initOwner(primaryScene.getWindow());
             stage.setScene(new Scene(root));
-            stage.getScene().getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            stage.getScene().getStylesheets().addAll(primaryScene.getStylesheets());
 
 //            When using showAndWait(), the setOnCloseRequest() handler should be set before calling showAndWait()
             stage.setOnCloseRequest(event1 -> {
@@ -338,9 +378,14 @@ public class MainController {
     }
 
     public void exit(ActionEvent event) {
-        //TODO: need to cast for MenuItem somehow
-        Node component = (Node) event.getSource();
-        Stage stage = (Stage) component.getScene().getWindow();
+        Stage stage = null;
+        Object eventSource = event.getSource();
+
+        if (eventSource instanceof MenuItem) {
+            stage = (Stage) ((MenuItem) eventSource).getParentPopup().getOwnerWindow().getScene().getWindow();
+        } else {
+            stage = (Stage) ((Node) eventSource).getScene().getWindow();
+        }
 
         exit(stage);
     }
@@ -353,7 +398,9 @@ public class MainController {
         alert.setHeaderText("Exit now?");
         alert.setContentText("Are you sure?");
         alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().addAll(stage.getScene().getStylesheets());
+//        alert.getDialogPane().getStylesheets().add(getClass().getResource("../assets/style.css").toExternalForm());
+
 
 //        alert.showAndWait()
 //                .filter(response -> response == ButtonType.YES)

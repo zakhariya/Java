@@ -1,4 +1,4 @@
-package ua.od.zakhariya.fx.fxml_gui.sub_views;
+package ua.od.zakhariya.fx.fxml_gui.controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

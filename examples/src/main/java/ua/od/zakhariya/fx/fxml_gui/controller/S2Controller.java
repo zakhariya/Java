@@ -1,4 +1,4 @@
-package ua.od.zakhariya.fx.fxml_gui.sub_views;
+package ua.od.zakhariya.fx.fxml_gui.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -51,13 +51,10 @@ public class S2Controller extends SubControllerSuper implements Initializable {
     private Media media;
     private MediaPlayer mediaPlayer;
 
-    private File dir;
-    private File[] files;
-
     private ArrayList<File> songs;
 
     private int songNumber;
-    private int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
+    private final int[] speeds = {25, 50, 75, 100, 125, 150, 175, 200};
 
     private Timer timer;
     private TimerTask task;
@@ -99,6 +96,8 @@ public class S2Controller extends SubControllerSuper implements Initializable {
                 pbSong.setProgress(current/end);
             }
         });
+
+        //TODO: on close stop media and cancel timer
     }
 
     private void disableMediaControls(boolean b) {
@@ -213,11 +212,12 @@ public class S2Controller extends SubControllerSuper implements Initializable {
 
     public void chooseFolder(ActionEvent event) {
         Window window = ((Button) event.getSource()).getScene().getWindow();
-        dir = new DirectoryChooser().showDialog(window);
+
+        File dir = new DirectoryChooser().showDialog(window);
 
         if (dir == null) return;
 
-        files = dir.listFiles();
+        File[] files = dir.listFiles();
         disableMediaControls(true);
 
         if (files != null) {

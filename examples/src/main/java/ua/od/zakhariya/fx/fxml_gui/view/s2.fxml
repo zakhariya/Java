@@ -14,17 +14,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.sub_views.S2Controller">
+<AnchorPane prefHeight="279.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.controller.S2Controller">
    <children>
-      <Slider fx:id="slider" layoutX="14.0" layoutY="12.0" majorTickUnit="10.0" minorTickCount="10" orientation="VERTICAL" prefHeight="372.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" />
+      <Slider fx:id="slider" layoutX="14.0" layoutY="12.0" majorTickUnit="10.0" minorTickCount="10" orientation="VERTICAL" prefHeight="246.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" />
       <Label fx:id="lblSliderData" alignment="BASELINE_CENTER" layoutX="55.0" layoutY="14.0" prefHeight="46.0" prefWidth="82.0" text="0">
          <font>
             <Font name="Arial Narrow Bold Italic" size="20.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="progressBar" layoutX="66.0" layoutY="319.0" prefWidth="200.0" progress="0.25" />
-      <ProgressIndicator fx:id="progIndicator" layoutX="218.0" layoutY="352.0" progress="0.25" />
-      <Button fx:id="btnGo" layoutX="135.0" layoutY="359.0" mnemonicParsing="false" onAction="#increaseProgress" prefHeight="25.0" prefWidth="63.0" text="GO" />
+      <ProgressBar fx:id="progressBar" layoutX="37.0" layoutY="105.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" progress="0.25" rotate="90.0" styleClass="vertical-progress-bar" />
+      <ProgressIndicator fx:id="progIndicator" layoutX="189.0" layoutY="94.0" nodeOrientation="RIGHT_TO_LEFT" progress="0.25" />
+      <Button fx:id="btnGo" layoutX="106.0" layoutY="233.0" mnemonicParsing="false" onAction="#increaseProgress" prefHeight="25.0" prefWidth="63.0" text="GO" />
       <BorderPane layoutX="255.0" layoutY="14.0" prefHeight="168.0" prefWidth="331.0" style="-fx-background-color: #fff;">
          <top>
             <VBox prefHeight="20.0" prefWidth="331.0" BorderPane.alignment="CENTER">

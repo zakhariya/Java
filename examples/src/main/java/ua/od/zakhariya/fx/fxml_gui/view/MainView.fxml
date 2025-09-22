@@ -22,6 +22,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
@@ -47,23 +48,25 @@
 <?import javafx.scene.text.TextFlow?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane prefHeight="874.0" prefWidth="1129.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.MainController">
+<!--<?import ua.od.zakhariya.fx.fxml_gui.view.components.ShinyLabel?>-->
+
+<AnchorPane prefHeight="874.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.controller.MainController">
     <children>
-        <Button fx:id="btnOK" layoutX="1082.0" layoutY="828.0" mnemonicParsing="false" styleClass="okBtn" text="OK" />
+        <Button fx:id="btnOK" layoutX="557.0" layoutY="816.0" mnemonicParsing="false" styleClass="okBtn" text="OK" />
         <MenuBar fx:id="menuBar" layoutY="2.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#exit" text="Close">
-                     <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="C" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
+                            <accelerator>
+                                <KeyCodeCombination alt="DOWN" code="C" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
                         <MenuItem mnemonicParsing="false" text="Properties" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <RadioMenuItem mnemonicParsing="false" selected="true" text="Option 1">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="menuRadioGroup" />
-                     </toggleGroup></RadioMenuItem>
+                            <toggleGroup>
+                                <ToggleGroup fx:id="menuRadioGroup" />
+                            </toggleGroup></RadioMenuItem>
                         <RadioMenuItem mnemonicParsing="false" text="Option 2" toggleGroup="$menuRadioGroup" />
                     </items>
                 </Menu>
@@ -79,30 +82,22 @@
                         <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
-            <Menu mnemonicParsing="false" text="Custom">
-              <items>
-                  <Menu mnemonicParsing="false" text="Custom submenu">
+                <Menu mnemonicParsing="false" text="Custom">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                        <Menu mnemonicParsing="false" text="Custom submenu">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Action 1" />
+                                <MenuItem mnemonicParsing="false" text="Action 1" />
+                            </items>
+                        </Menu>
                     </items>
-                  </Menu>
-              </items>
-            </Menu>
+                </Menu>
             </menus>
         </MenuBar>
-        <LineChart fx:id="lineChart" layoutX="8.0" layoutY="664.0" prefHeight="196.0" prefWidth="347.0">
-            <xAxis>
-                <CategoryAxis side="BOTTOM" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis side="LEFT" />
-            </yAxis>
-        </LineChart>
-        <DatePicker fx:id="datePicker" layoutX="169.0" layoutY="51.0" onAction="#getDate" />
-        <ColorPicker fx:id="colorPicker" layoutX="354.0" layoutY="51.0" onAction="#changeColor" />
+        <DatePicker fx:id="datePicker" layoutX="174.0" layoutY="75.0" onAction="#getDate" />
+        <ColorPicker fx:id="colorPicker" layoutX="362.0" layoutY="75.0" onAction="#changeColor" />
         <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="8.0" layoutY="200.0" prefHeight="200.0" prefWidth="506.0" />
-        <Accordion fx:id="accordion" layoutX="8.0" layoutY="412.0">
+        <Accordion fx:id="accordion" layoutX="8.0" layoutY="412.0" prefHeight="200.0" prefWidth="202.0">
             <panes>
                 <TitledPane animated="false" text="untitled 1">
                     <content>
@@ -114,31 +109,39 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </TitledPane>
-                <TitledPane animated="false" text="untitled 3">
+                <TitledPane animated="false" prefHeight="139.0" prefWidth="202.0" text="untitled 3">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </TitledPane>
             </panes>
         </Accordion>
-        <TabPane fx:id="tabPane" layoutX="217.0" layoutY="412.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="tabPane" layoutX="239.0" layoutY="412.0" prefHeight="260.0" prefWidth="450.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="tab1" text="Untitled Tab 1">
                     <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                            <children>
-                                <ToggleButton fx:id="toggleButton" layoutX="56.0" layoutY="73.0" mnemonicParsing="false" text="ToggleButton" />
-                            </children>
+                     <children>
+                          <LineChart fx:id="lineChart" layoutX="52.0" layoutY="18.0" prefHeight="196.0" prefWidth="347.0">
+                              <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                              </xAxis>
+                              <yAxis>
+                                  <NumberAxis side="LEFT" />
+                              </yAxis>
+                          </LineChart>
+                     </children>
                         </AnchorPane>
                     </content></Tab>
                 <Tab fx:id="tab2" text="Untitled Tab 2">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                                <TableView fx:id="tableView" layoutX="77.0" layoutY="16.0" prefHeight="200.0" prefWidth="297.0">
                                     <columns>
-                                        <TableColumn prefWidth="75.0" text="C1" />
-                                        <TableColumn prefWidth="75.0" text="C2" />
+                                        <TableColumn fx:id="columnId" prefWidth="37.0" text="ID" />
+                                        <TableColumn fx:id="columnName" prefWidth="113.0" text="name" />
+                                        <TableColumn fx:id="columnAge" prefWidth="75.0" text="age" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -147,67 +150,75 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <ButtonBar layoutX="516.0" layoutY="13.0" prefHeight="40.0" prefWidth="601.0">
+        <ButtonBar layoutX="308.0" layoutY="13.0" prefHeight="40.0" prefWidth="601.0">
             <buttons>
                 <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#changeImage" prefHeight="17.0" prefWidth="113.0" text="CheckBox" />
                 <Button fx:id="btnS1" contentDisplay="CENTER" mnemonicParsing="false" text="Show S1" textAlignment="CENTER" textFill="RED">
                     <tooltip>
                         <Tooltip text="Alright Tooltip" />
                     </tooltip></Button>
-            <Button fx:id="btnS2" mnemonicParsing="false" text="Show S2">
-               <textFill>
-                  <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color red="0.003411306068301201" green="0.7368420958518982" blue="0.15009745955467224" />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="0.5333292484283447" green="0.377984881401062" blue="0.9605262875556946" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Button>
-            <Button fx:id="btnS3" mnemonicParsing="false" text="Show S3" textFill="#2600fc" />
-            <Button fx:id="btnS4" mnemonicParsing="false" text="Show S4" textFill="#0ed703" />
-            <Button fx:id="btnS5" mnemonicParsing="false" text="Show S5" textFill="WHITE" />
+                <Button fx:id="btnS2" mnemonicParsing="false" text="Show S2">
+                    <textFill>
+                        <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color red="0.003411306068301201" green="0.7368420958518982" blue="0.15009745955467224" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="0.5333292484283447" green="0.377984881401062" blue="0.9605262875556946" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </textFill>
+                </Button>
+                <Button fx:id="btnS3" mnemonicParsing="false" text="Show S3" textFill="#2600fc" />
+                <Button fx:id="btnS4" mnemonicParsing="false" text="Show S4" textFill="#0ed703" />
+                <Button fx:id="btnS5" mnemonicParsing="false" text="Show S5" textFill="WHITE" />
             </buttons>
         </ButtonBar>
-        <Pagination fx:id="pagination" layoutX="417.0" layoutY="662.0" prefHeight="200.0" prefWidth="200.0" />
+        <Pagination fx:id="pagination" layoutX="14.0" layoutY="673.0" prefHeight="187.0" prefWidth="200.0" />
         <TextField fx:id="tfName" layoutX="701.0" layoutY="87.0" prefHeight="25.0" prefWidth="200.0" promptText="Name" />
         <PasswordField fx:id="tfPass" layoutX="701.0" layoutY="126.0" prefHeight="25.0" prefWidth="200.0" promptText="Pass" />
         <RadioButton fx:id="rbtnYes" layoutX="733.0" layoutY="162.0" mnemonicParsing="false" selected="true" text="Yes">
-             <toggleGroup>
+            <toggleGroup>
                 <ToggleGroup fx:id="radioGroup1" />
-             </toggleGroup>
+            </toggleGroup>
         </RadioButton>
         <RadioButton fx:id="rbtnNo" layoutX="801.0" layoutY="162.0" mnemonicParsing="false" text="No" toggleGroup="$radioGroup1" />
-        <Spinner fx:id="spinner" editable="true" layoutX="14.0" layoutY="51.0" />
+        <Spinner fx:id="spinner" editable="true" layoutX="14.0" layoutY="75.0" />
         <TextArea fx:id="textArea" layoutX="701.0" layoutY="300.0" prefHeight="128.0" prefWidth="200.0" />
-        <CubicCurve fx:id="curve" controlX1="391.0" controlX2="330.0" controlY1="-143.0" controlY2="20.0" endX="220.0" endY="-25.0" fill="#ff1f1f00" layoutX="607.0" layoutY="225.0" startX="251.0" startY="-172.0" stroke="RED" />
+        <CubicCurve fx:id="curve" controlX1="391.0" controlX2="330.0" controlY1="-143.0" controlY2="20.0" endX="220.0" endY="-25.0" fill="#ff1f1f00" layoutX="562.0" layoutY="225.0" startX="251.0" startY="-172.0" stroke="RED" />
         <ComboBox fx:id="comboBox" layoutX="701.0" layoutY="220.0" prefWidth="150.0" />
         <ChoiceBox fx:id="choiceBox" layoutX="701.0" layoutY="255.0" prefWidth="150.0" />
         <Label fx:id="lblChoice" layoutX="701.0" layoutY="188.0" prefHeight="25.0" prefWidth="200.0" text="Label" />
-        <ToolBar fx:id="toolBar" layoutX="802.0" layoutY="821.0" prefHeight="40.0" prefWidth="230.0">
+        <ToolBar fx:id="toolBar" layoutX="302.0" layoutY="809.0" prefHeight="40.0" prefWidth="230.0">
             <items>
                 <Button fx:id="btnDir" mnemonicParsing="false" text="Directory" />
                 <Button fx:id="btnFile" mnemonicParsing="false" text="File" />
                 <Button fx:id="btnFiles" mnemonicParsing="false" text="Files" />
-              <Hyperlink fx:id="hyperlink" text="Hyperlink" />
+                <Hyperlink fx:id="hyperlink" text="Hyperlink" />
             </items>
         </ToolBar>
-        <TextFlow fx:id="textFlow" layoutX="801.0" layoutY="612.0" prefHeight="208.0" prefWidth="309.0" />
-      <ImageView fx:id="imageView" fitHeight="40.0" fitWidth="65.0" layoutX="517.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblControls" alignment="BASELINE_CENTER" layoutX="14.0" layoutY="87.0" prefHeight="100.0" prefWidth="465.0" text="Label">
-         <font>
-            <Font name="Cocon-Light" size="16.0" />
-         </font>
-      </Label>
-      <ListView fx:id="listView" editable="true" layoutX="517.0" layoutY="70.0" prefHeight="121.0" prefWidth="149.0" />
-      <TreeView fx:id="treeView" layoutX="517.0" layoutY="200.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="200.0" prefWidth="150.0" />
+        <TextFlow fx:id="textFlow" accessibleHelp="Accessible help" accessibleText="Accessible text" layoutX="288.0" layoutY="692.0" prefHeight="106.0" prefWidth="309.0" style="-fx-background-color: #fff;" />
+        <ImageView fx:id="imageView" fitHeight="40.0" fitWidth="65.0" layoutX="229.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" styleClass="border-blue-class" />
+        <Label fx:id="lblControls" alignment="BASELINE_CENTER" layoutX="14.0" layoutY="114.0" prefHeight="73.0" prefWidth="465.0" styleClass="border-blue-class" text="Label">
+            <font>
+                <Font name="Cocon-Light" size="16.0" />
+            </font>
+        </Label>
+        <ListView fx:id="listView" editable="true" layoutX="517.0" layoutY="70.0" prefHeight="121.0" prefWidth="149.0" />
+        <TreeView fx:id="treeView" layoutX="517.0" layoutY="200.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="200.0" prefWidth="150.0" />
+              <ToggleButton fx:id="toggleButton" layoutX="708.0" layoutY="446.0" mnemonicParsing="false" text="ToggleButton" />
+      <ToggleButton fx:id="toggleButton1" layoutX="807.0" layoutY="445.0" mnemonicParsing="false" styleClass="okBtn" text="Class OK" />
+      <Separator layoutX="226.0" layoutY="412.0" orientation="VERTICAL" prefHeight="200.0" />
+      <TitledPane animated="false" layoutX="700.0" layoutY="493.0" text="untitled">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </TitledPane>
     </children>
 </AnchorPane>
