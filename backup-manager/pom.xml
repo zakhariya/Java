@@ -7,26 +7,53 @@
     <groupId>ua.lpr</groupId>
     <artifactId>backup-manager</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Backup manager</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>8</java.version>
+        <javafx.version>8</javafx.version>
+
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <!--        <javafx.version>${javafx.version}</javafx.version>-->
+        <glisten.version>6.0.6</glisten.version>
+        <attach.version>4.0.11</attach.version>
+    </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/java/</directory>
+                <!--                <directory>src/main/java/ua/od/zakhariya/fx/fxml_gui</directory>-->
+                <excludes>
+                    <!--                    <exclude>**/*.fxml</exclude>-->
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
-                <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>ua.lpr.Main</mainClass>
-                        </manifest>
-                    </archive>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
+                <version>3.1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
             </plugin>
         </plugins>
     </build>
+
 
     <dependencies>
         <dependency>

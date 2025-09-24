@@ -1,3 +1,5 @@
+package ua.lpr.shutdownbackup;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -10,6 +12,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 public class ShutdownBackupServer {
+
 
     private final String JSON =
             "{\n" +
@@ -119,4 +122,6 @@ public class ShutdownBackupServer {
     private void sendRequest(String url, String token, String notification) {
 
     }
+
+
 }

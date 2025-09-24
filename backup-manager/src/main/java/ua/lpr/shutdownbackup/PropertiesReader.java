@@ -1,3 +1,5 @@
+package ua.lpr.shutdownbackup;
+
 import lombok.Data;
 
 import java.io.FileNotFoundException;

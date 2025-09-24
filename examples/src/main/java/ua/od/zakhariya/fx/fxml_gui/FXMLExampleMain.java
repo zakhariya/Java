@@ -35,6 +35,6 @@ public class FXMLExampleMain extends Application {
             controller.exit(primaryStage);
         });
 
-        System.out.println("Java version: " + System.getProperty("java.version") + " JavaFX version" + System.getProperty("javafx.version"));
+        System.out.println("Java version: " + System.getProperty("java.version") + " JavaFX version " + System.getProperty("javafx.version"));
     }
 }

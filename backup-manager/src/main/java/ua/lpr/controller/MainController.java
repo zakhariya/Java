@@ -1,4 +1,4 @@
 package ua.lpr.controller;
 
-public class SomeController {
+public class MainController {
 }

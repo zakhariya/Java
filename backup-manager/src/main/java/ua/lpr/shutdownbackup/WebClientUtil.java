@@ -1,3 +1,5 @@
+package ua.lpr.shutdownbackup;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.RedirectStrategy;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
