@@ -24,4 +24,5 @@ public interface UserDao {
 
     void delete(int id);
 
+    List<User> getAdminList();
 }

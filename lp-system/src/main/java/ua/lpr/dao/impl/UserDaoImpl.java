@@ -85,4 +85,12 @@ public class UserDaoImpl implements UserDao {
         String sql = "DELETE FROM "+table+" WHERE id=?";
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public List<User> getAdminList() {
+        String adminRole="Администратор";
+
+        String sql = "SELECT * FROM "+table+" WHERE UserRole=? ORDER BY UserName";
+        return jdbcTemplate.query(sql, new UserMapper(), adminRole);
+    }
 }

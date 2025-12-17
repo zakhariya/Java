@@ -5,22 +5,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.lpr.model.Client;
-import ua.lpr.service.TaskService;
-import ua.lpr.service.UserService;
+import ua.lpr.service.SystemService;
 import ua.lpr.service.WorkplaceService;
-
-import java.util.List;
 
 @Controller
 public class MainController {
 
 	@Autowired
     private WorkplaceService workplaceService;
+
+	@Autowired
+	private SystemService systemService;
+
+	@Value("${security.token}")
+	private String token;
 
 	@Value("${settings.files.server.address}")
 	private String fileServerAddr;
@@ -49,6 +49,27 @@ public class MainController {
 		System.out.println(path);
 
 		return new ResponseEntity<>(path, HttpStatus.OK);
+	}
+
+	@GetMapping("shutdown")
+	public @ResponseBody
+	ResponseEntity<HttpStatus> shutdownPC(@RequestParam String token) {
+		if (!this.token.equals(token)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		systemService.shutdownPC();
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping("reboot")
+	public @ResponseBody ResponseEntity<HttpStatus> rebootPC(@RequestParam String token) {
+		if (!this.token.equals(token)) {
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+		systemService.rebootPC();
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("error")

@@ -134,6 +134,15 @@ public class NotificationServiceImpl implements NotificationService {
         startNotification();
     }
 
+    @Override
+    public void notifyAdmin(String message) {
+        List<User> adminList = userService.getAdminList();
+
+        for (User admin : adminList) {
+            sendMessage(admin, message);
+        }
+    }
+
     private void startNotification(){
         new Thread(new Runnable() {
             @Override
@@ -287,13 +296,16 @@ public class NotificationServiceImpl implements NotificationService {
         return thread;
     }
 
+
+
     private void sendMessage(User user, String messageText) {
 
         LocalTime now = LocalTime.now();
 
-        if (now.isBefore(notificationBegin) ||
-                now.isAfter(notificationEnd))
-            return;
+        //TODO: should never send, need the loop in new thread?
+//        if (now.isBefore(notificationBegin) ||
+//                now.isAfter(notificationEnd))
+//            return;
 
         String notificationType =
                 settingService.getByObjectAndParam(paramNotificationTypeName, paramNotificationName).getValue();

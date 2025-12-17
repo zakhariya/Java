@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAdminList() {
+        return userDao.getAdminList();
+    }
+
+    @Override
     public boolean validateUser(User user) {
         if(user == null ||
                 user.getName() == null)

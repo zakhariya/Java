@@ -16,6 +16,8 @@ public interface UserService {
 
     User getByLogin(String userLogin);
 
+    List<User> getAdminList();
+
     boolean validateUser(User user);
 
     void setLastLoginTime(User user);
