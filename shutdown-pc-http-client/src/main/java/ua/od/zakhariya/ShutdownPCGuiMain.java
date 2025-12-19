@@ -1,11 +1,11 @@
-package main.java.ua.od.zakhariya;
+package ua.od.zakhariya;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.java.ua.od.zakhariya.controller.MainController;
+import ua.od.zakhariya.controller.MainController;
 
 public class ShutdownPCGuiMain extends Application {
 
