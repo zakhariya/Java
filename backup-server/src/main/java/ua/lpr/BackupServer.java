@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import ua.lpr.controller.MainController;
 
 
-public class BackupManager extends Application {
+public class BackupServer extends Application {
 
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();

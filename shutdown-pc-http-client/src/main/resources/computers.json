@@ -1,0 +1,8 @@
+[
+  {
+    "name": "Server",
+    "ip": "192.168.0.55",
+    "port": 9191,
+    "url": "shutdown?token=45"
+  }
+]
