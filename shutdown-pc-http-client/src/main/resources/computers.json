@@ -1,8 +1,14 @@
 [
   {
-    "name": "Server",
-    "ip": "192.168.0.55",
-    "port": 9191,
+    "name": "PC1",
+    "ip": "192.168.0.10",
+    "port": 3291,
     "url": "shutdown?token=45"
+  },
+  {
+    "name": "PC2",
+    "ip": "192.168.0.11",
+    "port": 9123,
+    "url": "shutdown?token=68"
   }
 ]
