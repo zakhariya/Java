@@ -22,7 +22,7 @@ public class BackupServer extends Application {
 
 //        primaryStage.getIcons().addAll(new Image("logo_up_32x32.png"), new Image("logo_up_16x16.png"));
 //        primaryStage.getIcons().addAll(new Image(new FileInputStream("src/main/resources/logo.ico")));
-        primaryStage.setTitle("Backup agent");
+        primaryStage.setTitle("Backup server");
         primaryStage.setScene(scene);
         primaryStage.show();
 

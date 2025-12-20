@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import ua.lpr.controller.MainController;
 
-public class BackupAgent extends Application {
+public class BackupClient extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -23,7 +23,7 @@ public class BackupAgent extends Application {
 
 //        primaryStage.getIcons().addAll(new Image("logo_up_32x32.png"), new Image("logo_up_16x16.png"));
 //        primaryStage.getIcons().addAll(new Image(new FileInputStream("src/main/resources/logo.ico")));
-        primaryStage.setTitle("Backup agent");
+        primaryStage.setTitle("Backup client");
         primaryStage.setScene(scene);
         primaryStage.show();
 
