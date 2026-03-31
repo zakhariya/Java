@@ -41,7 +41,7 @@ public class NativeJacksonExample {
 
         String jsonString = "{ \"color\" : \"Black\", \"type\" : \"BMW\" }";
         Map<String, Object> map
-                = objectMapper.readValue(json, new TypeReference<Map<String,Object>>(){});
+                = objectMapper.readValue(jsonString, new TypeReference<Map<String,Object>>(){});
 
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

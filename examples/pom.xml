@@ -219,6 +219,14 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Source: https://mvnrepository.com/artifact/com.aspose/aspose-pdf -->
+        <dependency>
+            <groupId>com.aspose</groupId>
+            <artifactId>aspose-pdf</artifactId>
+            <version>11.5.0</version>
+            <scope>compile</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>junit</groupId>
@@ -230,6 +238,10 @@
     </dependencies>
 
     <repositories>
+        <repository>
+            <id>aspose-maven-repository</id>
+            <url>https://repository.aspose.com/repo/</url>
+        </repository>
         <repository>
             <id>Gluon</id>
             <url>https://nexus.gluonhq.com/nexus/content/repositories/releases</url>

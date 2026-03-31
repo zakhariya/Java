@@ -55,14 +55,19 @@ public class Get extends ResponseContent {
     private static final String url21 = "https://dev.fotoservice.lpr.ua/o_nas/";
     private static final String url22 = "https://lpr.ua/zaryazhateli-magazinov-ak";
 
-    public static void main(String... args) throws NoSuchAlgorithmException, KeyManagementException {
-        three();
+    private static final String URL_IN_USE = ip;
+
+    public static void main(String... args) throws Exception {
+        one();
+//        two();
+//        three();
+//        four();
     }
 
     private static void one() throws NoSuchAlgorithmException, KeyManagementException, IOException {
         SSLContext sslContext = WebClientUtil.getTrustContext();
 
-        URL url = new URL("https://lpr.ua/nashi-produktyi");
+        URL url = new URL(URL_IN_USE);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setHostnameVerifier(new HostnameVerifier() {
             @Override
@@ -76,7 +81,7 @@ public class Get extends ResponseContent {
 
     private static void two() {
         try (CloseableHttpClient httpclient = WebClientUtil.createHttpsClient(WebClientUtil.getTrustContext())) {
-            HttpGet get = new HttpGet(url18);
+            HttpGet get = new HttpGet(URL_IN_USE);
 
 //            get.addHeader("Host", "lpr.ua");
 
@@ -129,7 +134,7 @@ public class Get extends ResponseContent {
         };
 
         HttpClientContext context = HttpClientContext.create();
-        HttpGet get = new HttpGet(url22);
+        HttpGet get = new HttpGet(URL_IN_USE);
         SSLContext sslContext = WebClientUtil.getTrustContext();
 
         try (CloseableHttpClient httpclient = WebClientUtil.createHttpsClient(sslContext, strategy);
