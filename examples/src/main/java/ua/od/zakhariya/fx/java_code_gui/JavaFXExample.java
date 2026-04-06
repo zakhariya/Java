@@ -50,6 +50,7 @@ public class JavaFXExample extends Application {
         hBoxTop.getChildren().add(componentsExample.getRadioButton2());
         hBoxTop.getChildren().add(componentsExample.getTextField());
         hBoxTop.getChildren().add(componentsExample.getPasswordField());
+        hBoxTop.getChildren().add(componentsExample.getTitledPane1());
 
         graphicsExample.getText2().xProperty().bind(hBoxTop.widthProperty().divide(2));
 
@@ -70,6 +71,7 @@ public class JavaFXExample extends Application {
         vBox.getChildren().add(graphicsExample.getText1());
         vBox.getChildren().add(graphicsExample.getText2());
         vBox.getChildren().add(graphicsExample.getRectangle());
+        vBox.getChildren().add(componentsExample.getTitledPane2());
 
         FlowPane flowPane = new FlowPane();
         flowPane.setOrientation(Orientation.VERTICAL);

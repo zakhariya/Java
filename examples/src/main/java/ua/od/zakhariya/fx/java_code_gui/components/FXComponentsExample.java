@@ -3,6 +3,7 @@ package ua.od.zakhariya.fx.java_code_gui.components;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -27,6 +28,9 @@ public class FXComponentsExample {
     private ListCell listCell = new ListCell();
     private ScrollBar scrollBar = new ScrollBar();
     private Slider slider = new Slider();
+    private TitledPane titledPane1 = new TitledPane();
+    private TitledPane titledPane2 = new TitledPane();
+
 
     public static synchronized FXComponentsExample getInstance() throws FileNotFoundException {
         if (instance == null) {
@@ -37,6 +41,21 @@ public class FXComponentsExample {
     }
 
     private FXComponentsExample() throws FileNotFoundException {
+        Button headerButton = new Button("Edit");
+        headerButton.setOnAction(e -> System.out.println("Header button clicked"));
+
+        titledPane1.setText("Main Section");
+        titledPane1.setGraphic(headerButton); // Places button in the title area
+        titledPane1.setContent(new Label("Section Content"));
+
+        HBox customHeader = new HBox();
+        customHeader.setSpacing(10);
+        customHeader.getChildren().addAll(new Label("Custom Title"), new Button("Settings"));
+
+        titledPane2.setContent(new Label("Section Content"));
+        titledPane2.setGraphic(customHeader);
+        titledPane2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY); // Optional: hides the default text label
+
 
         graphicsExample = FXGraphicsExample.getInstance();
 
@@ -137,6 +156,14 @@ public class FXComponentsExample {
 
     public Slider getSlider() {
         return slider;
+    }
+
+    public TitledPane getTitledPane1() {
+        return titledPane1;
+    }
+
+    public TitledPane getTitledPane2() {
+        return titledPane2;
     }
 
     class ButtonListener implements EventHandler<ActionEvent> {
