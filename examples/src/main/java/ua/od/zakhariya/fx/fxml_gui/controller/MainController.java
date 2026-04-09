@@ -49,7 +49,7 @@ public class MainController {
     private Accordion accordion;
 
     @FXML
-    private Button btnS1, btnS2, btnS3, btnS4, btnS5, btnOK, btnDir, btnFile, btnFiles;
+    private Button btnS1, btnS2, btnS3, btnS4, btnS5, btnForm, btnOK, btnDir, btnFile, btnFiles;
 
     @FXML
     private CheckBox checkBox;
@@ -146,6 +146,9 @@ public class MainController {
 
     @FXML
     private TableColumn<User, Integer> columnAge;
+
+    @FXML
+    private FormController formController;
 
     @FXML
     void initialize() {
@@ -313,6 +316,36 @@ public class MainController {
         }
 
         lblChoice.setText(value);
+    }
+
+    public void showForm(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/form.fxml"));
+
+            /*If you must use one FXML file with different logic in different scenarios,
+            you can remove fx:controller from the FXML and set the controller manually in your Java code before loading.*/
+//            loader.setController(new MyCustomController()); // Assign any controller instance
+
+            loader.load();
+            Scene mainStage = ((Button) event.getSource()).getScene();
+
+            Parent root = loader.getRoot();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(mainStage.getWindow());
+            stage.setScene(new Scene(root));
+            stage.getScene().getStylesheets().addAll(mainStage.getStylesheets());
+
+            stage.setOnCloseRequest(event1 -> {
+//                event1.consume();// stop the event to do something before quitting
+                System.out.println("Form closed");
+            });
+
+            stage.showAndWait();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void showView(ActionEvent event, String view) {
