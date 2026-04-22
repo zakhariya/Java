@@ -1,7 +1,9 @@
 package ua.lpr.functions;
 
+import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 public class Functions {
@@ -71,4 +73,26 @@ public class Functions {
 
         return modelAndView;
     }
+
+    // Handling Proxies or Load Balancers
+    public static String getClientIp(HttpServletRequest request) {
+        String remoteAddr = request.getHeader("X-Forwarded-For");
+
+        // If header is empty, use the direct remote address
+        if (remoteAddr == null || remoteAddr.isEmpty()) {
+            remoteAddr = request.getRemoteAddr();
+        } else {
+            // X-Forwarded-For can be a comma-separated list; the first one is the client
+            remoteAddr = remoteAddr.split(",")[0].trim();
+        }
+
+        return remoteAddr;
+    }
+/*
+    //Spring WebFlux (Reactive)
+    public Mono<String> getIp(ServerHttpRequest request) {
+        String ip = request.getRemoteAddress().getAddress().getHostAddress();
+        return Mono.just(ip);
+    }
+*/
 }
