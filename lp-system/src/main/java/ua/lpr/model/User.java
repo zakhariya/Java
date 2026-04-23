@@ -3,9 +3,11 @@ package ua.lpr.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Component
-public class User {
+public class User implements Serializable {
 
     private int id;
 
@@ -95,10 +97,11 @@ public class User {
                 email.contains("*") || email.contains("(") || email.contains(")") || email.contains("+") ||
                 email.contains("=") || email.contains("{") || email.contains("}") || email.contains("[") ||
                 email.contains("]") || email.contains("\\") || email.contains("|") || email.contains(":") ||
-                email.contains(":") || email.contains("\"") || email.contains("'") || email.contains("<") ||
-                email.contains(">") || email.contains(",") || email.contains("?") || email.contains("/") ||
-                email.contains("№"))
+                email.contains("\"") || email.contains("'") || email.contains("<") || email.contains(">") ||
+                email.contains(",") || email.contains("?") || email.contains("/") || email.contains("№")) {
+
             return false;
+        }
 
         String prefix = email.substring(0, email.indexOf("@"));
         int pEnd = prefix.length() - 1;
@@ -136,13 +139,29 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", post='" + post + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
+                ", name='" + name + "'" +
+                ", password='" + password + "'" +
+                ", post='" + post + "'" +
+                ", email='" + email + "'" +
+                ", phone='" + phone + "'" +
                 ", isDead=" + isDead +
                 ", viberId=" + viberId +
-                '}';
+                "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                name.equals(user.name) &&
+                password.equals(user.password) &&
+                post.equals(user.post);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, password, post);
     }
 }

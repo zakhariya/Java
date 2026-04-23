@@ -47,13 +47,9 @@ public class UserServiceImpl implements UserService {
                 user.getName() == null)
             return false;
 
-        User userFromDB = getByLogin(user.getName());
+        User dbUser = getByLogin(user.getName());
 
-        if(userFromDB != null
-                && user.getPassword().equals(userFromDB.getPassword()))
-            return true;
-
-        return false;
+        return dbUser != null && dbUser.equals(user);
     }
 
     @Override

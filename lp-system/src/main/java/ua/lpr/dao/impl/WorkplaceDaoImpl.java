@@ -46,7 +46,7 @@ public class WorkplaceDaoImpl implements WorkplaceDao {
 
     @Override
     public List<Workplace> getAll() {
-        String sql = "SELECT * FROM tblWorkplaces ORDER BY WorkPartition";
-        return jdbcTemplate.query(sql, new WorkplaceMapper());
+        String sql = "SELECT * FROM tblWorkplaces WHERE ShowInApp=? ORDER BY WorkPartition";
+        return jdbcTemplate.query(sql, new WorkplaceMapper(), true);
     }
 }

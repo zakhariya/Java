@@ -101,25 +101,16 @@ public class UserController {
 
         User dbUser = userService.getById(user.getId());
 
-        if(dbUser == null
-                || dbUser.isDead() == true
-                || !dbUser.getName().equals(user.getName()))
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if(dbUser.isDead())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        if(userService.validateUser(user))
-            user = userService.getByLogin(user.getName());
-        else
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        if(!userService.validateUser(user))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         session.setAttribute("user", user);
         userService.setLastLoginTime(user);
 
-        User rUser = new User();
-
-        rUser.setName(user.getName());
-        rUser.setPost(user.getPost());
-
-        return new ResponseEntity<> (rUser, HttpStatus.OK);
+        return new ResponseEntity<> (user, HttpStatus.OK);
     }
 
     @GetMapping("/{post}/{name}")
@@ -136,17 +127,13 @@ public class UserController {
 
             model.setViewName("redirect:/");
 
-        }else if((sUser == null | user == null)
-                    | ((sUser != null & user != null)
-                    && (user.getId() != sUser.getId() | !user.getName().equals(sUser.getName())
-                    | !user.getPassword().equals(sUser.getPassword())
-                    | !user.getPost().equals(post) | !user.getPost().equals(sUser.getPost())))){
+        }else if(sUser == null || !sUser.equals(user)) {
 
             session.removeAttribute("user");
             model.setViewName("redirect:/" + URLEncoder.encode(post, "UTF-8").replace("+", "%20"));
 
-        }else{
-            try{
+        } else {
+            try {
                 String page = settingService.getByObjectAndParam(post, "page").getValue();
                 String message = settingService.getByObjectAndParam(page, "message").getValue();
 
