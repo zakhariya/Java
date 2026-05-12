@@ -1,6 +1,5 @@
-package ua.lpr.functions;
+package ua.lpr.util;
 
-import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +75,23 @@ public class Functions {
 
     // Handling Proxies or Load Balancers
     public static String getClientIp(HttpServletRequest request) {
+        //		String requestInfo = "Request host: " + request.getHeader("host")
+//				+ "\nLocal name: " + request.getLocalName()
+//				+ "\nLocal address: " + request.getLocalAddr()
+//				+ "\nRemote user: " + request.getRemoteUser()
+//				+ "\nRemote host: " + request.getRemoteHost()
+//				+ "\nRemote address: " + request.getRemoteAddr()
+//				+ "\nRemote port: " + request.getRemotePort();
+//
+//		System.out.println(requestInfo);
+
+
+//        String xfHeader = request.getHeader("X-Forwarded-For");
+//        if (xfHeader == null || xfHeader.isEmpty() || !xfHeader.contains(request.getRemoteAddr())) {
+//            return request.getRemoteAddr();
+//        }
+//        return xfHeader.split(",")[0];
+
         String remoteAddr = request.getHeader("X-Forwarded-For");
 
         // If header is empty, use the direct remote address

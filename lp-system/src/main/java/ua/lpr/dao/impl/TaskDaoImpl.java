@@ -1,7 +1,6 @@
 package ua.lpr.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,13 +8,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.lpr.dao.TaskDao;
-import ua.lpr.mapper.TaskMapper;
+import ua.lpr.dao.mapper.TaskMapper;
 import ua.lpr.model.Task;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;

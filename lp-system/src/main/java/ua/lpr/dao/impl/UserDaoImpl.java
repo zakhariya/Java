@@ -5,7 +5,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.lpr.dao.UserDao;
-import ua.lpr.mapper.UserMapper;
+import ua.lpr.dao.mapper.UserMapper;
 import ua.lpr.model.User;
 
 import java.sql.Timestamp;

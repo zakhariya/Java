@@ -46,19 +46,21 @@
                     'X-CSRF-Token': token
                 },
                 success:function(data, status) {
-                    if (status == 'success') {
+                    if (status === 'success') {
                         window.location.replace('/'+data['post']+'/'+data['name']);
                     } else {
                         console.log(status);
                     }
                 },
                 error:function(jqXHR) {
-                    if(jqXHR.status == 403){
+                    if(jqXHR.status === 401) {
                         alert('Неверный пароль');
                         $('input#password').css('border-color', 'red');
-                    }else if(jqXHR.status == 404){
+                    }else if(jqXHR.status === 403){
+                        alert('Доступ запрещен');
+                    }else if(jqXHR.status === 404){
                         alert('Пользователя не существует');
-                    }else if(jqXHR.status == 500){
+                    }else if(jqXHR.status === 500){
                         alert('Внутренняя ошибка сервера');
                     }
                     console.log(jqXHR.status);

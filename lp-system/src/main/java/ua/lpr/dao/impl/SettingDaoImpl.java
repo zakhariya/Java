@@ -5,7 +5,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.lpr.dao.SettingDao;
-import ua.lpr.mapper.SettingMapper;
+import ua.lpr.dao.mapper.SettingMapper;
 import ua.lpr.model.Setting;
 
 import java.util.List;

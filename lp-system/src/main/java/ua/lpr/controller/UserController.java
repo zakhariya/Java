@@ -5,6 +5,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.lpr.model.Task;
 import ua.lpr.model.User;
 import ua.lpr.service.*;
+import ua.lpr.util.Functions;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -44,6 +48,12 @@ public class UserController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private LoginAttemptService loginAttemptService;
 
     @PostConstruct
     private void runNotification(){
@@ -99,13 +109,22 @@ public class UserController {
     public ResponseEntity<User> login(@RequestBody User user){
         session.removeAttribute("user");
 
+        String ip = Functions.getClientIp(request);
+
+        if (loginAttemptService.isBlocked(ip)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         User dbUser = userService.getById(user.getId());
 
-        if(dbUser.isDead())
+        if(dbUser.isDead()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        if(!userService.validateUser(user))
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if(!userService.validateUser(user)) {
+            loginAttemptService.loginFailed(ip);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         session.setAttribute("user", user);
         userService.setLastLoginTime(user);
@@ -117,6 +136,7 @@ public class UserController {
     public ModelAndView showPage(@PathVariable("post") String post,
                                  @PathVariable("name") String name) throws UnsupportedEncodingException {
 
+        //TODO: magic code
         ModelAndView model = new ModelAndView();
 
         User sUser = (User) session.getAttribute("user");

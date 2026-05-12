@@ -1,4 +1,4 @@
-package ua.lpr.exception;
+package ua.lpr.util.exceptions;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;

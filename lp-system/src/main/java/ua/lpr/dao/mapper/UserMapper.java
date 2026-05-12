@@ -1,4 +1,4 @@
-package ua.lpr.mapper;
+package ua.lpr.dao.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import ua.lpr.model.User;

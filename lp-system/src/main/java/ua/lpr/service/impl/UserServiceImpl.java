@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.lpr.dao.UserDao;
 import ua.lpr.model.User;
+import ua.lpr.service.LoginAttemptService;
 import ua.lpr.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -14,6 +16,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private LoginAttemptService loginAttemptService;
+
+    @Autowired
+    private HttpServletRequest request;
+
 
     @Override
     public List<User> getAll() {
@@ -67,13 +76,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
-
         userDao.update(user);
     }
 
     @Override
     public void delete(int id) {
         userDao.delete(id);
-
     }
 }

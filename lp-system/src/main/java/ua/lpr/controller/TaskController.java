@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ua.lpr.functions.Functions;
+import ua.lpr.util.Functions;
 import ua.lpr.model.Client;
 import ua.lpr.model.Setting;
 import ua.lpr.model.Task;
@@ -105,7 +105,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity showTask(@PathVariable("id") long id){
+    public ResponseEntity<Task> showTask(@PathVariable("id") long id){
 
         User user = (User) session.getAttribute("user");
 
@@ -118,23 +118,23 @@ public class TaskController {
                 || !task.getUserName().equals(user.getName()))
             return new ResponseEntity(HttpStatus.FORBIDDEN);
 
-        return new ResponseEntity<Task>(task, HttpStatus.OK);
+        return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
     @PostMapping("/state/{state}/{id}")
-    public ResponseEntity changeTaskStatus(@PathVariable("state") String status, @PathVariable("id") long id){
+    public ResponseEntity<HttpStatus> changeTaskStatus(@PathVariable("state") String status, @PathVariable("id") long id){
         Task task = taskService.findById(id);
 
         User user = (User) session.getAttribute("user");
 
         if(task == null
                 || task.isDeleted())
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         if(user == null
                 || task.getUserName() == null
                 || !task.getUserName().contains(user.getName()))
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         String param = "";
 
@@ -157,15 +157,15 @@ public class TaskController {
 
         taskService.update(task);
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody Task task){
+    public ResponseEntity<HttpStatus> create(@RequestBody Task task){
         User user = (User) session.getAttribute("user");
 
         if(user == null)
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Client client = clientService.getByName(task.getClientName());
 
@@ -187,7 +187,7 @@ public class TaskController {
 
         taskService.create(task);
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/")

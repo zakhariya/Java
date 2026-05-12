@@ -1,7 +1,7 @@
-package ua.lpr.mapper;
+package ua.lpr.dao.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
-import ua.lpr.functions.Functions;
+import ua.lpr.util.Functions;
 import ua.lpr.model.Stage;
 
 import java.sql.ResultSet;

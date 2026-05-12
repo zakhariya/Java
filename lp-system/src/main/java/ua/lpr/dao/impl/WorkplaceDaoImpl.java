@@ -5,7 +5,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.lpr.dao.WorkplaceDao;
-import ua.lpr.mapper.WorkplaceMapper;
+import ua.lpr.dao.mapper.WorkplaceMapper;
 import ua.lpr.model.Workplace;
 
 import java.util.List;

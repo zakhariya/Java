@@ -1,6 +1,7 @@
-package ua.lpr.exception;
+package ua.lpr.util.exceptions;
 
 import org.springframework.dao.TransientDataAccessResourceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,7 +9,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ua.lpr.functions.Functions;
+import ua.lpr.util.Functions;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,7 +54,7 @@ public class GlobalExceptionHandler {
         return "redirect:/error";
     }
 
-    // data base
+    // database
     @ExceptionHandler(TransientDataAccessResourceException.class)
     public ModelAndView handlerError4(TransientDataAccessResourceException ex,
                                       HttpServletRequest request){
@@ -61,8 +62,8 @@ public class GlobalExceptionHandler {
         String url = request.getHeader("referer");
         String message = "";
 
-        if(ex.getLocalizedMessage().indexOf("Packet for query is too large") > -1
-                | ex.getLocalizedMessage().indexOf("Недопустимая длина") > -1) {
+        if(ex.getLocalizedMessage().contains("Packet for query is too large")
+                | ex.getLocalizedMessage().contains("Недопустимая длина")) {
 
             message = "Размер данных превышает возможный для записи в базу данных.";
         }
@@ -72,11 +73,17 @@ public class GlobalExceptionHandler {
 
     //sometimes see error on console
     @ExceptionHandler(IllegalArgumentException.class)
-    public void hanlerError5(IllegalArgumentException ex, HttpServletRequest request){
+    public void handlerError5(IllegalArgumentException ex, HttpServletRequest request){
         String msg = ex.getMessage();
         if(msg.indexOf("HTTP method names must be tokens") > -1)
-            System.out.println("IP - " + request.getRemoteAddr());
+            System.out.println("IP - " + Functions.getClientIp(request));
 
         System.err.println("Error from cached exception" + msg);
     }
+
+    //test
+//    @ExceptionHandler(BadCredentialsException.class)
+//    public void handlerError6(BadCredentialsException ex, HttpServletRequest request){
+//        System.out.println("Bad creds. IP - " + Functions.getClientIp(request));
+//    }
 }

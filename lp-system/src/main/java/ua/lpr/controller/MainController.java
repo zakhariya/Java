@@ -2,13 +2,13 @@ package ua.lpr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.lpr.functions.Functions;
+import ua.lpr.service.LoginAttemptService;
+import ua.lpr.util.Functions;
 import ua.lpr.service.NotificationService;
 import ua.lpr.service.SystemService;
 import ua.lpr.service.WorkplaceService;
@@ -29,6 +29,9 @@ public class MainController {
 	*/
 	@Autowired
 	private HttpServletRequest request;
+
+	@Autowired
+	private LoginAttemptService loginAttemptService;
 
 	@Autowired
 	private NotificationService notificationService;
@@ -80,8 +83,15 @@ public class MainController {
 	@GetMapping("shutdown")
 	public @ResponseBody
 	ResponseEntity<HttpStatus> shutdownPC(@RequestParam String token) {
-		if (!this.token.equals(token)) {
+		String ip = Functions.getClientIp(request);
+
+		if (loginAttemptService.isBlocked(ip)) {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
+		if (!this.token.equals(token)) {
+			loginAttemptService.loginFailed(ip);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 
 		boolean shutdown = systemService.shutdownPC();
@@ -90,17 +100,6 @@ public class MainController {
 			return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
-//		String requestInfo = "Request host: " + request.getHeader("host")
-//				+ "\nLocal name: " + request.getLocalName()
-//				+ "\nLocal address: " + request.getLocalAddr()
-//				+ "\nRemote user: " + request.getRemoteUser()
-//				+ "\nRemote host: " + request.getRemoteHost()
-//				+ "\nRemote address: " + request.getRemoteAddr()
-//				+ "\nRemote port: " + request.getRemotePort();
-//
-//		System.out.println(requestInfo);
-
-		String ip = Functions.getClientIp(request);
 		notificationService.notifyAdmin("System shutdown terminate in " + shutdownDelay + " minute(s). Request from: " + ip);
 
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -108,8 +107,15 @@ public class MainController {
 
 	@GetMapping("reboot")
 	public @ResponseBody ResponseEntity<HttpStatus> rebootPC(@RequestParam String token) {
-		if (!this.token.equals(token)) {
+		String ip = Functions.getClientIp(request);
+
+		if (loginAttemptService.isBlocked(ip)) {
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		}
+
+		if (!this.token.equals(token)) {
+			loginAttemptService.loginFailed(ip);
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 
 		boolean reboot = systemService.rebootPC();
@@ -118,7 +124,6 @@ public class MainController {
 			return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
-		String ip = Functions.getClientIp(request);
 		notificationService.notifyAdmin("System reboot terminate in " + rebootDelay + " minute(s). Request from: " + ip);
 
 		return new ResponseEntity<>(HttpStatus.OK);
