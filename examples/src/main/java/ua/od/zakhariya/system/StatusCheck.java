@@ -8,20 +8,20 @@ import java.util.concurrent.TimeUnit;
 
 public class StatusCheck {
     private static final int TIMEOUT = 3 * 1000;
-    private static final String host = "192.168.0.1";
+    private static final String HOST = "192.168.0.1";
 
     public static void main(String[] args) {
-        System.out.println(pingVer1(host));
+        System.out.println(pingVer1(HOST));
 
         try {
-            System.out.println(pingVer2(host));
+            System.out.println(pingVer2(HOST));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        System.out.println(pingVer3(host));
+        System.out.println(pingVer3(HOST));
 
 
     }

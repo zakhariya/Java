@@ -1,3 +1,13 @@
 .label {
-    -fx-text-fill: red;
+    /*-fx-text-fill: red;*/
+    /*-fx-padding: 15px;*/
+}
+.button {
+    -fx-cursor: hand;
+}
+.horizontal-container {
+    -fx-spacing: 10px;
+}
+#computerContainer {
+    -fx-border-color: gray;
 }

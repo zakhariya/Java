@@ -1,14 +1,1 @@
-[
-  {
-    "name": "PC1",
-    "ip": "192.168.0.10",
-    "port": 3291,
-    "url": "shutdown?token=45"
-  },
-  {
-    "name": "PC2",
-    "ip": "192.168.0.11",
-    "port": 9123,
-    "url": "shutdown?token=68"
-  }
-]
+{"PC3":{"name":"PC3","host":"192.168.8.11","port":9132,"url":"shutdown?token=22"},"PC2":{"name":"PC2","host":"192.168.0.55","port":9191,"url":"shutdown?token=578"},"PC1":{"name":"PC1","host":"192.168.0.10","port":3291,"url":"shutdown?token=495"},"PC5":{"name":"PC5","host":"192.168.8.10","port":8181,"url":"shutdown?token=someSecurityTokenForLPSystem"},"PC6":{"name":"PC6","host":"192.168.8.1","port":5555,"url":"5555555"},"PC7":{"name":"PC7","host":"192.168.0.33","port":8,"url":"88"},"PC4":{"name":"PC4","host":"192.168.0.20","port":555,"url":"55555"}}

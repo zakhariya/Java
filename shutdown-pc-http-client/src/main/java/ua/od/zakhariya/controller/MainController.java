@@ -1,35 +1,46 @@
 package ua.od.zakhariya.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import ua.od.zakhariya.model.Computer;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import ua.od.zakhariya.model.Data;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class MainController {
 
     @FXML
+    private VBox vBox;
+
+    @FXML
     public void initialize() {
-        ObjectMapper mapper = new ObjectMapper();
-        File file = new File("src/main/resources/computers.json");
+        //TODO: make initialize objects and containers here???
 
+        Data.getInstance().init(vBox);
+    }
+
+    public void showAddComputerForm(ActionEvent event) {
         try {
-            // Read JSON from file and convert to a User object (deserialization)
-            List<Computer> computers = mapper.readValue(file, new TypeReference<List<Computer>>(){});
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/EditComputerDialog.fxml"));
+            loader.load();
 
-            System.out.println("Object successfully deserialized from JSON file:");
-            System.out.println(computers);
+            Scene primaryScene = ((Button) event.getSource()).getScene();
 
+            Parent root = loader.getRoot();
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(primaryScene.getWindow());
+            stage.setScene(new Scene(root));
+            stage.getScene().getStylesheets().addAll(primaryScene.getStylesheets());
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void shutDownPC(ActionEvent event) {
-        System.out.println("fddgdfgfdgfd");
     }
 }

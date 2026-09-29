@@ -152,14 +152,14 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <ButtonBar layoutX="308.0" layoutY="13.0" prefHeight="40.0" prefWidth="601.0">
+        <ButtonBar layoutX="308.0" layoutY="13.0" prefHeight="40.0" prefWidth="743.0">
             <buttons>
                 <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#changeImage" prefHeight="17.0" prefWidth="113.0" text="CheckBox" />
-                <Button fx:id="btnS1" contentDisplay="CENTER" mnemonicParsing="false" text="Show S1" textAlignment="CENTER" textFill="RED">
+                <Button fx:id="btnS1" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Drag&amp;Dropp (S1)" textAlignment="CENTER" textFill="RED">
                     <tooltip>
                         <Tooltip text="Alright Tooltip" />
                     </tooltip></Button>
-                <Button fx:id="btnS2" mnemonicParsing="false" text="Show S2">
+                <Button fx:id="btnS2" mnemonicParsing="false" text="MP3 (S2)">
                     <textFill>
                         <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
                             <stops>
@@ -177,9 +177,9 @@
                         </LinearGradient>
                     </textFill>
                 </Button>
-                <Button fx:id="btnS3" mnemonicParsing="false" text="Show S3" textFill="#2600fc" />
-                <Button fx:id="btnS4" mnemonicParsing="false" text="Show S4" textFill="#0ed703" />
-                <Button fx:id="btnS5" mnemonicParsing="false" text="Show S5" textFill="WHITE" />
+                <Button fx:id="btnS3" mnemonicParsing="false" text="Effects (S3)" textFill="#2600fc" />
+                <Button fx:id="btnS4" mnemonicParsing="false" text="Player (S4)" textFill="#0ed703" />
+                <Button fx:id="btnS5" mnemonicParsing="false" text="Browser (S5)" textFill="WHITE" />
             <Button fx:id="btnForm" mnemonicParsing="false" onAction="#showForm" text="Form" />
             </buttons>
         </ButtonBar>
@@ -208,7 +208,7 @@
         </ToolBar>
         <TextFlow fx:id="textFlow" accessibleHelp="Accessible help" accessibleText="Accessible text" layoutX="288.0" layoutY="692.0" prefHeight="106.0" prefWidth="309.0" style="-fx-background-color: #fff;" />
         <ImageView fx:id="imageView" fitHeight="40.0" fitWidth="65.0" layoutX="229.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" styleClass="border-blue-class" />
-        <Label fx:id="lblControls" alignment="BASELINE_CENTER" layoutX="14.0" layoutY="114.0" prefHeight="73.0" prefWidth="465.0" styleClass="border-blue-class" text="Label">
+        <Label fx:id="lblControls" alignment="BASELINE_CENTER" layoutX="14.0" layoutY="114.0" prefHeight="73.0" prefWidth="465.0" styleClass="border-blue-class" text="Text">
             <font>
                 <Font name="Cocon-Light" size="16.0" />
             </font>

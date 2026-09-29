@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public void handlerError5(IllegalArgumentException ex, HttpServletRequest request){
         String msg = ex.getMessage();
-        if(msg.indexOf("HTTP method names must be tokens") > -1)
+        if(msg.contains("HTTP method names must be tokens"))
             System.out.println("IP - " + Functions.getClientIp(request));
 
         System.err.println("Error from cached exception" + msg);

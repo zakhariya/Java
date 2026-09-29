@@ -4,6 +4,7 @@
     <logger name="httpclient" level="WARN" />
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+<!--        <withJansi>false</withJansi>-->
         <encoder>
             <charset>UTF-8</charset>
             <pattern>%-5level %logger{0} [%file:%line] %msg%n</pattern>

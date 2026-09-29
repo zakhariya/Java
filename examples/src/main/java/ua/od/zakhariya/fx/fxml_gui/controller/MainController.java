@@ -1,5 +1,7 @@
 package ua.od.zakhariya.fx.fxml_gui.controller;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -127,7 +129,7 @@ public class MainController {
     private PasswordField tfPass;
 
     @FXML
-    private ToggleButton toggleButton;
+    private ToggleButton toggleButton, toggleButton1;
 
     @FXML
     private ToolBar toolBar;

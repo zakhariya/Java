@@ -1,3 +1,7 @@
 .label {
     -fx-text-fill: red;
 }
+
+#paneUploadFiles {
+    -fx-border-color: blue;
+}

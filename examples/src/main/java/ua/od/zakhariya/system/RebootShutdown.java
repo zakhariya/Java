@@ -4,6 +4,8 @@ import java.io.IOException;
 
 public class RebootShutdown {
 
+    //TODO: or to use ProcessBuilder??  :|  see CommandExecutor class
+
     public static void main(String arg[]) throws IOException {
 //        shutdownWithOSCheck();
 //        rebootWithOSCheck();

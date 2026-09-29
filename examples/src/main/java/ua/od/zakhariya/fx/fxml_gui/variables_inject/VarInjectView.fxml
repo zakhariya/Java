@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+
+<?import java.lang.Double?>
+<?import java.lang.String?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ua.od.zakhariya.fx.fxml_gui.variables_inject.VarInjectController">
+   <fx:define>
+      <Double fx:id="globalSpacing" fx:value="20.0"/>
+      <String fx:id="varLabelText" fx:value="Text from FXML file variable"/>
+   </fx:define>
+
+   <children>
+
+<!--        <Label fx:id="lblControls" alignment="BASELINE_CENTER" layoutX="14.0" layoutY="114.0" prefHeight="73.0" prefWidth="465.0" styleClass="border-blue-class" text="$varLabelText">-->
+<!--        <Label fx:id="lblControls" alignment="BASELINE_CENTER" layoutX="14.0" layoutY="114.0" prefHeight="73.0" prefWidth="465.0" styleClass="border-blue-class" text="${controller.labelText}">-->
+
+
+      <Label layoutX="75.0" layoutY="45.0" prefHeight="77.0" prefWidth="181.0" text="Label" />
+      <ComboBox layoutX="75.0" layoutY="140.0" prefWidth="150.0" />
+      <Button text="Save Document">
+         <graphic>
+            <ImageView fitWidth="16" fitHeight="16">
+               <image>
+                  <!-- Expression syntax evaluates 'iconPath' at runtime -->
+                  <Image url="${iconPath + 'save-icon.png'}" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
